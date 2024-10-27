@@ -248,10 +248,6 @@ Future<String> send(String value, BuildContext context, Function setState,
         if (chatAllowed) return "";
         messages.insert(
             0, types.TextMessage(author: assistant, id: newId, text: text));
-        //TODO: add functionality
-        //
-        // chatKey!.currentState!.scrollToMessage(messages[1].id,
-        //     preferPosition: AutoScrollPosition.end);
         if (onStream != null) {
           onStream(text, false);
         }
@@ -310,10 +306,6 @@ Future<String> send(String value, BuildContext context, Function setState,
         showCloseIcon: true));
     return "";
   }
-  //TODO: add functionality
-  //
-  // chatKey!.currentState!
-  //     .scrollToMessage(messages[1].id, preferPosition: AutoScrollPosition.end);
   if ((prefs!.getString("requestType") ?? "stream") == "stream") {
     if (onStream != null) {
       onStream(text, true);
