@@ -564,7 +564,7 @@
     },
     "settingsThemeOllama": "Ollama",
     "@settingsThemeOllama": {
-        "description": "Text displayed as description for Ollama theme option",
+        "description": "Text displayed as description for Dr.AI theme option",
         "context": "Visible in the settings view"
     },
     "settingsTemporaryFixes": "Temporary interface fixes",
@@ -724,7 +724,7 @@
         "description": "Title of the update dialog",
         "context": "Visible in the settings view"
     },
-    "settingsUpdateDialogDescription": "A new version of Ollama is available. Do you want to download and install it now?",
+    "settingsUpdateDialogDescription": "A new version of Dr.AI is available. Do you want to download and install it now?",
     "@settingsUpdateDialogDescription": {
         "description": "Description of the update dialog",
         "context": "Visible in the settings view"

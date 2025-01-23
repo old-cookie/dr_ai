@@ -31,15 +31,10 @@ void setModel(BuildContext context, Function setState) {
   setState(() {});
   void load() async {
     try {
-      var list = await llama.OllamaClient(
-              headers:
-                  (jsonDecode(prefs!.getString("hostHeaders") ?? "{}") as Map)
-                      .cast<String, String>(),
-              baseUrl: "$host/api")
-          .listModels()
-          .timeout(Duration(
-              seconds: (10.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0))
-                  .round()));
+      var list =
+          await llama.OllamaClient(headers: (jsonDecode(prefs!.getString("hostHeaders") ?? "{}") as Map).cast<String, String>(), baseUrl: "$host/api")
+              .listModels()
+              .timeout(Duration(seconds: (10.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0)).round()));
       for (var i = 0; i < list.models!.length; i++) {
         models.add(list.models![i].model!.split(":")[0]);
         modelsReal.add(list.models![i].model!);
@@ -77,11 +72,9 @@ void setModel(BuildContext context, Function setState) {
       // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
       // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(
-              // ignore: use_build_context_synchronously
-              AppLocalizations.of(context)!.settingsHostInvalid("timeout")),
-          showCloseIcon: true));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(
+          // ignore: use_build_context_synchronously
+          AppLocalizations.of(context)!.settingsHostInvalid("timeout")), showCloseIcon: true));
     }
   }
 
@@ -100,8 +93,7 @@ void setModel(BuildContext context, Function setState) {
           bool preload = false;
           if (usedIndex >= 0 && modelsReal[usedIndex] != model) {
             preload = true;
-            if (prefs!.getBool("resetOnModelSelect") ??
-          true && allowMultipleChats) {
+            if (prefs!.getBool("resetOnModelSelect") ?? true && allowMultipleChats) {
               messages = [];
               chatUuid = null;
             }
@@ -116,37 +108,23 @@ void setModel(BuildContext context, Function setState) {
           }
           prefs?.setBool("multimodal", multimodal);
 
-          if (model != null &&
-              preload &&
-              int.parse(prefs!.getString("keepAlive") ?? "300") != 0 &&
-              (prefs!.getBool("preloadModel") ?? true)) {
+          if (model != null && preload && int.parse(prefs!.getString("keepAlive") ?? "300") != 0 && (prefs!.getBool("preloadModel") ?? true)) {
             setLocalState(() {});
             try {
               // don't use llama client, package doesn't support just loading without content
               await http
                   .post(
                     Uri.parse("$host/api/generate"),
-                    headers: {
-                      "Content-Type": "application/json",
-                      ...(jsonDecode(prefs!.getString("hostHeaders") ?? "{}")
-                          as Map)
-                    }.cast<String, String>(),
-                    body: jsonEncode({
-                      "model": model!,
-                      "keep_alive":
-                          int.parse(prefs!.getString("keepAlive") ?? "300")
-                    }),
+                    headers:
+                        {"Content-Type": "application/json", ...(jsonDecode(prefs!.getString("hostHeaders") ?? "{}") as Map)}.cast<String, String>(),
+                    body: jsonEncode({"model": model!, "keep_alive": int.parse(prefs!.getString("keepAlive") ?? "300")}),
                   )
-                  .timeout(Duration(
-                      seconds: (10.0 *
-                              (prefs!.getDouble("timeoutMultiplier") ?? 1.0))
-                          .round()));
+                  .timeout(Duration(seconds: (10.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0)).round()));
             } catch (_) {
               // ignore: use_build_context_synchronously
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   // ignore: use_build_context_synchronously
-                  content: Text(AppLocalizations.of(context)!
-                      .settingsHostInvalid("timeout")),
+                  content: Text(AppLocalizations.of(context)!.settingsHostInvalid("timeout")),
                   showCloseIcon: true));
               setState(() {
                 model = null;
@@ -169,92 +147,51 @@ void setModel(BuildContext context, Function setState) {
         },
         child: Container(
             width: desktopLayout(context) ? null : double.infinity,
-            padding: EdgeInsets.only(
-                left: 16,
-                right: 16,
-                top: 16,
-                bottom: desktopLayout(context) ? 16 : 0),
+            padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: desktopLayout(context) ? 16 : 0),
             child: (!loaded)
-                ? SizedBox(
-                    width: desktopLayout(context) ? 300 : double.infinity,
-                    child: const LinearProgressIndicator())
+                ? SizedBox(width: desktopLayout(context) ? 300 : double.infinity, child: const LinearProgressIndicator())
                 : Column(mainAxisSize: MainAxisSize.min, children: [
                     Container(
                         width: desktopLayout(context) ? 300 : double.infinity,
-                        constraints: BoxConstraints(
-                            maxHeight:
-                                MediaQuery.of(context).size.height * 0.4),
+                        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.4),
                         child: SingleChildScrollView(
                             scrollDirection: Axis.vertical,
                             child: Wrap(
                               spacing: desktopLayout(context) ? 10.0 : 5.0,
-                              runSpacing:
-                                  desktopFeature(web: true) ? 10.0 : 0.0,
+                              runSpacing: desktopFeature(web: true) ? 10.0 : 0.0,
                               alignment: WrapAlignment.center,
                               children: List<Widget>.generate(
                                 models.length,
                                 (int index) {
                                   return ChoiceChip(
-                                    label: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(models[index]),
-                                          ((prefs!.getBool("modelTags") ??
-                                                      false) &&
-                                                  modelsReal[index]
-                                                          .split(":")
-                                                          .length >
-                                                      1)
-                                              ? Text(
-                                                  ":${modelsReal[index].split(":")[1]}",
-                                                  style: const TextStyle(
-                                                      color: Colors.grey))
-                                              : const SizedBox.shrink()
-                                        ]),
+                                    label: Row(mainAxisSize: MainAxisSize.min, children: [
+                                      Text(models[index]),
+                                      ((prefs!.getBool("modelTags") ?? false) && modelsReal[index].split(":").length > 1)
+                                          ? Text(":${modelsReal[index].split(":")[1]}", style: const TextStyle(color: Colors.grey))
+                                          : const SizedBox.shrink()
+                                    ]),
                                     selected: usedIndex == index,
                                     avatar: (usedIndex == index)
                                         ? null
                                         : (addIndex == index)
                                             ? const Icon(Icons.add_rounded)
-                                            : ((recommendedModels
-                                                    .contains(models[index]))
+                                            : ((recommendedModels.contains(models[index]))
                                                 ? const Icon(Icons.star_rounded)
-                                                : ((modal[index])
-                                                    ? const Icon(Icons
-                                                        .collections_rounded)
-                                                    : null)),
-                                    checkmarkColor: (usedIndex == index &&
-                                            !(prefs?.getBool(
-                                                    "useDeviceTheme") ??
-                                                false))
-                                        ? ((MediaQuery.of(context)
-                                                    .platformBrightness ==
-                                                Brightness.light)
+                                                : ((modal[index]) ? const Icon(Icons.collections_rounded) : null)),
+                                    checkmarkColor: (usedIndex == index && !(prefs?.getBool("useDeviceTheme") ?? false))
+                                        ? ((MediaQuery.of(context).platformBrightness == Brightness.light)
                                             ? themeLight().colorScheme.secondary
                                             : themeDark().colorScheme.secondary)
                                         : null,
-                                    labelStyle: (usedIndex == index &&
-                                            !(prefs?.getBool(
-                                                    "useDeviceTheme") ??
-                                                false))
+                                    labelStyle: (usedIndex == index && !(prefs?.getBool("useDeviceTheme") ?? false))
                                         ? TextStyle(
-                                            color: (MediaQuery.of(context)
-                                                        .platformBrightness ==
-                                                    Brightness.light)
-                                                ? themeLight()
-                                                    .colorScheme
-                                                    .secondary
-                                                : themeDark()
-                                                    .colorScheme
-                                                    .secondary)
+                                            color: (MediaQuery.of(context).platformBrightness == Brightness.light)
+                                                ? themeLight().colorScheme.secondary
+                                                : themeDark().colorScheme.secondary)
                                         : null,
-                                    selectedColor: (prefs
-                                                ?.getBool("useDeviceTheme") ??
-                                            false)
+                                    selectedColor: (prefs?.getBool("useDeviceTheme") ?? false)
                                         ? null
-                                        : (MediaQuery.of(context)
-                                                    .platformBrightness ==
-                                                Brightness.light)
+                                        : (MediaQuery.of(context).platformBrightness == Brightness.light)
                                             ? themeLight().colorScheme.primary
                                             : themeDark().colorScheme.primary,
                                     onSelected: (bool selected) {
@@ -283,49 +220,31 @@ void setModel(BuildContext context, Function setState) {
         context: context,
         builder: (context) {
           return Transform.translate(
-            offset: desktopLayoutRequired(context)
-                ? const Offset(289, 0)
-                : const Offset(0, 0),
+            offset: desktopLayoutRequired(context) ? const Offset(289, 0) : const Offset(0, 0),
             child: Dialog(
-                surfaceTintColor:
-                    (Theme.of(context).brightness == Brightness.dark)
-                        ? Colors.grey[800]
-                        : null,
-                alignment: desktopLayoutRequired(context)
-                    ? Alignment.topLeft
-                    : Alignment.topCenter,
+                surfaceTintColor: (Theme.of(context).brightness == Brightness.dark) ? Colors.grey[800] : null,
+                alignment: desktopLayoutRequired(context) ? Alignment.topLeft : Alignment.topCenter,
                 child: content),
           );
         });
   } else {
-    showModalBottomSheet(
-        context: context, builder: (context) => Container(child: content));
+    showModalBottomSheet(context: context, builder: (context) => Container(child: content));
   }
 }
 
 void addModel(BuildContext context, Function setState) async {
-  var client = llama.OllamaClient(
-      headers: (jsonDecode(prefs!.getString("hostHeaders") ?? "{}") as Map)
-          .cast<String, String>(),
-      baseUrl: "$host/api");
+  var client = llama.OllamaClient(headers: (jsonDecode(prefs!.getString("hostHeaders") ?? "{}") as Map).cast<String, String>(), baseUrl: "$host/api");
   bool canceled = false;
   bool networkError = false;
   bool ratelimitError = false;
   bool alreadyExists = false;
-  final String invalidText =
-      AppLocalizations.of(context)!.modelDialogAddPromptInvalid;
-  final networkErrorText =
-      AppLocalizations.of(context)!.settingsHostInvalid("other");
-  final timeoutErrorText =
-      AppLocalizations.of(context)!.settingsHostInvalid("timeout");
-  final ratelimitErrorText =
-      AppLocalizations.of(context)!.settingsHostInvalid("ratelimit");
-  final alreadyExistsText =
-      AppLocalizations.of(context)!.modelDialogAddPromptAlreadyExists;
-  final downloadSuccessText =
-      AppLocalizations.of(context)!.modelDialogAddDownloadSuccess;
-  final downloadFailedText =
-      AppLocalizations.of(context)!.modelDialogAddDownloadFailed;
+  final String invalidText = AppLocalizations.of(context)!.modelDialogAddPromptInvalid;
+  final networkErrorText = AppLocalizations.of(context)!.settingsHostInvalid("other");
+  final timeoutErrorText = AppLocalizations.of(context)!.settingsHostInvalid("timeout");
+  final ratelimitErrorText = AppLocalizations.of(context)!.settingsHostInvalid("ratelimit");
+  final alreadyExistsText = AppLocalizations.of(context)!.modelDialogAddPromptAlreadyExists;
+  final downloadSuccessText = AppLocalizations.of(context)!.modelDialogAddDownloadSuccess;
+  final downloadFailedText = AppLocalizations.of(context)!.modelDialogAddDownloadFailed;
   var requestedModel = await prompt(
     context,
     title: AppLocalizations.of(context)!.modelDialogAddPromptTitle,
@@ -341,9 +260,7 @@ void addModel(BuildContext context, Function setState) async {
       ratelimitError = false;
       alreadyExists = false;
       try {
-        var request = await client.listModels().timeout(Duration(
-            seconds: (10.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0))
-                .round()));
+        var request = await client.listModels().timeout(Duration(seconds: (10.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0)).round()));
         for (var element in request.models!) {
           var localModel = element.model!.removeSuffix(":latest");
           if (localModel == model) {
@@ -364,12 +281,10 @@ void addModel(BuildContext context, Function setState) async {
               barrierDismissible: false,
               builder: (context) {
                 return AlertDialog(
-                    title: Text(AppLocalizations.of(context)!
-                        .modelDialogAddAllowanceTitle),
+                    title: Text(AppLocalizations.of(context)!.modelDialogAddAllowanceTitle),
                     content: SizedBox(
                       width: 640,
-                      child: Text(AppLocalizations.of(context)!
-                          .modelDialogAddAllowanceDescription),
+                      child: Text(AppLocalizations.of(context)!.modelDialogAddAllowanceDescription),
                     ),
                     actions: [
                       TextButton(
@@ -377,15 +292,13 @@ void addModel(BuildContext context, Function setState) async {
                             canceled = true;
                             Navigator.of(context).pop();
                           },
-                          child: Text(AppLocalizations.of(context)!
-                              .modelDialogAddAllowanceDeny)),
+                          child: Text(AppLocalizations.of(context)!.modelDialogAddAllowanceDeny)),
                       TextButton(
                           onPressed: () {
                             returnValue = true;
                             Navigator.of(context).pop();
                           },
-                          child: Text(AppLocalizations.of(context)!
-                              .modelDialogAddAllowanceAllow))
+                          child: Text(AppLocalizations.of(context)!.modelDialogAddAllowanceAllow))
                     ]);
               });
           if (!returnValue) return false;
@@ -395,30 +308,24 @@ void addModel(BuildContext context, Function setState) async {
       }
       http.Response response;
       try {
-        response = await http.get(Uri.parse("$endpoint$model")).timeout(
-            Duration(
-                seconds: (10.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0))
-                    .round()));
+        response =
+            await http.get(Uri.parse("$endpoint$model")).timeout(Duration(seconds: (10.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0)).round()));
       } catch (_) {
         networkError = true;
         return false;
       }
       if (response.statusCode == 200) {
         bool returnValue = false;
-        resetSystemNavigation(mainContext!,
-            systemNavigationBarColor: Color.alphaBlend(
-                Colors.black54, Theme.of(mainContext!).colorScheme.surface));
+        resetSystemNavigation(mainContext!, systemNavigationBarColor: Color.alphaBlend(Colors.black54, Theme.of(mainContext!).colorScheme.surface));
         await showDialog(
             context: mainContext!,
             barrierDismissible: false,
             builder: (context) {
               return AlertDialog(
-                  title: Text(AppLocalizations.of(context)!
-                      .modelDialogAddAssuranceTitle(model)),
+                  title: Text(AppLocalizations.of(context)!.modelDialogAddAssuranceTitle(model)),
                   content: SizedBox(
                     width: 640,
-                    child: Text(AppLocalizations.of(context)!
-                        .modelDialogAddAssuranceDescription(model)),
+                    child: Text(AppLocalizations.of(context)!.modelDialogAddAssuranceDescription(model)),
                   ),
                   actions: [
                     TextButton(
@@ -426,15 +333,13 @@ void addModel(BuildContext context, Function setState) async {
                           canceled = true;
                           Navigator.of(context).pop();
                         },
-                        child: Text(AppLocalizations.of(context)!
-                            .modelDialogAddAssuranceCancel)),
+                        child: Text(AppLocalizations.of(context)!.modelDialogAddAssuranceCancel)),
                     TextButton(
                         onPressed: () {
                           returnValue = true;
                           Navigator.of(context).pop();
                         },
-                        child: Text(AppLocalizations.of(context)!
-                            .modelDialogAddAssuranceAdd))
+                        child: Text(AppLocalizations.of(context)!.modelDialogAddAssuranceAdd))
                   ]);
             });
         resetSystemNavigation(mainContext!);
@@ -466,21 +371,14 @@ void addModel(BuildContext context, Function setState) async {
               canPop: false,
               child: Container(
                   width: double.infinity,
-                  padding: EdgeInsets.only(
-                      left: 16,
-                      right: 16,
-                      top: 16,
-                      bottom: desktopLayout(context) ? 16 : 0),
+                  padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: desktopLayout(context) ? 16 : 0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
                         percent == null
-                            ? AppLocalizations.of(context)!
-                                .modelDialogAddDownloadPercentLoading
-                            : AppLocalizations.of(context)!
-                                .modelDialogAddDownloadPercent(
-                                    (percent * 100).round().toString()),
+                            ? AppLocalizations.of(context)!.modelDialogAddDownloadPercentLoading
+                            : AppLocalizations.of(context)!.modelDialogAddDownloadPercent((percent * 100).round().toString()),
                       ),
                       const Padding(padding: EdgeInsets.only(top: 8)),
                       LinearProgressIndicator(value: percent),
@@ -491,13 +389,10 @@ void addModel(BuildContext context, Function setState) async {
   try {
     final stream = client
         .pullModelStream(request: llama.PullModelRequest(model: requestedModel))
-        .timeout(Duration(
-            seconds: (10.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0))
-                .round()));
+        .timeout(Duration(seconds: (10.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0)).round()));
     bool alreadyProgressed = false;
     await for (final res in stream) {
-      double tmpPercent =
-          ((res.completed ?? 0).toInt() / (res.total ?? 100).toInt());
+      double tmpPercent = ((res.completed ?? 0).toInt() / (res.total ?? 100).toInt());
       if ((tmpPercent * 100).round() == 0) {
         if (!alreadyProgressed) {
           percent = null;
@@ -519,9 +414,7 @@ void addModel(BuildContext context, Function setState) async {
     }
     bool exists = false;
     try {
-      var request = await client.listModels().timeout(Duration(
-          seconds:
-              (10.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0)).round()));
+      var request = await client.listModels().timeout(Duration(seconds: (10.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0)).round()));
       for (var element in request.models!) {
         if (element.model == model) {
           exists = true;
@@ -541,11 +434,9 @@ void addModel(BuildContext context, Function setState) async {
       prefs?.setBool("multimodal", multimodal);
       Navigator.of(mainContext!).pop();
       if (!exists) {
-        ScaffoldMessenger.of(mainContext!).showSnackBar(
-            SnackBar(content: Text(downloadFailedText), showCloseIcon: true));
+        ScaffoldMessenger.of(mainContext!).showSnackBar(SnackBar(content: Text(downloadFailedText), showCloseIcon: true));
       } else {
-        ScaffoldMessenger.of(mainContext!).showSnackBar(
-            SnackBar(content: Text(timeoutErrorText), showCloseIcon: true));
+        ScaffoldMessenger.of(mainContext!).showSnackBar(SnackBar(content: Text(timeoutErrorText), showCloseIcon: true));
       }
       return;
     }
@@ -555,12 +446,10 @@ void addModel(BuildContext context, Function setState) async {
       chatAllowed = true;
     });
     Navigator.of(mainContext!).pop();
-    ScaffoldMessenger.of(mainContext!).showSnackBar(
-        SnackBar(content: Text(downloadSuccessText), showCloseIcon: true));
+    ScaffoldMessenger.of(mainContext!).showSnackBar(SnackBar(content: Text(downloadSuccessText), showCloseIcon: true));
   } catch (_) {
     Navigator.of(mainContext!).pop();
-    ScaffoldMessenger.of(mainContext!).showSnackBar(
-        SnackBar(content: Text(downloadFailedText), showCloseIcon: true));
+    ScaffoldMessenger.of(mainContext!).showSnackBar(SnackBar(content: Text(downloadFailedText), showCloseIcon: true));
   }
 }
 
@@ -575,15 +464,11 @@ void saveChat(String uuid, Function setState) async {
   List<Map<String, String>> history = [];
   for (var i = 0; i < messages.length; i++) {
     if ((jsonDecode(jsonEncode(messages[i])) as Map).containsKey("text")) {
-      history.add({
-        "role": (messages[i].author == user) ? "user" : "assistant",
-        "content": jsonDecode(jsonEncode(messages[i]))["text"]
-      });
+      history.add({"role": (messages[i].author == user) ? "user" : "assistant", "content": jsonDecode(jsonEncode(messages[i]))["text"]});
     } else {
       var uri = jsonDecode(jsonEncode(messages[i]))["uri"] as String;
-      String content = (uri.startsWith("data:image/png;base64,"))
-          ? uri.removePrefix("data:image/png;base64,")
-          : base64.encode(await File(uri).readAsBytes());
+      String content =
+          (uri.startsWith("data:image/png;base64,")) ? uri.removePrefix("data:image/png;base64,") : base64.encode(await File(uri).readAsBytes());
       history.add({
         "role": (messages[i].author == user) ? "user" : "assistant",
         "type": "image",
@@ -595,8 +480,7 @@ void saveChat(String uuid, Function setState) async {
   }
   if (messages.isEmpty && uuid == chatUuid) {
     for (var i = 0; i < (prefs!.getStringList("chats") ?? []).length; i++) {
-      if (jsonDecode((prefs!.getStringList("chats") ?? [])[i])["uuid"] ==
-          chatUuid) {
+      if (jsonDecode((prefs!.getStringList("chats") ?? [])[i])["uuid"] == chatUuid) {
         List<String> tmp = prefs!.getStringList("chats")!;
         tmp.removeAt(i);
         prefs!.setStringList("chats", tmp);
@@ -605,24 +489,14 @@ void saveChat(String uuid, Function setState) async {
       }
     }
   }
-  if (jsonDecode((prefs!.getStringList("chats") ?? [])[index])["messages"]
-          .length >=
-      1) {
-    if (jsonDecode(jsonDecode((prefs!.getStringList("chats") ?? [])[index])[
-            "messages"])[0]["role"] ==
-        "system") {
-      history.add({
-        "role": "system",
-        "content": jsonDecode(jsonDecode(
-                (prefs!.getStringList("chats") ?? [])[index])["messages"])[0]
-            ["content"]
-      });
+  if (jsonDecode((prefs!.getStringList("chats") ?? [])[index])["messages"].length >= 1) {
+    if (jsonDecode(jsonDecode((prefs!.getStringList("chats") ?? [])[index])["messages"])[0]["role"] == "system") {
+      history.add({"role": "system", "content": jsonDecode(jsonDecode((prefs!.getStringList("chats") ?? [])[index])["messages"])[0]["content"]});
     }
   } else {
     var system = prefs?.getString("system") ?? "You are a helpful assistant";
     if (prefs!.getBool("noMarkdown") ?? false) {
-      system +=
-          " You must not use markdown or any other formatting language in any way!";
+      system += " You must not use markdown or any other formatting language in any way!";
     }
     history.add({"role": "system", "content": system});
   }
@@ -632,8 +506,7 @@ void saveChat(String uuid, Function setState) async {
   tmp.insert(
       0,
       jsonEncode({
-        "title":
-            jsonDecode((prefs!.getStringList("chats") ?? [])[index])["title"],
+        "title": jsonDecode((prefs!.getStringList("chats") ?? [])[index])["title"],
         "uuid": uuid,
         "model": model,
         "messages": jsonEncode(history)
@@ -653,12 +526,10 @@ void loadChat(String uuid, Function setState) {
   messages = [];
   model = null;
   setState(() {});
-  var history = jsonDecode(
-      jsonDecode((prefs!.getStringList("chats") ?? [])[index])["messages"]);
+  var history = jsonDecode(jsonDecode((prefs!.getStringList("chats") ?? [])[index])["messages"]);
   for (var i = 0; i < history.length; i++) {
     if (history[i]["role"] != "system") {
-      if ((history[i] as Map).containsKey("type") &&
-          history[i]["type"] == "image") {
+      if ((history[i] as Map).containsKey("type") && history[i]["type"] == "image") {
         messages.insert(
             0,
             types.ImageMessage(
@@ -669,11 +540,7 @@ void loadChat(String uuid, Function setState) {
                 uri: "data:image/png;base64,${history[i]["content"]}"));
       } else {
         messages.insert(
-            0,
-            types.TextMessage(
-                author: (history[i]["role"] == "user") ? user : assistant,
-                id: const Uuid().v4(),
-                text: history[i]["content"]));
+            0, types.TextMessage(author: (history[i]["role"] == "user") ? user : assistant, id: const Uuid().v4(), text: history[i]["content"]));
       }
     }
   }
@@ -682,10 +549,7 @@ void loadChat(String uuid, Function setState) {
 }
 
 Future<bool> deleteChatDialog(BuildContext context, Function setState,
-    {bool takeAction = true,
-    bool? additionalCondition,
-    String? uuid,
-    bool popSidebar = false}) async {
+    {bool takeAction = true, bool? additionalCondition, String? uuid, bool popSidebar = false}) async {
   additionalCondition ??= true;
   uuid ??= chatUuid;
 
@@ -694,8 +558,7 @@ Future<bool> deleteChatDialog(BuildContext context, Function setState,
     returnValue = true;
     if (takeAction) {
       for (var i = 0; i < (prefs!.getStringList("chats") ?? []).length; i++) {
-        if (jsonDecode((prefs!.getStringList("chats") ?? [])[i])["uuid"] ==
-            uuid) {
+        if (jsonDecode((prefs!.getStringList("chats") ?? [])[i])["uuid"] == uuid) {
           List<String> tmp = prefs!.getStringList("chats")!;
           tmp.removeAt(i);
           prefs!.setStringList("chats", tmp);
@@ -705,9 +568,7 @@ Future<bool> deleteChatDialog(BuildContext context, Function setState,
       if (chatUuid == uuid) {
         messages = [];
         chatUuid = null;
-        if (!desktopLayoutRequired(context) &&
-            Navigator.of(context).canPop() &&
-            popSidebar) {
+        if (!desktopLayoutRequired(context) && Navigator.of(context).canPop() && popSidebar) {
           Navigator.of(context).pop();
         }
       }
@@ -736,16 +597,14 @@ Future<bool> deleteChatDialog(BuildContext context, Function setState,
                         selectionHaptic();
                         Navigator.of(context).pop();
                       },
-                      child: Text(
-                          AppLocalizations.of(context)!.deleteDialogCancel)),
+                      child: Text(AppLocalizations.of(context)!.deleteDialogCancel)),
                   TextButton(
                       onPressed: () {
                         selectionHaptic();
                         Navigator.of(context).pop();
                         delete(context);
                       },
-                      child: Text(
-                          AppLocalizations.of(context)!.deleteDialogDelete))
+                      child: Text(AppLocalizations.of(context)!.deleteDialogDelete))
                 ]);
           });
         });
@@ -776,8 +635,7 @@ Future<String> prompt(BuildContext context,
     String? placeholder,
     bool prefill = true}) async {
   var returnText = (valueIfCanceled != null) ? valueIfCanceled : value;
-  final TextEditingController controller =
-      TextEditingController(text: prefill ? value : "");
+  final TextEditingController controller = TextEditingController(text: prefill ? value : "");
   bool loading = false;
   String? error;
   await showModalBottomSheet(
@@ -817,99 +675,64 @@ Future<String> prompt(BuildContext context,
           return PopScope(
               child: Container(
                   padding: EdgeInsets.only(
-                      left: 16,
-                      right: 16,
-                      top: 16,
-                      bottom: desktopFeature(web: true)
-                          ? 12
-                          : MediaQuery.of(context).viewInsets.bottom),
+                      left: 16, right: 16, top: 16, bottom: desktopFeature(web: true) ? 12 : MediaQuery.of(context).viewInsets.bottom),
                   width: double.infinity,
-                  child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        (title != "")
-                            ? Text(title,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold))
-                            : const SizedBox.shrink(),
-                        (title != "")
-                            ? const Divider()
-                            : const SizedBox.shrink(),
-                        (description != "")
-                            ? Text(description)
-                            : const SizedBox.shrink(),
-                        const SizedBox(height: 8),
-                        TextField(
-                            controller: controller,
-                            autofocus: true,
-                            keyboardType: keyboard,
-                            autocorrect: autocorrect,
-                            autofillHints: autofillHints,
-                            enableSuggestions: enableSuggestions,
-                            maxLines: maxLines,
-                            onSubmitted: (_) => submit(),
-                            decoration: InputDecoration(
-                                border: const OutlineInputBorder(),
-                                hintText: placeholder,
-                                errorText: error,
-                                suffixIcon: IconButton(
+                  child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    (title != "") ? Text(title, style: const TextStyle(fontWeight: FontWeight.bold)) : const SizedBox.shrink(),
+                    (title != "") ? const Divider() : const SizedBox.shrink(),
+                    (description != "") ? Text(description) : const SizedBox.shrink(),
+                    const SizedBox(height: 8),
+                    TextField(
+                        controller: controller,
+                        autofocus: true,
+                        keyboardType: keyboard,
+                        autocorrect: autocorrect,
+                        autofillHints: autofillHints,
+                        enableSuggestions: enableSuggestions,
+                        maxLines: maxLines,
+                        onSubmitted: (_) => submit(),
+                        decoration: InputDecoration(
+                            border: const OutlineInputBorder(),
+                            hintText: placeholder,
+                            errorText: error,
+                            suffixIcon: IconButton(
+                                enableFeedback: false,
+                                tooltip: AppLocalizations.of(context)!.tooltipSave,
+                                onPressed: submit,
+                                icon: const Icon(Icons.save_rounded)),
+                            prefixIcon: (title == AppLocalizations.of(context)!.dialogEnterNewTitle && uuid != null)
+                                ? IconButton(
                                     enableFeedback: false,
-                                    tooltip: AppLocalizations.of(context)!
-                                        .tooltipSave,
-                                    onPressed: submit,
-                                    icon: const Icon(Icons.save_rounded)),
-                                prefixIcon: (title ==
-                                            AppLocalizations.of(context)!
-                                                .dialogEnterNewTitle &&
-                                        uuid != null)
-                                    ? IconButton(
-                                        enableFeedback: false,
-                                        tooltip: AppLocalizations.of(context)!
-                                            .tooltipLetAIThink,
-                                        onPressed: () async {
-                                          selectionHaptic();
-                                          setLocalState(() {
-                                            loading = true;
-                                          });
+                                    tooltip: AppLocalizations.of(context)!.tooltipLetAIThink,
+                                    onPressed: () async {
+                                      selectionHaptic();
+                                      setLocalState(() {
+                                        loading = true;
+                                      });
 
-                                          try {
-                                            var title = await getTitleAi(
-                                                getHistoryString(uuid));
-                                            controller.text = title;
-                                            setLocalState(() {
-                                              loading = false;
-                                            });
-                                          } catch (_) {
-                                            try {
-                                              setLocalState(() {
-                                                loading = false;
-                                              });
+                                      try {
+                                        var title = await getTitleAi(getHistoryString(uuid));
+                                        controller.text = title;
+                                        setLocalState(() {
+                                          loading = false;
+                                        });
+                                      } catch (_) {
+                                        try {
+                                          setLocalState(() {
+                                            loading = false;
+                                          });
+                                          // ignore: use_build_context_synchronously
+                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(
                                               // ignore: use_build_context_synchronously
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                      content: Text(
-                                                          AppLocalizations.of(
-                                                                  // ignore: use_build_context_synchronously
-                                                                  context)!
-                                                              .settingsHostInvalid(
-                                                                  "timeout")),
-                                                      showCloseIcon: true));
-                                            } catch (_) {}
-                                          }
-                                        },
-                                        icon: const Icon(
-                                            Icons.auto_awesome_rounded))
-                                    : prefixIcon)),
-                        SizedBox(
-                            height: 3,
-                            child: (loading)
-                                ? const LinearProgressIndicator()
-                                : const SizedBox.shrink()),
-                        (MediaQuery.of(context).viewInsets.bottom != 0)
-                            ? const SizedBox(height: 16)
-                            : const SizedBox.shrink()
-                      ])));
+                                              context)!.settingsHostInvalid("timeout")), showCloseIcon: true));
+                                        } catch (_) {}
+                                      }
+                                    },
+                                    icon: const Icon(Icons.auto_awesome_rounded))
+                                : prefixIcon)),
+                    SizedBox(height: 3, child: (loading) ? const LinearProgressIndicator() : const SizedBox.shrink()),
+                    (MediaQuery.of(context).viewInsets.bottom != 0) ? const SizedBox(height: 16) : const SizedBox.shrink()
+                  ])));
         });
       });
   return returnText;

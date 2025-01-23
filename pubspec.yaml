@@ -80,9 +80,9 @@ flutter:
   assets:
     - assets/logo512.png
     - assets/logo512error.png
-    - assets/welcome/1.png
-    - assets/welcome/2.png
-    - assets/welcome/3.png
-    - assets/welcome/1dark.png
-    - assets/welcome/2dark.png
-    - assets/welcome/3dark.png
+#    - assets/welcome/1.png
+#    - assets/welcome/2.png
+#    - assets/welcome/3.png
+#    - assets/welcome/1dark.png
+#    - assets/welcome/2dark.png
+#    - assets/welcome/3dark.png

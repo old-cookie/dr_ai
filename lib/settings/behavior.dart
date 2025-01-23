@@ -4,6 +4,9 @@ import '../main.dart';
 import '../worker/haptic.dart';
 import '../worker/desktop.dart';
 import '../screen_settings.dart';
+import '../widgets/screen_settings/toggle.dart';
+import '../widgets/screen_settings/title.dart';
+import '../widgets/screen_settings/button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:bitsdojo_window/bitsdojo_window.dart';
@@ -17,8 +20,7 @@ class ScreenSettingsBehavior extends StatefulWidget {
 }
 
 class _ScreenSettingsBehaviorState extends State<ScreenSettingsBehavior> {
-  final systemInputController = TextEditingController(
-      text: prefs?.getString("system") ?? "You are a helpful assistant");
+  final systemInputController = TextEditingController(text: prefs?.getString("system") ?? "You are a helpful assistant");
 
   @override
   void dispose() {
@@ -32,10 +34,8 @@ class _ScreenSettingsBehaviorState extends State<ScreenSettingsBehavior> {
       color: Theme.of(context).colorScheme.surface,
       child: Scaffold(
           appBar: AppBar(
-              title: Row(children: [
-                Text(AppLocalizations.of(context)!.settingsTitleBehavior),
-                Expanded(child: SizedBox(height: 200, child: MoveWindow()))
-              ]),
+              title: Row(
+                  children: [Text(AppLocalizations.of(context)!.settingsTitleBehavior), Expanded(child: SizedBox(height: 200, child: MoveWindow()))]),
               actions: desktopControlsActions(context)),
           body: Center(
             child: Container(
@@ -50,21 +50,16 @@ class _ScreenSettingsBehaviorState extends State<ScreenSettingsBehavior> {
                           keyboardType: TextInputType.multiline,
                           maxLines: desktopLayoutNotRequired(context) ? 5 : 2,
                           decoration: InputDecoration(
-                              labelText: AppLocalizations.of(context)!
-                                  .settingsSystemMessage,
+                              labelText: AppLocalizations.of(context)!.settingsSystemMessage,
                               alignLabelWithHint: true,
                               hintText: "You are a helpful assistant",
                               suffixIcon: IconButton(
                                 enableFeedback: false,
-                                tooltip:
-                                    AppLocalizations.of(context)!.tooltipSave,
+                                tooltip: AppLocalizations.of(context)!.tooltipSave,
                                 onPressed: () {
                                   selectionHaptic();
                                   prefs?.setString(
-                                      "system",
-                                      (systemInputController.text.isNotEmpty)
-                                          ? systemInputController.text
-                                          : "You are a helpful assistant");
+                                      "system", (systemInputController.text.isNotEmpty) ? systemInputController.text : "You are a helpful assistant");
                                 },
                                 icon: const Icon(Icons.save_rounded),
                               ),
@@ -79,20 +74,14 @@ class _ScreenSettingsBehaviorState extends State<ScreenSettingsBehavior> {
                             prefs!.setBool("useSystem", value);
                             setState(() {});
                           },
-                          icon: const Icon(Icons.info_rounded,
-                              color: Colors.grey),
+                          icon: const Icon(Icons.info_rounded, color: Colors.grey),
                           iconAfterwards: true,
                           onLongTap: () {
                             selectionHaptic();
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text(AppLocalizations.of(context)!
-                                    .settingsUseSystemDescription),
-                                showCloseIcon: true));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(AppLocalizations.of(context)!.settingsUseSystemDescription), showCloseIcon: true));
                           }),
-                      toggle(
-                          context,
-                          AppLocalizations.of(context)!.settingsDisableMarkdown,
-                          (prefs!.getBool("noMarkdown") ?? false), (value) {
+                      toggle(context, AppLocalizations.of(context)!.settingsDisableMarkdown, (prefs!.getBool("noMarkdown") ?? false), (value) {
                         selectionHaptic();
                         prefs!.setBool("noMarkdown", value);
                         setState(() {});
@@ -100,13 +89,8 @@ class _ScreenSettingsBehaviorState extends State<ScreenSettingsBehavior> {
                     ]),
                   ),
                   const SizedBox(height: 8),
-                  button(
-                      AppLocalizations.of(context)!
-                          .settingsBehaviorNotUpdatedForOlderChats,
-                      Icons.info_rounded,
-                      null,
-                      color: Colors.grey
-                          .harmonizeWith(Theme.of(context).colorScheme.primary))
+                  button(AppLocalizations.of(context)!.settingsBehaviorNotUpdatedForOlderChats, Icons.info_rounded, null,
+                      color: Colors.grey.harmonizeWith(Theme.of(context).colorScheme.primary))
                 ])),
           )),
     );

@@ -7,6 +7,7 @@ import '../main.dart';
 ColorScheme? colorSchemeLight;
 ColorScheme? colorSchemeDark;
 
+// 重置系統導航欄顏色
 void resetSystemNavigation(BuildContext context,
     {Color? color,
     Color? statusBarColor,
@@ -20,9 +21,7 @@ void resetSystemNavigation(BuildContext context,
     color ??= themeCurrent(context).colorScheme.surface;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarIconBrightness:
-          (((statusBarColor != null) ? statusBarColor : color)!
-                      .computeLuminance() >
-                  0.179)
+          (((statusBarColor != null) ? statusBarColor : color)!.computeLuminance() > 0.179)
               ? Brightness.dark
               : Brightness.light,
       statusBarColor:
@@ -40,6 +39,7 @@ void resetSystemNavigation(BuildContext context,
   });
 }
 
+// 修改主題
 ThemeData themeModifier(ThemeData theme) {
   return theme.copyWith(
       // https://docs.flutter.dev/platform-integration/android/predictive-back#set-up-your-app
@@ -50,6 +50,7 @@ ThemeData themeModifier(ThemeData theme) {
   ));
 }
 
+// 獲取當前主題
 ThemeData themeCurrent(BuildContext context) {
   if (themeMode() == ThemeMode.system) {
     if (MediaQuery.of(context).platformBrightness == Brightness.light) {
@@ -66,6 +67,7 @@ ThemeData themeCurrent(BuildContext context) {
   }
 }
 
+// 獲取淺色主題
 ThemeData themeLight() {
   if (!(prefs?.getBool("useDeviceTheme") ?? false) ||
       colorSchemeLight == null) {
@@ -85,6 +87,7 @@ ThemeData themeLight() {
   }
 }
 
+// 獲取深色主題
 ThemeData themeDark() {
   if (!(prefs?.getBool("useDeviceTheme") ?? false) || colorSchemeDark == null) {
     return themeModifier(ThemeData.from(
@@ -103,6 +106,7 @@ ThemeData themeDark() {
   }
 }
 
+// 獲取主題模式
 ThemeMode themeMode() {
   return ((prefs?.getString("brightness") ?? "system") == "system")
       ? ThemeMode.system

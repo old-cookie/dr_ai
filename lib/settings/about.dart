@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../screen_settings.dart';
 import '../worker/haptic.dart';
-
+import '../widgets/screen_settings/toggle.dart';
+import '../widgets/screen_settings/title.dart';
+import '../widgets/screen_settings/button.dart';
 import '../worker/desktop.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -30,10 +32,8 @@ class _ScreenSettingsAboutState extends State<ScreenSettingsAbout> {
       color: Theme.of(context).colorScheme.surface,
       child: Scaffold(
           appBar: AppBar(
-              title: Row(children: [
-                Text(AppLocalizations.of(context)!.settingsTitleAbout),
-                Expanded(child: SizedBox(height: 200, child: MoveWindow()))
-              ]),
+              title: Row(
+                  children: [Text(AppLocalizations.of(context)!.settingsTitleAbout), Expanded(child: SizedBox(height: 200, child: MoveWindow()))]),
               actions: desktopControlsActions(context)),
           body: Center(
             child: Container(
@@ -43,28 +43,20 @@ class _ScreenSettingsAboutState extends State<ScreenSettingsAbout> {
                   Expanded(
                     child: ListView(children: [
                       titleDivider(context: context),
-                      button(AppLocalizations.of(context)!.settingsGithub,
-                          SimpleIcons.github, () {
+                      button(AppLocalizations.of(context)!.settingsGithub, SimpleIcons.github, () {
                         selectionHaptic();
-                        launchUrl(
-                            mode: LaunchMode.inAppBrowserView,
-                            Uri.parse("https://github.com/your-repo-url"));
+                        launchUrl(mode: LaunchMode.inAppBrowserView, Uri.parse("https://github.com/your-repo-url"));
                       }),
-                      button(AppLocalizations.of(context)!.settingsReportIssue,
-                          Icons.report_rounded, () {
+                      button(AppLocalizations.of(context)!.settingsReportIssue, Icons.report_rounded, () {
                         selectionHaptic();
-                        launchUrl(
-                            mode: LaunchMode.inAppBrowserView,
-                            Uri.parse("https://github.com/your-repo-url/issues"));
+                        launchUrl(mode: LaunchMode.inAppBrowserView, Uri.parse("https://github.com/your-repo-url/issues"));
                       }),
-                      button(AppLocalizations.of(context)!.settingsLicenses,
-                          Icons.gavel_rounded, () {
+                      button(AppLocalizations.of(context)!.settingsLicenses, Icons.gavel_rounded, () {
                         selectionHaptic();
                         String legal = "Copyright 2024 ";
                         Widget icon = const Padding(
                           padding: EdgeInsets.all(16),
-                          child: ImageIcon(AssetImage("assets/logo512.png"),
-                              size: 48),
+                          child: ImageIcon(AssetImage("assets/logo512.png"), size: 48),
                         );
                         if (desktopFeature()) {
                           showDialog(
@@ -73,18 +65,11 @@ class _ScreenSettingsAboutState extends State<ScreenSettingsAbout> {
                                 return Dialog(
                                     child: ClipRRect(
                                   borderRadius: BorderRadius.circular(28),
-                                  child: LicensePage(
-                                      applicationName: "Dr.AI",
-                                      applicationIcon: icon,
-                                      applicationLegalese: legal),
+                                  child: LicensePage(applicationName: "Dr.AI", applicationIcon: icon, applicationLegalese: legal),
                                 ));
                               });
                         } else {
-                          showLicensePage(
-                              context: context,
-                              applicationName: "Dr.AI",
-                              applicationIcon: icon,
-                              applicationLegalese: legal);
+                          showLicensePage(context: context, applicationName: "Dr.AI", applicationIcon: icon, applicationLegalese: legal);
                         }
                       }),
                       const SizedBox(height: 16)
