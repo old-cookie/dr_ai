@@ -4,7 +4,6 @@ import '../main.dart';
 import '../worker/haptic.dart';
 import '../worker/desktop.dart';
 import '../worker/theme.dart';
-import '../screen_settings.dart';
 import '../widgets/screen_settings/toggle.dart';
 import '../widgets/screen_settings/title.dart';
 import '../widgets/screen_settings/button.dart';

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../screen_settings.dart';
 import '../worker/haptic.dart';
-import '../widgets/screen_settings/toggle.dart';
 import '../widgets/screen_settings/title.dart';
 import '../widgets/screen_settings/button.dart';
 import '../worker/desktop.dart';

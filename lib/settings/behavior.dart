@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import '../main.dart';
 import '../worker/haptic.dart';
 import '../worker/desktop.dart';
-import '../screen_settings.dart';
 import '../widgets/screen_settings/toggle.dart';
-import '../widgets/screen_settings/title.dart';
 import '../widgets/screen_settings/button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
