@@ -1,5 +1,5 @@
 {
+    "java.home": "A:/Java/openjdk-23.0.2",
     "java.configuration.updateBuildConfiguration": "automatic",
-    "cmake.sourceDirectory": "G:/GitHub/dr_ai/windows/flutter",
     "java.compile.nullAnalysis.mode": "automatic"
 }
