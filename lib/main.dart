@@ -95,7 +95,7 @@ void main() {
 
   runApp(const App());
 
-  if (desktopFeature()) {
+  if (isDesktopPlatform()) {
     doWhenWindowReady(() {
       appWindow.minSize = const Size(600, 450);
       appWindow.size = const Size(1200, 650);
@@ -193,10 +193,10 @@ class _MainAppState extends State<MainApp> {
   int tipId = Random().nextInt(5);
 
   List<Widget> sidebar(BuildContext context, Function setState) {
-    var padding = EdgeInsets.only(left: desktopLayoutRequired(context) ? 17 : 12, right: desktopLayoutRequired(context) ? 17 : 12);
+    var padding = EdgeInsets.only(left: isDesktopLayoutRequired(context) ? 17 : 12, right: isDesktopLayoutRequired(context) ? 17 : 12);
     return List.from([
-      (desktopLayoutNotRequired(context) || kIsWeb) ? const SizedBox(height: 8) : const SizedBox.shrink(),
-      desktopLayoutNotRequired(context)
+      (isDesktopLayoutNotRequired(context) || kIsWeb) ? const SizedBox(height: 8) : const SizedBox.shrink(),
+      isDesktopLayoutNotRequired(context)
           ? const SizedBox.shrink()
           : (Padding(
               padding: padding,
@@ -235,9 +235,9 @@ class _MainAppState extends State<MainApp> {
                         ),
                         const SizedBox(width: 16),
                       ]))))),
-      (desktopLayoutNotRequired(context) || (!allowMultipleChats && !allowSettings))
+      (isDesktopLayoutNotRequired(context) || (!allowMultipleChats && !allowSettings))
           ? const SizedBox.shrink()
-          : Divider(color: desktopLayout(context) ? Theme.of(context).colorScheme.onSurface.withAlpha(20) : null),
+          : Divider(color: shouldUseDesktopLayout(context) ? Theme.of(context).colorScheme.onSurface.withAlpha(20) : null),
       (allowMultipleChats)
           ? (Padding(
               padding: padding,
@@ -246,7 +246,7 @@ class _MainAppState extends State<MainApp> {
                   customBorder: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50))),
                   onTap: () {
                     selectionHaptic();
-                    if (!desktopLayout(context)) {
+                    if (!shouldUseDesktopLayout(context)) {
                       Navigator.of(context).pop();
                     }
                     if (!chatAllowed && model != null) return;
@@ -273,7 +273,7 @@ class _MainAppState extends State<MainApp> {
                   customBorder: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50))),
                   onTap: () {
                     selectionHaptic();
-                    if (!desktopLayout(context)) {
+                    if (!shouldUseDesktopLayout(context)) {
                       Navigator.of(context).pop();
                     }
                     setState(() {
@@ -300,7 +300,7 @@ class _MainAppState extends State<MainApp> {
                   customBorder: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50))),
                   onTap: () {
                     selectionHaptic();
-                    if (!desktopLayout(context)) {
+                    if (!shouldUseDesktopLayout(context)) {
                       Navigator.of(context).pop();
                     }
                     pwa.PWAInstall().onAppInstalled = () {
@@ -317,7 +317,7 @@ class _MainAppState extends State<MainApp> {
                       child: Row(children: [
                         Padding(
                             padding: const EdgeInsets.only(left: 16, right: 12),
-                            child: desktopLayoutNotRequired(context)
+                            child: isDesktopLayoutNotRequired(context)
                                 ? const Icon(Icons.install_desktop_rounded)
                                 : const Icon(Icons.install_mobile_rounded)),
                         Expanded(
@@ -327,9 +327,9 @@ class _MainAppState extends State<MainApp> {
                         const SizedBox(width: 16),
                       ])))))
           : const SizedBox.shrink(),
-      (desktopLayoutNotRequired(context) && (!allowMultipleChats && !allowSettings))
+      (isDesktopLayoutNotRequired(context) && (!allowMultipleChats && !allowSettings))
           ? const SizedBox.shrink()
-          : Divider(color: desktopLayout(context) ? Theme.of(context).colorScheme.onSurface.withAlpha(20) : null),
+          : Divider(color: shouldUseDesktopLayout(context) ? Theme.of(context).colorScheme.onSurface.withAlpha(20) : null),
       ((prefs?.getStringList("chats") ?? []).isNotEmpty)
           ? const SizedBox.shrink()
           : (Padding(
@@ -401,7 +401,7 @@ class _MainAppState extends State<MainApp> {
                 customBorder: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50))),
                 onTap: () {
                   selectionHaptic();
-                  if (!desktopLayoutRequired(context)) {
+                  if (!isDesktopLayoutRequired(context)) {
                     Navigator.of(context).pop();
                   }
                   if (!chatAllowed) return;
@@ -418,7 +418,7 @@ class _MainAppState extends State<MainApp> {
                     }
                   });
                 },
-                onLongPress: (desktopFeature() || (kIsWeb && desktopLayoutNotRequired(context)))
+                onLongPress: (isDesktopPlatform() || (kIsWeb && isDesktopLayoutNotRequired(context)))
                     ? null
                     : () async {
                         selectionHaptic();
@@ -453,7 +453,7 @@ class _MainAppState extends State<MainApp> {
                       ),
                       AnimatedSwitcher(
                           duration: const Duration(milliseconds: 100),
-                          child: (((desktopFeature() || (kIsWeb && desktopLayoutNotRequired(context))) &&
+                          child: (((isDesktopPlatform() || (kIsWeb && isDesktopLayoutNotRequired(context))) &&
                                       (hoveredChat == jsonDecode(item)["uuid"])) ||
                                   !allowMultipleChats)
                               ? Padding(
@@ -482,7 +482,7 @@ class _MainAppState extends State<MainApp> {
                                           }
                                           messages = [];
                                           chatUuid = null;
-                                          if (!desktopLayoutRequired(context)) {
+                                          if (!isDesktopLayoutRequired(context)) {
                                             Navigator.of(context).pop();
                                           }
                                           setState(() {});
@@ -493,7 +493,7 @@ class _MainAppState extends State<MainApp> {
                                               additionalCondition: false, uuid: jsonDecode(item)["uuid"], popSidebar: true);
                                           return;
                                         }
-                                        if (!desktopLayoutRequired(context)) {
+                                        if (!isDesktopLayoutRequired(context)) {
                                           Navigator.of(context).pop();
                                         }
                                         showModalBottomSheet(
@@ -557,7 +557,7 @@ class _MainAppState extends State<MainApp> {
                                   ))
                               : const SizedBox(width: 16)),
                     ]))));
-        return (desktopFeature() || (kIsWeb && desktopLayoutNotRequired(context))) || !allowMultipleChats
+        return (isDesktopPlatform() || (kIsWeb && isDesktopLayoutNotRequired(context))) || !allowMultipleChats
             ? child
             : Dismissible(
                 key: Key(jsonDecode(item)["uuid"]),
@@ -581,7 +581,7 @@ class _MainAppState extends State<MainApp> {
                   if (chatUuid == jsonDecode(item)["uuid"]) {
                     messages = [];
                     chatUuid = null;
-                    if (!desktopLayoutRequired(context)) {
+                    if (!isDesktopLayoutRequired(context)) {
                       Navigator.of(context).pop();
                     }
                   }
@@ -688,8 +688,8 @@ class _MainAppState extends State<MainApp> {
           appBar: AppBar(
               titleSpacing: 0,
               title: Row(
-                  children: desktopFeature()
-                      ? desktopLayoutRequired(context)
+                  children: isDesktopPlatform()
+                      ? isDesktopLayoutRequired(context)
                           ? [
                               SizedBox(width: 304, height: 200, child: MoveWindow()),
                               SizedBox(
@@ -714,7 +714,7 @@ class _MainAppState extends State<MainApp> {
                               selector,
                               Expanded(child: SizedBox(height: 200, child: MoveWindow()))
                             ]
-                      : desktopLayoutRequired(context)
+                      : isDesktopLayoutRequired(context)
                           ? [
                               // bottom left tile
                               const SizedBox(width: 304, height: 200),
@@ -735,7 +735,7 @@ class _MainAppState extends State<MainApp> {
                               const Expanded(child: SizedBox(height: 200))
                             ]
                           : [Expanded(child: selector)]),
-              actions: desktopControlsActions(context, [
+              actions: getDesktopControlsActions(context, [
                 const SizedBox(width: 4),
                 allowMultipleChats
                     ? IconButton(
@@ -752,16 +752,16 @@ class _MainAppState extends State<MainApp> {
                   preferredSize: const Size.fromHeight(1),
                   child: (!chatAllowed && model != null)
                       ? const LinearProgressIndicator()
-                      : desktopLayout(context)
+                      : shouldUseDesktopLayout(context)
                           ? AnimatedOpacity(
                               opacity: menuVisible ? 1.0 : 0.0,
                               duration: const Duration(milliseconds: 300),
                               child: Divider(height: 2, color: Theme.of(context).colorScheme.onSurface.withAlpha(20)))
                           : const SizedBox.shrink()),
-              automaticallyImplyLeading: !desktopLayoutRequired(context)),
+              automaticallyImplyLeading: !isDesktopLayoutRequired(context)),
           body: Row(
             children: [
-              desktopLayoutRequired(context)
+              isDesktopLayoutRequired(context)
                   ? SizedBox(
                       width: 304,
                       height: double.infinity,
@@ -779,7 +779,7 @@ class _MainAppState extends State<MainApp> {
                               duration: const Duration(milliseconds: 300),
                               child: ListView(children: sidebar(context, setState)))))
                   : const SizedBox.shrink(),
-              desktopLayout(context)
+              shouldUseDesktopLayout(context)
                   ? AnimatedOpacity(
                       opacity: menuVisible ? 1.0 : 0.0,
                       duration: const Duration(milliseconds: 300),
@@ -898,7 +898,7 @@ class _MainAppState extends State<MainApp> {
                                     ));
                               },
                               imageMessageBuilder: (p0, {required messageWidth}) {
-                                return SizedBox(width: desktopLayout(context) ? 360.0 : 160.0, child: MarkdownBody(data: "![${p0.name}](${p0.uri})"));
+                                return SizedBox(width: shouldUseDesktopLayout(context) ? 360.0 : 160.0, child: MarkdownBody(data: "![${p0.name}](${p0.uri})"));
                               },
                               disableImageGallery: true,
                               emptyState: Center(
@@ -999,7 +999,7 @@ class _MainAppState extends State<MainApp> {
                                       if (!chatAllowed || model == null) {
                                         return;
                                       }
-                                      if (desktopFeature()) {
+                                      if (isDesktopPlatform()) {
                                         FilePicker.platform.pickFiles(type: FileType.image).then((value) async {
                                           if (value == null) return;
                                           if (!multimodal) return;
@@ -1126,7 +1126,7 @@ class _MainAppState extends State<MainApp> {
                                       sendable = p0.trim().isNotEmpty;
                                     });
                                   },
-                                  sendButtonVisibilityMode: desktopFeature()
+                                  sendButtonVisibilityMode: isDesktopPlatform()
                                       ? SendButtonVisibilityMode.always
                                       : (sendable)
                                           ? SendButtonVisibilityMode.always
@@ -1157,9 +1157,9 @@ class _MainAppState extends State<MainApp> {
                                       inputBorderRadius: BorderRadius.circular(32),
                                       inputPadding: const EdgeInsets.all(16),
                                       inputMargin: EdgeInsets.only(
-                                          left: !desktopFeature(web: true) ? 8 : 6,
-                                          right: !desktopFeature(web: true) ? 8 : 6,
-                                          bottom: (MediaQuery.of(context).viewInsets.bottom == 0.0 && !desktopFeature(web: true)) ? 0 : 8),
+                                          left: !isDesktopPlatform(includeWeb: true) ? 8 : 6,
+                                          right: !isDesktopPlatform(includeWeb: true) ? 8 : 6,
+                                          bottom: (MediaQuery.of(context).viewInsets.bottom == 0.0 && !isDesktopPlatform(includeWeb: true)) ? 0 : 8),
                                       messageMaxWidth: (MediaQuery.of(context).size.width >= 1000)
                                           ? (MediaQuery.of(context).size.width >= 1600)
                                               ? (MediaQuery.of(context).size.width >= 2200)
@@ -1191,9 +1191,9 @@ class _MainAppState extends State<MainApp> {
                                       inputBorderRadius: BorderRadius.circular(32),
                                       inputPadding: const EdgeInsets.all(16),
                                       inputMargin: EdgeInsets.only(
-                                          left: !desktopFeature(web: true) ? 8 : 6,
-                                          right: !desktopFeature(web: true) ? 8 : 6,
-                                          bottom: (MediaQuery.of(context).viewInsets.bottom == 0.0 && !desktopFeature(web: true)) ? 0 : 8),
+                                          left: !isDesktopPlatform(includeWeb: true) ? 8 : 6,
+                                          right: !isDesktopPlatform(includeWeb: true) ? 8 : 6,
+                                          bottom: (MediaQuery.of(context).viewInsets.bottom == 0.0 && !isDesktopPlatform(includeWeb: true)) ? 0 : 8),
                                       messageMaxWidth: (MediaQuery.of(context).size.width >= 1000)
                                           ? (MediaQuery.of(context).size.width >= 1600)
                                               ? (MediaQuery.of(context).size.width >= 2200)
@@ -1210,9 +1210,9 @@ class _MainAppState extends State<MainApp> {
             ],
           ),
           drawerEdgeDragWidth:
-              (prefs?.getBool("fixCodeblockScroll") ?? false) ? null : (desktopLayout(context) ? null : MediaQuery.of(context).size.width),
+              (prefs?.getBool("fixCodeblockScroll") ?? false) ? null : (shouldUseDesktopLayout(context) ? null : MediaQuery.of(context).size.width),
           drawer: Builder(builder: (context) {
-            if (desktopLayoutRequired(context) && !settingsOpen) {
+            if (isDesktopLayoutRequired(context) && !settingsOpen) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 if (Navigator.of(context).canPop()) {
                   Navigator.of(context).pop();

@@ -31,54 +31,97 @@ class WidgetBehavior extends StatelessWidget {
     return WindowBorder(
       color: Theme.of(context).colorScheme.surface,
       child: Scaffold(
-          appBar: AppBar(
-              title: Row(
-                  children: [Text(AppLocalizations.of(context)!.settingsTitleBehavior), Expanded(child: SizedBox(height: 200, child: MoveWindow()))]),
-              actions: desktopControlsActions(context)),
-          body: Center(
-            child: Container(
-                constraints: const BoxConstraints(maxWidth: 1000),
-                padding: const EdgeInsets.only(left: 16, right: 16),
-                child: Column(children: [
-                  Expanded(
-                    child: ListView(children: [
+        appBar: AppBar(
+          title: Row(
+            children: [
+              Text(AppLocalizations.of(context)!.settingsTitleBehavior),
+              Expanded(child: SizedBox(height: 200, child: MoveWindow())),
+            ],
+          ),
+          actions: getDesktopControlsActions(context),
+        ),
+        body: Center(
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 1000),
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    children: [
                       const SizedBox(height: 8),
-                      TextField(
-                          controller: systemInputController,
-                          keyboardType: TextInputType.multiline,
-                          maxLines: desktopLayoutNotRequired(context) ? 5 : 2,
-                          decoration: InputDecoration(
-                              labelText: AppLocalizations.of(context)!.settingsSystemMessage,
-                              alignLabelWithHint: true,
-                              hintText: "You are a helpful assistant",
-                              suffixIcon: IconButton(
-                                enableFeedback: false,
-                                tooltip: AppLocalizations.of(context)!.tooltipSave,
-                                onPressed: onSystemMessageSaved,
-                                icon: const Icon(Icons.save_rounded),
-                              ),
-                              border: const OutlineInputBorder())),
+                      _buildSystemMessageInput(context),
                       const SizedBox(height: 16),
-                      widgetToggle(
-                          context,
-                          AppLocalizations.of(context)!.settingsUseSystem,
-                          useSystem,
-                          onUseSystemChanged,
-                          icon: const Icon(Icons.info_rounded, color: Colors.grey),
-                          iconAfterwards: true,
-                          onLongTap: () {
-                            selectionHaptic();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(AppLocalizations.of(context)!.settingsUseSystemDescription), showCloseIcon: true));
-                          }),
-                      widgetToggle(context, AppLocalizations.of(context)!.settingsDisableMarkdown, noMarkdown, onNoMarkdownChanged)
-                    ]),
+                      _buildUseSystemToggle(context),
+                      _buildNoMarkdownToggle(context),
+                    ],
                   ),
-                  const SizedBox(height: 8),
-                  widgetButton(AppLocalizations.of(context)!.settingsBehaviorNotUpdatedForOlderChats, Icons.info_rounded, null,
-                      color: Colors.grey.harmonizeWith(Theme.of(context).colorScheme.primary))
-                ])),
-          )),
+                ),
+                const SizedBox(height: 8),
+                _buildNotUpdatedButton(context),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSystemMessageInput(BuildContext context) {
+    return TextField(
+      controller: systemInputController,
+      keyboardType: TextInputType.multiline,
+      maxLines: isDesktopLayoutNotRequired(context) ? 5 : 2,
+      decoration: InputDecoration(
+        labelText: AppLocalizations.of(context)!.settingsSystemMessage,
+        alignLabelWithHint: true,
+        hintText: "You are a helpful assistant",
+        suffixIcon: IconButton(
+          enableFeedback: false,
+          tooltip: AppLocalizations.of(context)!.tooltipSave,
+          onPressed: onSystemMessageSaved,
+          icon: const Icon(Icons.save_rounded),
+        ),
+        border: const OutlineInputBorder(),
+      ),
+    );
+  }
+
+  Widget _buildUseSystemToggle(BuildContext context) {
+    return widgetToggle(
+      context,
+      AppLocalizations.of(context)!.settingsUseSystem,
+      useSystem,
+      onUseSystemChanged,
+      icon: const Icon(Icons.info_rounded, color: Colors.grey),
+      iconAfterwards: true,
+      onLongTap: () {
+        selectionHaptic();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.settingsUseSystemDescription),
+            showCloseIcon: true,
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildNoMarkdownToggle(BuildContext context) {
+    return widgetToggle(
+      context,
+      AppLocalizations.of(context)!.settingsDisableMarkdown,
+      noMarkdown,
+      onNoMarkdownChanged,
+    );
+  }
+
+  Widget _buildNotUpdatedButton(BuildContext context) {
+    return widgetButton(
+      AppLocalizations.of(context)!.settingsBehaviorNotUpdatedForOlderChats,
+      Icons.info_rounded,
+      null,
+      color: Colors.grey.harmonizeWith(Theme.of(context).colorScheme.primary),
     );
   }
 }

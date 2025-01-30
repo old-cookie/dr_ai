@@ -17,52 +17,77 @@ class WidgetAbout extends StatelessWidget {
     return WindowBorder(
       color: Theme.of(context).colorScheme.surface,
       child: Scaffold(
-          appBar: AppBar(
-              title: Row(
-                  children: [Text(AppLocalizations.of(context)!.settingsTitleAbout), Expanded(child: SizedBox(height: 200, child: MoveWindow()))]),
-              actions: desktopControlsActions(context)),
-          body: Center(
-            child: Container(
-                constraints: const BoxConstraints(maxWidth: 1000),
-                padding: const EdgeInsets.only(left: 16, right: 16),
-                child: Column(children: [
-                  Expanded(
-                    child: ListView(children: [
+        appBar: AppBar(
+          title: Row(
+            children: [
+              Text(AppLocalizations.of(context)!.settingsTitleAbout),
+              Expanded(child: SizedBox(height: 200, child: MoveWindow())),
+            ],
+          ),
+          actions: getDesktopControlsActions(context),
+        ),
+        body: Center(
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 1000),
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    children: [
                       titleDivider(context: context),
-                      widgetButton(AppLocalizations.of(context)!.settingsGithub, SimpleIcons.github, () {
-                        selectionHaptic();
-                        launchUrl(mode: LaunchMode.inAppBrowserView, Uri.parse("https://github.com/old-cookie/dr_ai"));
-                      }),
-                      widgetButton(AppLocalizations.of(context)!.settingsReportIssue, Icons.report_rounded, () {
-                        selectionHaptic();
-                        launchUrl(mode: LaunchMode.inAppBrowserView, Uri.parse("https://github.com/old-cookie/dr_ai/issues"));
-                      }),
-                      widgetButton(AppLocalizations.of(context)!.settingsLicenses, Icons.gavel_rounded, () {
-                        selectionHaptic();
-                        String legal = "Copyright 2024 ";
-                        Widget icon = const Padding(
-                          padding: EdgeInsets.all(16),
-                          child: ImageIcon(AssetImage("assets/logo512.png"), size: 48),
-                        );
-                        if (desktopFeature()) {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return Dialog(
-                                    child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(28),
-                                  child: LicensePage(applicationName: "Dr.AI", applicationIcon: icon, applicationLegalese: legal),
-                                ));
-                              });
-                        } else {
-                          showLicensePage(context: context, applicationName: "Dr.AI", applicationIcon: icon, applicationLegalese: legal);
-                        }
-                      }),
-                      const SizedBox(height: 16)
-                    ]),
-                  )
-                ])),
-          )),
+                      buildButton(
+                        context,
+                        AppLocalizations.of(context)!.settingsGithub,
+                        SimpleIcons.github,
+                        "https://github.com/old-cookie/dr_ai",
+                      ),
+                      buildButton(
+                        context,
+                        AppLocalizations.of(context)!.settingsReportIssue,
+                        Icons.report_rounded,
+                        "https://github.com/old-cookie/dr_ai/issues",
+                      ),
+                      buildLicensesButton(context),
+                      const SizedBox(height: 16),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildButton(BuildContext context, String text, IconData icon, String url) {
+    return widgetButton(
+      text,
+      icon,
+      () {
+        selectionHaptic();
+        launchUrl(mode: LaunchMode.inAppBrowserView, Uri.parse(url));
+      },
+    );
+  }
+
+  Widget buildLicensesButton(BuildContext context) {
+    return widgetButton(
+      AppLocalizations.of(context)!.settingsLicenses,
+      Icons.gavel_rounded,
+      () {
+        selectionHaptic();
+        showLicensePage(
+          context: context,
+          applicationName: "Dr.AI",
+          applicationIcon: const Padding(
+            padding: EdgeInsets.all(16),
+            child: ImageIcon(AssetImage("assets/logo512.png"), size: 48),
+          ),
+          applicationLegalese: "Copyright 2025 ",
+        );
+      },
     );
   }
 }

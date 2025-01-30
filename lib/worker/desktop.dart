@@ -3,38 +3,30 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import '../widgets/widgets_workers/widget_desktop.dart';
-//import 'package:bitsdojo_window/bitsdojo_window.dart';
 
-// 檢查是否為桌面平台（Windows、Linux、MacOS）或 Web 平台
-bool desktopFeature({bool web = false}) {
+bool isDesktopPlatform({bool includeWeb = false}) {
   try {
-    return (Platform.isWindows || Platform.isLinux || Platform.isMacOS || (web ? kIsWeb : false));
+    return Platform.isWindows || Platform.isLinux || Platform.isMacOS || (includeWeb && kIsWeb);
   } catch (_) {
-    return web ? kIsWeb : false;
+    return includeWeb && kIsWeb;
   }
 }
 
-// 檢查是否需要使用桌面佈局
-bool desktopLayout(BuildContext context, {bool web = true, double? value, double valueCap = 1000}) {
-  value ??= MediaQuery.of(context).size.width;
-  return (desktopFeature(web: web) || value >= valueCap);
+bool shouldUseDesktopLayout(BuildContext context, {bool includeWeb = true, double? screenWidth, double widthThreshold = 1000}) {
+  screenWidth ??= MediaQuery.of(context).size.width;
+  return isDesktopPlatform(includeWeb: includeWeb) || screenWidth >= widthThreshold;
 }
 
-// 檢查是否需要強制使用桌面佈局
-bool desktopLayoutRequired(BuildContext context, {bool web = true, double? value, double valueCap = 1000}) {
-  value ??= MediaQuery.of(context).size.width;
-  return (desktopFeature(web: web) && value >= valueCap);
+bool isDesktopLayoutRequired(BuildContext context, {bool includeWeb = true, double? screenWidth, double widthThreshold = 1000}) {
+  screenWidth ??= MediaQuery.of(context).size.width;
+  return isDesktopPlatform(includeWeb: includeWeb) && screenWidth >= widthThreshold;
 }
 
-// 檢查是否不需要使用桌面佈局
-bool desktopLayoutNotRequired(BuildContext context, {bool web = true, double? value, double valueCap = 1000}) {
-  value ??= MediaQuery.of(context).size.width;
-  return (value >= valueCap);
+bool isDesktopLayoutNotRequired(BuildContext context, {bool includeWeb = true, double? screenWidth, double widthThreshold = 1000}) {
+  screenWidth ??= MediaQuery.of(context).size.width;
+  return screenWidth >= widthThreshold;
 }
 
-// 根據 desktopFeature 的結果返回不同的 Widget 列表
-List<Widget>? desktopControlsActions(BuildContext context, [List<Widget>? ifNotAvailable]) {
-  // 如果 desktopFeature 為 true，返回包含 desktopControls 的 Widget 列表
-  // 否則返回 ifNotAvailable
-  return desktopFeature() ? <Widget>[widgetDesktop(context)] : ifNotAvailable;
+List<Widget>? getDesktopControlsActions(BuildContext context, [List<Widget>? alternativeActions]) {
+  return isDesktopPlatform() ? [widgetDesktop(context)] : alternativeActions;
 }

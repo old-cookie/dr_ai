@@ -146,19 +146,19 @@ void setModel(BuildContext context, Function setState) {
           }
         },
         child: Container(
-            width: desktopLayout(context) ? null : double.infinity,
-            padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: desktopLayout(context) ? 16 : 0),
+            width: shouldUseDesktopLayout(context) ? null : double.infinity,
+            padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: shouldUseDesktopLayout(context) ? 16 : 0),
             child: (!loaded)
-                ? SizedBox(width: desktopLayout(context) ? 300 : double.infinity, child: const LinearProgressIndicator())
+                ? SizedBox(width: shouldUseDesktopLayout(context) ? 300 : double.infinity, child: const LinearProgressIndicator())
                 : Column(mainAxisSize: MainAxisSize.min, children: [
                     Container(
-                        width: desktopLayout(context) ? 300 : double.infinity,
+                        width: shouldUseDesktopLayout(context) ? 300 : double.infinity,
                         constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.4),
                         child: SingleChildScrollView(
                             scrollDirection: Axis.vertical,
                             child: Wrap(
-                              spacing: desktopLayout(context) ? 10.0 : 5.0,
-                              runSpacing: desktopFeature(web: true) ? 10.0 : 0.0,
+                              spacing: shouldUseDesktopLayout(context) ? 10.0 : 5.0,
+                              runSpacing: isDesktopPlatform(includeWeb: true) ? 10.0 : 0.0,
                               alignment: WrapAlignment.center,
                               children: List<Widget>.generate(
                                 models.length,
@@ -215,15 +215,15 @@ void setModel(BuildContext context, Function setState) {
                   ])));
   });
 
-  if (desktopLayoutNotRequired(context)) {
+  if (isDesktopLayoutNotRequired(context)) {
     showDialog(
         context: context,
         builder: (context) {
           return Transform.translate(
-            offset: desktopLayoutRequired(context) ? const Offset(289, 0) : const Offset(0, 0),
+            offset: isDesktopLayoutRequired(context) ? const Offset(289, 0) : const Offset(0, 0),
             child: Dialog(
                 surfaceTintColor: (Theme.of(context).brightness == Brightness.dark) ? Colors.grey[800] : null,
-                alignment: desktopLayoutRequired(context) ? Alignment.topLeft : Alignment.topCenter,
+                alignment: isDesktopLayoutRequired(context) ? Alignment.topLeft : Alignment.topCenter,
                 child: content),
           );
         });
@@ -371,7 +371,7 @@ void addModel(BuildContext context, Function setState) async {
               canPop: false,
               child: Container(
                   width: double.infinity,
-                  padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: desktopLayout(context) ? 16 : 0),
+                  padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: shouldUseDesktopLayout(context) ? 16 : 0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -568,7 +568,7 @@ Future<bool> deleteChatDialog(BuildContext context, Function setState,
       if (chatUuid == uuid) {
         messages = [];
         chatUuid = null;
-        if (!desktopLayoutRequired(context) && Navigator.of(context).canPop() && popSidebar) {
+        if (!isDesktopLayoutRequired(context) && Navigator.of(context).canPop() && popSidebar) {
           Navigator.of(context).pop();
         }
       }
@@ -675,7 +675,7 @@ Future<String> prompt(BuildContext context,
           return PopScope(
               child: Container(
                   padding: EdgeInsets.only(
-                      left: 16, right: 16, top: 16, bottom: desktopFeature(web: true) ? 12 : MediaQuery.of(context).viewInsets.bottom),
+                      left: 16, right: 16, top: 16, bottom: isDesktopPlatform(includeWeb: true) ? 12 : MediaQuery.of(context).viewInsets.bottom),
                   width: double.infinity,
                   child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
                     (title != "") ? Text(title, style: const TextStyle(fontWeight: FontWeight.bold)) : const SizedBox.shrink(),

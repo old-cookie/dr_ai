@@ -1,24 +1,30 @@
 import 'package:flutter/services.dart';
 import '../main.dart';
 
+bool _isHapticEnabled() {
+  return prefs?.getBool('enableHaptic') ?? true;
+}
+
+void _performHapticFeedback(VoidCallback hapticFeedback) {
+  if (_isHapticEnabled()) {
+    hapticFeedback();
+  }
+}
+
 void lightHaptic() {
-  if (!(prefs!.getBool("enableHaptic") ?? true)) return;
-  HapticFeedback.lightImpact();
+  _performHapticFeedback(HapticFeedback.lightImpact);
 }
 
 void mediumHaptic() {
-  if (!(prefs!.getBool("enableHaptic") ?? true)) return;
-  HapticFeedback.mediumImpact();
+  _performHapticFeedback(HapticFeedback.mediumImpact);
 }
 
 void heavyHaptic() {
-  if (!(prefs!.getBool("enableHaptic") ?? true)) return;
-  HapticFeedback.heavyImpact();
+  _performHapticFeedback(HapticFeedback.heavyImpact);
 }
 
 void selectionHaptic() {
-  if (!(prefs!.getBool("enableHaptic") ?? true)) return;
-  // same name but for better experience, change behavior
-  HapticFeedback.lightImpact();
+  // Same name but for better experience, change behavior
+  _performHapticFeedback(HapticFeedback.lightImpact);
   // HapticFeedback.selectionClick();
 }
