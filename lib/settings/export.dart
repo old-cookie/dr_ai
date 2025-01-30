@@ -12,7 +12,7 @@ import '../worker/theme.dart';
 //import '../screen_settings.dart';
 //import '../widgets/screen_settings/toggle.dart';
 //import '../widgets/screen_settings/title.dart';
-import '../widgets/screen_settings/button.dart';
+import '../widgets/widgets_units/widget_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:bitsdojo_window/bitsdojo_window.dart';
@@ -46,7 +46,7 @@ class _ScreenSettingsExportState extends State<ScreenSettingsExport> {
                   Expanded(
                     child: ListView(children: [
                       // const SizedBox(height: 8),
-                      button(AppLocalizations.of(context)!.settingsExportChats, Icons.upload_rounded, () async {
+                      widgetButton(AppLocalizations.of(context)!.settingsExportChats, Icons.upload_rounded, () async {
                         selectionHaptic();
                         var name = "ollama-export-${DateFormat('yyyy-MM-dd-H-m-s').format(DateTime.now())}.json";
                         var content = jsonEncode(prefs!.getStringList("chats") ?? []);
@@ -91,7 +91,7 @@ class _ScreenSettingsExportState extends State<ScreenSettingsExport> {
                             showCloseIcon: true));
                       }),
                       allowMultipleChats
-                          ? button(AppLocalizations.of(context)!.settingsImportChats, Icons.download_rounded, () async {
+                          ? widgetButton(AppLocalizations.of(context)!.settingsImportChats, Icons.download_rounded, () async {
                               selectionHaptic();
                               resetSystemNavigation(context,
                                   systemNavigationBarColor: Color.alphaBlend(Colors.black54, Theme.of(context).colorScheme.surface));
@@ -179,9 +179,9 @@ class _ScreenSettingsExportState extends State<ScreenSettingsExport> {
                     ]),
                   ),
                   const SizedBox(height: 8),
-                  button(AppLocalizations.of(context)!.settingsExportInfo, Icons.info_rounded, null,
+                  widgetButton(AppLocalizations.of(context)!.settingsExportInfo, Icons.info_rounded, null,
                       color: Colors.grey.harmonizeWith(Theme.of(context).colorScheme.primary)),
-                  button(AppLocalizations.of(context)!.settingsExportWarning, Icons.warning_rounded, null,
+                  widgetButton(AppLocalizations.of(context)!.settingsExportWarning, Icons.warning_rounded, null,
                       color: Colors.orange.harmonizeWith(Theme.of(context).colorScheme.primary))
                 ])),
           )),

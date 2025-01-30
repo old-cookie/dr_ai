@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../worker/desktop.dart';
 
 // A widget that displays a title with dividers on both sides.
-Widget title(String text, {double top = 16, double bottom = 16}) {
+Widget widgetTitle(String text, {double top = 16, double bottom = 16}) {
   return Padding(
       padding: EdgeInsets.only(left: 8, right: 8, top: top, bottom: bottom),
       child: Row(children: [

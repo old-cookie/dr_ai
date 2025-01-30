@@ -6,9 +6,9 @@ import 'package:dr_ai/worker/theme.dart';
 
 import '../main.dart';
 // import '../worker/haptic.dart';
-import '../widgets/screen_settings/toggle.dart';
-import '../widgets/screen_settings/title.dart';
-import '../widgets/screen_settings/button.dart';
+import '../widgets/widgets_units/widget_toggle.dart';
+import '../widgets/widgets_units/widget_title.dart';
+import '../widgets/widgets_units/widget_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:bitsdojo_window/bitsdojo_window.dart';
@@ -84,7 +84,7 @@ class _ScreenSettingsVoiceState extends State<ScreenSettingsVoice> {
                                 voiceSupported &&
                                 voiceLanguageOptionsAvailable.contains((prefs!.getString("voiceLanguage") ?? "en_US"))))
                         ? const SizedBox.shrink()
-                        : button(
+                        : widgetButton(
                             permissionLoading
                                 ? AppLocalizations.of(context)!.settingsVoicePermissionLoading
                                 : (!voiceLanguageOptionsAvailable.contains((prefs!.getString("voiceLanguage") ?? "en_US")) &&
@@ -125,12 +125,12 @@ class _ScreenSettingsVoiceState extends State<ScreenSettingsVoice> {
                                   content: Text(AppLocalizations.of(context)!.settingsVoiceTtsNotSupportedDescription), showCloseIcon: true));
                             }
                           }),
-                    toggle(context, AppLocalizations.of(context)!.settingsVoiceEnable, (prefs!.getBool("voiceModeEnabled") ?? false), (value) {
+                    widgetToggle(context, AppLocalizations.of(context)!.settingsVoiceEnable, (prefs!.getBool("voiceModeEnabled") ?? false), (value) {
                       selectionHaptic();
                       prefs!.setBool("voiceModeEnabled", value);
                       setState(() {});
                     }, disabled: !voiceSupported),
-                    button(
+                    widgetButton(
                         ((prefs!.getString("voiceLanguage") ?? "") == "" || languageOptions.isEmpty)
                             ? AppLocalizations.of(context)!.settingsVoiceNoLanguage
                             : () {
@@ -235,13 +235,13 @@ class _ScreenSettingsVoiceState extends State<ScreenSettingsVoice> {
                               }));
                     }, disabled: (!voiceSupported || !(prefs!.getBool("voiceModeEnabled") ?? false))),
                     titleDivider(),
-                    toggle(context, AppLocalizations.of(context)!.settingsVoiceLimitLanguage, (prefs!.getBool("voiceLimitLanguage") ?? true),
+                    widgetToggle(context, AppLocalizations.of(context)!.settingsVoiceLimitLanguage, (prefs!.getBool("voiceLimitLanguage") ?? true),
                         (value) {
                       selectionHaptic();
                       prefs!.setBool("voiceLimitLanguage", value);
                       setState(() {});
                     }, disabled: (!voiceSupported || !(prefs!.getBool("voiceModeEnabled") ?? false))),
-                    toggle(context, AppLocalizations.of(context)!.settingsVoicePunctuation, (prefs!.getBool("aiPunctuation") ?? true), (value) {
+                    widgetToggle(context, AppLocalizations.of(context)!.settingsVoicePunctuation, (prefs!.getBool("aiPunctuation") ?? true), (value) {
                       selectionHaptic();
                       prefs!.setBool("aiPunctuation", value);
                       setState(() {});
@@ -249,7 +249,7 @@ class _ScreenSettingsVoiceState extends State<ScreenSettingsVoice> {
                   ]),
                 ),
                 const SizedBox(height: 8),
-                button(AppLocalizations.of(context)!.settingsExperimentalBetaFeature, Icons.warning_rounded, null,
+                widgetButton(AppLocalizations.of(context)!.settingsExperimentalBetaFeature, Icons.warning_rounded, null,
                     color: Colors.orange.harmonizeWith(Theme.of(context).colorScheme.primary), onLongTap: () {
                   selectionHaptic();
                   ScaffoldMessenger.of(context)

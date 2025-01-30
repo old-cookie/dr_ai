@@ -13,8 +13,8 @@ import 'settings/about.dart';
 
 // Add new widget imports
 //import 'widgets/screen_settings/toggle.dart';
-import 'widgets/screen_settings/title.dart';
-import 'widgets/screen_settings/button.dart';
+import 'widgets/widgets_units/widget_title.dart';
+import 'widgets/widgets_units/widget_button.dart';
 
 import 'package:dartx/dartx.dart';
 import 'package:http/http.dart' as http;
@@ -233,16 +233,16 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                                             ))))
                         ]);
                         var column2 = Column(mainAxisSize: MainAxisSize.min, children: [
-                          button(AppLocalizations.of(context)!.settingsTitleBehavior, Icons.psychology_rounded, () {
+                          widgetButton(AppLocalizations.of(context)!.settingsTitleBehavior, Icons.psychology_rounded, () {
                             selectionHaptic();
                             Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenSettingsBehavior()));
                           }, context: context, description: "\n${AppLocalizations.of(context)!.settingsDescriptionBehavior}"),
-                          button(AppLocalizations.of(context)!.settingsTitleInterface, Icons.web_asset_rounded, () {
+                          widgetButton(AppLocalizations.of(context)!.settingsTitleInterface, Icons.web_asset_rounded, () {
                             selectionHaptic();
                             Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenSettingsInterface()));
                           }, context: context, description: "\n${AppLocalizations.of(context)!.settingsDescriptionInterface}"),
                           (!desktopFeature(web: true))
-                              ? button(AppLocalizations.of(context)!.settingsTitleVoice, Icons.headphones_rounded, () {
+                              ? widgetButton(AppLocalizations.of(context)!.settingsTitleVoice, Icons.headphones_rounded, () {
                                   selectionHaptic();
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenSettingsVoice()));
                                 },
@@ -250,12 +250,12 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                                   description: "\n${AppLocalizations.of(context)!.settingsDescriptionVoice}",
                                   badge: AppLocalizations.of(context)!.settingsExperimentalBeta)
                               : const SizedBox.shrink(),
-                          button(AppLocalizations.of(context)!.settingsTitleExport, Icons.share_rounded, () {
+                          widgetButton(AppLocalizations.of(context)!.settingsTitleExport, Icons.share_rounded, () {
                             selectionHaptic();
                             Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenSettingsExport()));
                           }, context: context, description: "\n${AppLocalizations.of(context)!.settingsDescriptionExport}"),
                           Builder(builder: (context) {
-                            return button(AppLocalizations.of(context)!.settingsTitleAbout, Icons.help_rounded, () {
+                            return widgetButton(AppLocalizations.of(context)!.settingsTitleAbout, Icons.help_rounded, () {
                               selectionHaptic();
                               Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenSettingsAbout()));
                             }, context: context, description: "\n${AppLocalizations.of(context)!.settingsDescriptionAbout}", iconBadge: null);
@@ -299,7 +299,7 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                                         ))),
                                         Transform.translate(
                                           offset: const Offset(0, 8),
-                                          child: button(AppLocalizations.of(context)!.settingsSavedAutomatically, Icons.info_rounded, null,
+                                          child: widgetButton(AppLocalizations.of(context)!.settingsSavedAutomatically, Icons.info_rounded, null,
                                               color: Colors.grey.harmonizeWith(Theme.of(context).colorScheme.primary)),
                                         )
                                       ])),
@@ -317,7 +317,7 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                           const SizedBox(height: 8),
                           desktopLayoutNotRequired(context)
                               ? const SizedBox.shrink()
-                              : button(AppLocalizations.of(context)!.settingsSavedAutomatically, Icons.info_rounded, null,
+                              : widgetButton(AppLocalizations.of(context)!.settingsSavedAutomatically, Icons.info_rounded, null,
                                   color: Colors.grey.harmonizeWith(Theme.of(context).colorScheme.primary))
                         ]);
                       })),

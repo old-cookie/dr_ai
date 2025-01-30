@@ -3,7 +3,7 @@ import 'package:transparent_image/transparent_image.dart';
 import '../../worker/desktop.dart';
 import '../../worker/haptic.dart';
 
-Widget button(String text, IconData? icon, void Function()? onPressed,
+Widget widgetButton(String text, IconData? icon, void Function()? onPressed,
     {BuildContext? context,
     Color? color,
     bool disabled = false,

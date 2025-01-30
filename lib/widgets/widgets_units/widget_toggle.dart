@@ -3,7 +3,7 @@ import '../../main.dart';
 import '../../worker/haptic.dart';
 
 // 自定義切換按鈕 Widget
-Widget toggle(BuildContext context, String text, bool value, Function(bool value) onChanged,
+Widget widgetToggle(BuildContext context, String text, bool value, Function(bool value) onChanged,
     {bool disabled = false,
     void Function()? onDisabledTap,
     void Function()? onLongTap,

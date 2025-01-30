@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 
-Widget desktopControls(BuildContext context) {
+Widget widgetDesktop(BuildContext context) {
   return SizedBox(
       height: 200,
       child: WindowTitleBarBox(

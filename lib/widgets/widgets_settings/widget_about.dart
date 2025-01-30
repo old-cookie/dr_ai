@@ -1,28 +1,16 @@
 import 'package:flutter/material.dart';
-
-import '../worker/haptic.dart';
-import '../widgets/widgets_units/widget_title.dart';
-import '../widgets/widgets_units/widget_button.dart';
-import '../worker/desktop.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:simple_icons/simple_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ScreenSettingsAbout extends StatefulWidget {
-  const ScreenSettingsAbout({super.key});
+import '../../worker/haptic.dart';
+import '../../worker/desktop.dart';
+import '../widgets_units/widget_title.dart';
+import '../widgets_units/widget_button.dart';
 
-  @override
-  State<ScreenSettingsAbout> createState() => _ScreenSettingsAboutState();
-}
-
-class _ScreenSettingsAboutState extends State<ScreenSettingsAbout> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsFlutterBinding.ensureInitialized();
-  }
+class WidgetAbout extends StatelessWidget {
+  const WidgetAbout({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +31,11 @@ class _ScreenSettingsAboutState extends State<ScreenSettingsAbout> {
                       titleDivider(context: context),
                       widgetButton(AppLocalizations.of(context)!.settingsGithub, SimpleIcons.github, () {
                         selectionHaptic();
-                        launchUrl(mode: LaunchMode.inAppBrowserView, Uri.parse("https://github.com/your-repo-url"));
+                        launchUrl(mode: LaunchMode.inAppBrowserView, Uri.parse("https://github.com/old-cookie/dr_ai"));
                       }),
                       widgetButton(AppLocalizations.of(context)!.settingsReportIssue, Icons.report_rounded, () {
                         selectionHaptic();
-                        launchUrl(mode: LaunchMode.inAppBrowserView, Uri.parse("https://github.com/your-repo-url/issues"));
+                        launchUrl(mode: LaunchMode.inAppBrowserView, Uri.parse("https://github.com/old-cookie/dr_ai/issues"));
                       }),
                       widgetButton(AppLocalizations.of(context)!.settingsLicenses, Icons.gavel_rounded, () {
                         selectionHaptic();

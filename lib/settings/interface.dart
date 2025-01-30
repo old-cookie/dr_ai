@@ -4,9 +4,9 @@ import '../main.dart';
 import '../worker/haptic.dart';
 import '../worker/desktop.dart';
 import '../worker/theme.dart';
-import '../widgets/screen_settings/toggle.dart';
-import '../widgets/screen_settings/title.dart';
-import '../widgets/screen_settings/button.dart';
+import '../widgets/widgets_units/widget_toggle.dart';
+import '../widgets/widgets_units/widget_title.dart';
+import '../widgets/widgets_units/widget_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:bitsdojo_window/bitsdojo_window.dart';
@@ -60,17 +60,17 @@ class _ScreenSettingsInterfaceState extends State<ScreenSettingsInterface> {
                   Expanded(
                     child: ListView(children: [
                       // const SizedBox(height: 8),
-                      toggle(context, AppLocalizations.of(context)!.settingsShowModelTags, (prefs!.getBool("modelTags") ?? false), (value) {
+                      widgetToggle(context, AppLocalizations.of(context)!.settingsShowModelTags, (prefs!.getBool("modelTags") ?? false), (value) {
                         selectionHaptic();
                         prefs!.setBool("modelTags", value);
                         setState(() {});
                       }),
-                      toggle(context, AppLocalizations.of(context)!.settingsPreloadModels, (prefs!.getBool("preloadModel") ?? true), (value) {
+                      widgetToggle(context, AppLocalizations.of(context)!.settingsPreloadModels, (prefs!.getBool("preloadModel") ?? true), (value) {
                         selectionHaptic();
                         prefs!.setBool("preloadModel", value);
                         setState(() {});
                       }),
-                      toggle(context, AppLocalizations.of(context)!.settingsResetOnModelChange, (prefs!.getBool("resetOnModelSelect") ?? true),
+                      widgetToggle(context, AppLocalizations.of(context)!.settingsResetOnModelChange, (prefs!.getBool("resetOnModelSelect") ?? true),
                           (value) {
                         selectionHaptic();
                         prefs!.setBool("resetOnModelSelect", value);
@@ -98,28 +98,28 @@ class _ScreenSettingsInterfaceState extends State<ScreenSettingsInterface> {
                             });
                           }),
                       const SizedBox(height: 16),
-                      toggle(context, AppLocalizations.of(context)!.settingsGenerateTitles, (prefs!.getBool("generateTitles") ?? true), (value) {
+                      widgetToggle(context, AppLocalizations.of(context)!.settingsGenerateTitles, (prefs!.getBool("generateTitles") ?? true), (value) {
                         selectionHaptic();
                         prefs!.setBool("generateTitles", value);
                         setState(() {});
                       }),
-                      toggle(context, AppLocalizations.of(context)!.settingsEnableEditing, (prefs!.getBool("enableEditing") ?? true), (value) {
+                      widgetToggle(context, AppLocalizations.of(context)!.settingsEnableEditing, (prefs!.getBool("enableEditing") ?? true), (value) {
                         selectionHaptic();
                         prefs!.setBool("enableEditing", value);
                         setState(() {});
                       }),
-                      toggle(context, AppLocalizations.of(context)!.settingsAskBeforeDelete, (prefs!.getBool("askBeforeDeletion") ?? false), (value) {
+                      widgetToggle(context, AppLocalizations.of(context)!.settingsAskBeforeDelete, (prefs!.getBool("askBeforeDeletion") ?? false), (value) {
                         selectionHaptic();
                         prefs!.setBool("askBeforeDeletion", value);
                         setState(() {});
                       }),
-                      toggle(context, AppLocalizations.of(context)!.settingsShowTips, (prefs!.getBool("tips") ?? true), (value) {
+                      widgetToggle(context, AppLocalizations.of(context)!.settingsShowTips, (prefs!.getBool("tips") ?? true), (value) {
                         selectionHaptic();
                         prefs!.setBool("tips", value);
                         setState(() {});
                       }),
                       titleDivider(context: context),
-                      toggle(context, AppLocalizations.of(context)!.settingsKeepModelLoadedAlways,
+                      widgetToggle(context, AppLocalizations.of(context)!.settingsKeepModelLoadedAlways,
                           int.parse(prefs!.getString("keepAlive") ?? "300") == -1, (value) {
                         selectionHaptic();
                         setState(() {
@@ -130,7 +130,7 @@ class _ScreenSettingsInterfaceState extends State<ScreenSettingsInterface> {
                           }
                         });
                       }),
-                      toggle(
+                      widgetToggle(
                           context, AppLocalizations.of(context)!.settingsKeepModelLoadedNever, int.parse(prefs!.getString("keepAlive") ?? "300") == 0,
                           (value) {
                         selectionHaptic();
@@ -142,7 +142,7 @@ class _ScreenSettingsInterfaceState extends State<ScreenSettingsInterface> {
                           }
                         });
                       }),
-                      button(
+                      widgetButton(
                           (int.parse(prefs!.getString("keepAlive") ?? "300") > 0)
                               ? AppLocalizations.of(context)!
                                   .settingsKeepModelLoadedSet((int.parse(prefs!.getString("keepAlive") ?? "300") ~/ 60).toString())
@@ -211,7 +211,7 @@ class _ScreenSettingsInterfaceState extends State<ScreenSettingsInterface> {
                         resetSystemNavigation(context);
                       }),
                       titleDivider(context: context),
-                      button(AppLocalizations.of(context)!.settingsTimeoutMultiplier, Icons.info_rounded, null,
+                      widgetButton(AppLocalizations.of(context)!.settingsTimeoutMultiplier, Icons.info_rounded, null,
                           iconAfterwards: true,
                           context: context,
                           alwaysMobileDescription: true,
@@ -227,7 +227,7 @@ class _ScreenSettingsInterfaceState extends State<ScreenSettingsInterface> {
                             prefs!.setDouble("timeoutMultiplier", value);
                             setState(() {});
                           }),
-                      button(AppLocalizations.of(context)!.settingsTimeoutMultiplierExample, Icons.calculate_rounded, null,
+                      widgetButton(AppLocalizations.of(context)!.settingsTimeoutMultiplierExample, Icons.calculate_rounded, null,
                           onlyDesktopDescription: false,
                           // making it complicated because web is weird and doesn't like to round numbers
                           description: "\n${() {
@@ -242,13 +242,13 @@ class _ScreenSettingsInterfaceState extends State<ScreenSettingsInterface> {
                             }
                           }.call()} x 30s = ${((prefs!.getDouble("timeoutMultiplier") ?? 1) * 30).round()}s ${secondsBeautify((prefs!.getDouble("timeoutMultiplier") ?? 1) * 30)}"),
                       titleDivider(context: context),
-                      toggle(context, AppLocalizations.of(context)!.settingsEnableHapticFeedback, (prefs!.getBool("enableHaptic") ?? true), (value) {
+                      widgetToggle(context, AppLocalizations.of(context)!.settingsEnableHapticFeedback, (prefs!.getBool("enableHaptic") ?? true), (value) {
                         prefs!.setBool("enableHaptic", value);
                         selectionHaptic();
                         setState(() {});
                       }),
                       desktopFeature()
-                          ? toggle(context, AppLocalizations.of(context)!.settingsMaximizeOnStart, (prefs!.getBool("maximizeOnStart") ?? false),
+                          ? widgetToggle(context, AppLocalizations.of(context)!.settingsMaximizeOnStart, (prefs!.getBool("maximizeOnStart") ?? false),
                               (value) {
                               selectionHaptic();
                               prefs!.setBool("maximizeOnStart", value);
@@ -304,7 +304,7 @@ class _ScreenSettingsInterfaceState extends State<ScreenSettingsInterface> {
                               })
                           : const SizedBox.shrink(),
                       titleDivider(),
-                      button(AppLocalizations.of(context)!.settingsTemporaryFixes, Icons.fast_forward_rounded, () {
+                      widgetButton(AppLocalizations.of(context)!.settingsTemporaryFixes, Icons.fast_forward_rounded, () {
                         selectionHaptic();
                         showModalBottomSheet(
                             context: context,
@@ -314,9 +314,9 @@ class _ScreenSettingsInterfaceState extends State<ScreenSettingsInterface> {
                                   width: double.infinity,
                                   padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: desktopLayout(context) ? 16 : 0),
                                   child: Column(mainAxisSize: MainAxisSize.min, children: [
-                                    button(AppLocalizations.of(context)!.settingsTemporaryFixesDescription, Icons.info_rounded, null,
+                                    widgetButton(AppLocalizations.of(context)!.settingsTemporaryFixesDescription, Icons.info_rounded, null,
                                         color: Colors.grey.harmonizeWith(Theme.of(context).colorScheme.primary)),
-                                    button(AppLocalizations.of(context)!.settingsTemporaryFixesInstructions, Icons.warning_rounded, null,
+                                    widgetButton(AppLocalizations.of(context)!.settingsTemporaryFixesInstructions, Icons.warning_rounded, null,
                                         color: Colors.orange.harmonizeWith(Theme.of(context).colorScheme.primary)),
                                     titleDivider(),
                                     // Text(
@@ -324,7 +324,7 @@ class _ScreenSettingsInterfaceState extends State<ScreenSettingsInterface> {
                                     //         .settingsTemporaryFixesNoFixes,
                                     //     style: const TextStyle(
                                     //         color: Colors.grey)),
-                                    toggle(context, "Fixing code block not scrollable", (prefs!.getBool("fixCodeblockScroll") ?? false), (value) {
+                                    widgetToggle(context, "Fixing code block not scrollable", (prefs!.getBool("fixCodeblockScroll") ?? false), (value) {
                                       selectionHaptic();
                                       prefs!.setBool("fixCodeblockScroll", value);
                                       if ((prefs!.getBool("fixCodeblockScroll") ?? false) == false) {
