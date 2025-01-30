@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+
 import '../main.dart';
 
 bool _isHapticEnabled() {

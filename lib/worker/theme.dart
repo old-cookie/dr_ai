@@ -42,7 +42,7 @@ void resetSystemNavigation(BuildContext context,
 // 修改主題
 ThemeData themeModifier(ThemeData theme) {
   return theme.copyWith(
-      // https://docs.flutter.dev/platform-integration/android/predictive-back#set-up-your-app
+
       pageTransitionsTheme: const PageTransitionsTheme(
     builders: <TargetPlatform, PageTransitionsBuilder>{
       TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),

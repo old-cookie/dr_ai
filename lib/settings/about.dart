@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
+
 import '../widgets/widgets_settings/widget_about.dart';
 
 class ScreenSettingsAbout extends StatefulWidget {

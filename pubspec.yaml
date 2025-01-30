@@ -60,9 +60,10 @@ dependencies:
   permission_handler: ^11.3.1
   datetime_loop: ^1.2.0
   dynamic_color: ^1.7.0
-  volume_controller: ^2.0.7
+  volume_controller: ^3.2.0
   universal_html: ^2.2.4
-  pwa_install: ^0.0.5
+  pwa_install: ^0.0.6
+  flutter_chat_types: ^3.6.2
 
 
 dev_dependencies:

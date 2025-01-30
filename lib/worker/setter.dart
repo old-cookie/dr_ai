@@ -3,20 +3,18 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ollama_dart/ollama_dart.dart' as llama;
+import 'package:dartx/dartx.dart';
+import 'package:uuid/uuid.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+
 import 'desktop.dart';
 import 'haptic.dart';
 import '../main.dart';
 import 'sender.dart';
 import 'theme.dart';
-
-import 'package:dartx/dartx.dart';
-import 'package:ollama_dart/ollama_dart.dart' as llama;
-// ignore: depend_on_referenced_packages
-import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-import 'package:uuid/uuid.dart';
-import 'package:http/http.dart' as http;
 
 void setModel(BuildContext context, Function setState) {
   List<String> models = [];

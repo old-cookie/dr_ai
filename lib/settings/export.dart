@@ -1,22 +1,19 @@
 import 'dart:io';
 import 'dart:convert';
-import 'package:universal_html/html.dart' as html;
 
+import 'package:universal_html/html.dart' as html;
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:file_selector/file_selector.dart' as file_selector;
+import 'package:intl/intl.dart';
 
 import '../main.dart';
 import '../worker/haptic.dart';
 import '../worker/desktop.dart';
 import '../worker/theme.dart';
-import '../widgets/widgets_units/widget_button.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import 'package:bitsdojo_window/bitsdojo_window.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:file_selector/file_selector.dart' as file_selector;
-import 'package:intl/intl.dart';
-import 'package:dynamic_color/dynamic_color.dart';
+import '../widgets/widgets_settings/widget_export.dart';
 
 class ScreenSettingsExport extends StatefulWidget {
   const ScreenSettingsExport({super.key});
@@ -176,59 +173,9 @@ class _ScreenSettingsExportState extends State<ScreenSettingsExport> {
 
   @override
   Widget build(BuildContext context) {
-    return WindowBorder(
-      color: Theme.of(context).colorScheme.surface,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Row(
-            children: [
-              Text(AppLocalizations.of(context)!.settingsTitleExport),
-              Expanded(child: SizedBox(height: 200, child: MoveWindow())),
-            ],
-          ),
-          actions: getDesktopControlsActions(context),
-        ),
-        body: Center(
-          child: Container(
-            constraints: const BoxConstraints(maxWidth: 1000),
-            padding: const EdgeInsets.only(left: 16, right: 16),
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    children: [
-                      widgetButton(
-                        AppLocalizations.of(context)!.settingsExportChats,
-                        Icons.upload_rounded,
-                        () => _exportChats(context),
-                      ),
-                      if (allowMultipleChats)
-                        widgetButton(
-                          AppLocalizations.of(context)!.settingsImportChats,
-                          Icons.download_rounded,
-                          () => _importChats(context),
-                        ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 8),
-                widgetButton(
-                  AppLocalizations.of(context)!.settingsExportInfo,
-                  Icons.info_rounded,
-                  null,
-                  color: Colors.grey.harmonizeWith(Theme.of(context).colorScheme.primary),
-                ),
-                widgetButton(
-                  AppLocalizations.of(context)!.settingsExportWarning,
-                  Icons.warning_rounded,
-                  null,
-                  color: Colors.orange.harmonizeWith(Theme.of(context).colorScheme.primary),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return WidgetExport(
+      exportChats: _exportChats,
+      importChats: _importChats,
     );
   }
 }

@@ -2,31 +2,20 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+// ignore: depend_on_referenced_packages
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+// ignore: depend_on_referenced_packages
+import 'package:markdown/markdown.dart' as md;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import 'screen_settings.dart';
-import 'screen_voice.dart';
-
-import 'worker/setter.dart';
-import 'worker/haptic.dart';
-import 'worker/sender.dart';
-import 'worker/desktop.dart';
-import 'worker/theme.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
-// ignore: depend_on_referenced_packages
-import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:uuid/uuid.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-// ignore: depend_on_referenced_packages
-import 'package:markdown/markdown.dart' as md;
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:speech_to_text/speech_to_text.dart';
@@ -34,9 +23,16 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'package:pwa_install/pwa_install.dart' as pwa;
 import 'package:universal_html/html.dart' as html;
+
+import 'screen_settings.dart';
+import 'screen_voice.dart';
+import 'worker/setter.dart';
+import 'worker/haptic.dart';
+import 'worker/sender.dart';
+import 'worker/desktop.dart';
+import 'worker/theme.dart';
 
 // client configuration
 
