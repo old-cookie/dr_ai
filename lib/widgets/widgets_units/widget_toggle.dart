@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../main.dart';
-import '../../worker/haptic.dart';
+import '../../services/haptic.dart';
 
 Widget widgetToggle(
   BuildContext context,

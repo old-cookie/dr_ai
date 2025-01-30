@@ -9,10 +9,10 @@ import 'package:datetime_loop/datetime_loop.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'main.dart';
-import 'worker/sender.dart';
-import 'worker/haptic.dart';
-import 'worker/setter.dart';
-import 'worker/theme.dart';
+import 'services/sender.dart';
+import 'services/haptic.dart';
+import 'services/setter.dart';
+import 'services/theme.dart';
 import 'settings/voice.dart';
 
 class ScreenVoice extends StatefulWidget {

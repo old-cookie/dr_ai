@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../main.dart';
-import '../worker/haptic.dart';
+import '../services/haptic.dart';
 import '../widgets/widgets_settings/widget_behavior.dart';
 
 class ScreenSettingsBehavior extends StatefulWidget {

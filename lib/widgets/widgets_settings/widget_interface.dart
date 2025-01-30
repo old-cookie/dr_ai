@@ -6,9 +6,9 @@ import 'package:duration_picker/duration_picker.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../worker/haptic.dart';
-import '../../worker/desktop.dart';
-import '../../worker/theme.dart';
+import '../../services/haptic.dart';
+import '../../services/desktop.dart';
+import '../../services/theme.dart';
 import '../widgets_units/widget_toggle.dart';
 import '../widgets_units/widget_title.dart';
 import '../widgets_units/widget_button.dart';

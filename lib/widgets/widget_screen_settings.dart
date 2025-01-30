@@ -8,14 +8,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'widgets_units/widget_title.dart';
 import 'widgets_units/widget_button.dart';
 
-import '../worker/haptic.dart';
-import '../worker/setter.dart';
+import '../services/haptic.dart';
+import '../services/setter.dart';
 import '../settings/behavior.dart';
 import '../settings/interface.dart';
 import '../settings/voice.dart';
 import '../settings/export.dart';
 import '../settings/about.dart';
-import '../worker/desktop.dart';
+import '../services/desktop.dart';
 
 
 class WidgetScreenSettings extends StatefulWidget {

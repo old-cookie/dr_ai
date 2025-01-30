@@ -28,11 +28,11 @@ import 'package:universal_html/html.dart' as html;
 
 import 'screen_settings.dart';
 import 'screen_voice.dart';
-import 'worker/setter.dart';
-import 'worker/haptic.dart';
-import 'worker/sender.dart';
-import 'worker/desktop.dart';
-import 'worker/theme.dart';
+import 'services/setter.dart';
+import 'services/haptic.dart';
+import 'services/sender.dart';
+import 'services/desktop.dart';
+import 'services/theme.dart';
 
 // client configuration
 

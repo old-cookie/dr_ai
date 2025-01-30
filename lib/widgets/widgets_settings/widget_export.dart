@@ -4,7 +4,7 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 
 import '../../main.dart';
-import '../../worker/desktop.dart';
+import '../../services/desktop.dart';
 import '../../widgets/widgets_units/widget_button.dart';
 
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-import '../../worker/desktop.dart';
-import '../../worker/haptic.dart';
+import '../../services/desktop.dart';
+import '../../services/haptic.dart';
 
 Widget widgetButton(
   String text,

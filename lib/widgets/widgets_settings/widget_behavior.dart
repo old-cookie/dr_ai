@@ -3,8 +3,8 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../worker/haptic.dart';
-import '../../worker/desktop.dart';
+import '../../services/haptic.dart';
+import '../../services/desktop.dart';
 import '../widgets_units/widget_toggle.dart';
 import '../widgets_units/widget_button.dart';
 

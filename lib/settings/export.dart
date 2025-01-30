@@ -10,9 +10,9 @@ import 'package:file_selector/file_selector.dart' as file_selector;
 import 'package:intl/intl.dart';
 
 import '../main.dart';
-import '../worker/haptic.dart';
-import '../worker/desktop.dart';
-import '../worker/theme.dart';
+import '../services/haptic.dart';
+import '../services/desktop.dart';
+import '../services/theme.dart';
 import '../widgets/widgets_settings/widget_export.dart';
 
 class ScreenSettingsExport extends StatefulWidget {

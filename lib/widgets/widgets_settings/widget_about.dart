@@ -4,8 +4,8 @@ import 'package:simple_icons/simple_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../worker/haptic.dart';
-import '../../worker/desktop.dart';
+import '../../services/haptic.dart';
+import '../../services/desktop.dart';
 import '../widgets_units/widget_title.dart';
 import '../widgets_units/widget_button.dart';
 
