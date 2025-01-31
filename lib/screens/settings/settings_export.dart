@@ -8,9 +8,9 @@ import 'package:file_picker/file_picker.dart';
 import 'package:file_selector/file_selector.dart' as file_selector;
 import 'package:intl/intl.dart';
 import '../../main.dart';
-import '../../services/services_haptic.dart';
-import '../../services/services_desktop.dart';
-import '../../services/services_theme.dart';
+import '../../services/service_haptic.dart';
+import '../../services/service_desktop.dart';
+import '../../services/service_theme.dart';
 import '../../widgets/widgets_screens/widgets_settings/widget_export.dart';
 
 /// 導出設置頁面

@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import '../../../main.dart';
-import '../../../services/services_desktop.dart';
+import '../../../services/service_desktop.dart';
 import '../../widgets_units/widget_button.dart';
 
 /// 匯出設置組件

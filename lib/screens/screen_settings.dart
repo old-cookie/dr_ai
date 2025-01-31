@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../services/services_haptic.dart';
+import '../services/service_haptic.dart';
 import '../widgets/widgets_screens/widget_screen_settings.dart';
 import '../main.dart' show useHost, fixedHost;
 

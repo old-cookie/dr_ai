@@ -12,8 +12,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:pwa_install/pwa_install.dart' as pwa;
 import 'widgets/widgets_screens/widget_main.dart';
-import 'services/services_desktop.dart';
-import 'services/services_theme.dart';
+import 'services/service_desktop.dart';
+import 'services/service_theme.dart';
 
 ///*******************************************
 /// 客戶端配置部分

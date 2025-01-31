@@ -5,10 +5,10 @@ import 'package:ollama_dart/ollama_dart.dart' as llama;
 import 'package:datetime_loop/datetime_loop.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../main.dart';
-import '../services/services_sender.dart';
-import '../services/services_haptic.dart';
-import '../services/services_setter.dart';
-import '../services/services_theme.dart';
+import '../services/service_sender.dart';
+import '../services/service_haptic.dart';
+import '../services/service_setter.dart';
+import '../services/service_theme.dart';
 import 'settings/settings_voice.dart';
 
 /// 語音交互頁面

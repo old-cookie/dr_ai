@@ -19,11 +19,11 @@ import 'package:universal_html/html.dart' as html;
 import '../../screens/screen_settings.dart';
 import '../../screens/screen_voice.dart';
 //import '../../screens/screen_vaccine_record.dart';
-import '../../services/services_setter.dart';
-import '../../services/services_haptic.dart';
-import '../../services/services_sender.dart';
-import '../../services/services_desktop.dart';
-import '../../services/services_theme.dart';
+import '../../services/service_setter.dart';
+import '../../services/service_haptic.dart';
+import '../../services/service_sender.dart';
+import '../../services/service_desktop.dart';
+import '../../services/service_theme.dart';
 import '../../main.dart';
 
 class MainApp extends StatefulWidget {

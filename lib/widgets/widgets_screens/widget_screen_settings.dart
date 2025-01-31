@@ -6,14 +6,14 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets_units/widget_title.dart';
 import '../widgets_units/widget_button.dart';
-import '../../services/services_haptic.dart';
-import '../../services/services_setter.dart';
+import '../../services/service_haptic.dart';
+import '../../services/service_setter.dart';
 import '../../screens/settings/settings_behavior.dart';
 import '../../screens/settings/settings_interface.dart';
 import '../../screens/settings/settings_voice.dart';
 import '../../screens/settings/settings_export.dart';
 import '../../screens/settings/settings_about.dart';
-import '../../services/services_desktop.dart';
+import '../../services/service_desktop.dart';
 
 /// 設置頁面組件
 /// 用於顯示和管理應用程序的各項設置

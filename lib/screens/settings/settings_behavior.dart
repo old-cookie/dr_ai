@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../main.dart';
-import '../../services/services_haptic.dart';
+import '../../services/service_haptic.dart';
 import '../../widgets/widgets_screens/widgets_settings/widget_behavior.dart';
 
 /// 行為設置頁面
