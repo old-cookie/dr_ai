@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
-import '../../services/desktop.dart';
-import '../../services/haptic.dart';
+import '../../services/services_desktop.dart';
+import '../../services/services_haptic.dart';
 
 /// 自定義按鈕組件
 /// 可配置的通用按鈕組件，支持圖標、描述文字、徽章等功能

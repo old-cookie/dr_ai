@@ -6,8 +6,8 @@ import 'package:ollama_dart/ollama_dart.dart' as llama;
 import 'package:dartx/dartx.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-import 'haptic.dart';
-import 'setter.dart';
+import 'services_haptic.dart';
+import 'services_setter.dart';
 import '../main.dart';
 
 /// 提供聊天訊息發送和歷史記錄管理的服務

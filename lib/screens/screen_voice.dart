@@ -5,11 +5,11 @@ import 'package:ollama_dart/ollama_dart.dart' as llama;
 import 'package:datetime_loop/datetime_loop.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../main.dart';
-import '../services/sender.dart';
-import '../services/haptic.dart';
-import '../services/setter.dart';
-import '../services/theme.dart';
-import '../settings/voice.dart';
+import '../services/services_sender.dart';
+import '../services/services_haptic.dart';
+import '../services/services_setter.dart';
+import '../services/services_theme.dart';
+import 'settings/settings_voice.dart';
 
 /// 語音交互頁面
 /// 用於提供語音識別和語音合成功能的界面

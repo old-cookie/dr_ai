@@ -2,11 +2,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../services/haptic.dart';
-import '../widgets/widget_screen_settings.dart';
+import '../services/services_haptic.dart';
+import '../widgets/widgets_screens/widget_screen_settings.dart';
+import '../main.dart' show useHost, fixedHost;
 
 /// 設置頁面
-/// 用於配置應用程序的主要設置，如服務器地址等
+/// 用於配置應用程序的主要設置，包括：
+/// - 服務器主機地址配置
+/// - 主機連接狀態檢查
+/// - 本地設置的加載和保存
 class ScreenSettings extends StatefulWidget {
   const ScreenSettings({super.key});
   @override
@@ -14,28 +18,29 @@ class ScreenSettings extends StatefulWidget {
 }
 
 class _ScreenSettingsState extends State<ScreenSettings> {
+  /// 本地儲存實例
   SharedPreferences? _prefs;
 
-  /// 是否使用固定主機地址
-  bool useHost = true;
-
-  /// 固定主機地址
-  String fixedHost = "http://100.64.50.12:11434";
-
-  /// 當前主機地址
+  /// 當前使用的主機地址
+  /// 用於臨時存儲有效的主機配置
   String? host;
 
   /// 主機地址輸入控制器
+  /// 用於管理輸入框的文本內容
   final hostInputController = TextEditingController();
 
   /// 主機檢查載入狀態
+  /// true 表示正在進行連接測試
   bool hostLoading = false;
 
   /// URL 格式是否無效
+  /// true 表示輸入的 URL 格式不正確
   bool hostInvalidUrl = false;
 
   /// 主機連接是否失敗
+  /// true 表示無法連接到指定主機
   bool hostInvalidHost = false;
+
   @override
   void initState() {
     super.initState();
@@ -44,17 +49,16 @@ class _ScreenSettingsState extends State<ScreenSettings> {
   }
 
   /// 載入本地設置
+  /// 從 SharedPreferences 中讀取已保存的主機設置
+  /// 並根據固定主機模式決定是否進行連接測試
   Future<void> _loadPrefs() async {
     _prefs = await SharedPreferences.getInstance();
     if (!mounted) return;
-    
+
     setState(() {
-      // 初始化主機設置，添加空值檢查
-      useHost = _prefs?.getBool('useHost') ?? false;
-      fixedHost = _prefs?.getString('fixedHost') ?? '';
-      host = _prefs?.getString('host') ?? 'http://localhost:11434';
+      host = _prefs?.getString('host') ?? fixedHost;
       hostInputController.text = useHost ? fixedHost : host!;
-      
+
       if ((Uri.parse(hostInputController.text.trim().replaceAll(RegExp(r'/$'), '').trim()).toString() != fixedHost)) {
         checkHost();
       }
@@ -68,6 +72,11 @@ class _ScreenSettingsState extends State<ScreenSettings> {
   }
 
   /// 檢查主機連接狀態
+  /// 執行以下步驟：
+  /// 1. 格式化並驗證主機地址
+  /// 2. 發送測試請求檢查連接
+  /// 3. 處理響應結果並更新狀態
+  /// 4. 成功時保存新的主機設置
   void checkHost() async {
     setState(() {
       hostLoading = true;
@@ -127,6 +136,9 @@ class _ScreenSettingsState extends State<ScreenSettings> {
     selectionHaptic();
   }
 
+  /// 構建設置頁面
+  /// 在 SharedPreferences 初始化完成前顯示載入指示器
+  /// 初始化完成後顯示完整的設置界面
   @override
   Widget build(BuildContext context) {
     // 如果 prefs 未初始化，顯示載入指示器

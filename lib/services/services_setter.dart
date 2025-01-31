@@ -9,10 +9,10 @@ import 'package:uuid/uuid.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import '../main.dart';
-import 'desktop.dart';
-import 'haptic.dart';
-import 'sender.dart';
-import 'theme.dart';
+import 'services_desktop.dart';
+import 'services_haptic.dart';
+import 'services_sender.dart';
+import 'services_theme.dart';
 
 /// 設置 AI 模型的對話框
 /// 顯示可用模型列表供使用者選擇

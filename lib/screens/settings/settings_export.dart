@@ -7,11 +7,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:file_selector/file_selector.dart' as file_selector;
 import 'package:intl/intl.dart';
-import '../main.dart';
-import '../services/haptic.dart';
-import '../services/desktop.dart';
-import '../services/theme.dart';
-import '../widgets/widgets_settings/widget_export.dart';
+import '../../main.dart';
+import '../../services/services_haptic.dart';
+import '../../services/services_desktop.dart';
+import '../../services/services_theme.dart';
+import '../../widgets/widgets_screens/widgets_settings/widget_export.dart';
 
 /// 導出設置頁面
 /// 用於導出和導入聊天記錄

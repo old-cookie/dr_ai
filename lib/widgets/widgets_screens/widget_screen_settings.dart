@@ -4,19 +4,20 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'widgets_units/widget_title.dart';
-import 'widgets_units/widget_button.dart';
-import '../services/haptic.dart';
-import '../services/setter.dart';
-import '../settings/behavior.dart';
-import '../settings/interface.dart';
-import '../settings/voice.dart';
-import '../settings/export.dart';
-import '../settings/about.dart';
-import '../services/desktop.dart';
+import '../widgets_units/widget_title.dart';
+import '../widgets_units/widget_button.dart';
+import '../../services/services_haptic.dart';
+import '../../services/services_setter.dart';
+import '../../screens/settings/settings_behavior.dart';
+import '../../screens/settings/settings_interface.dart';
+import '../../screens/settings/settings_voice.dart';
+import '../../screens/settings/settings_export.dart';
+import '../../screens/settings/settings_about.dart';
+import '../../services/services_desktop.dart';
 
 /// 設置頁面組件
 /// 用於顯示和管理應用程序的各項設置
+/// 包含主機設置、行為設置、界面設置、語音設置、導出和關於等功能
 class WidgetScreenSettings extends StatefulWidget {
   /// 主機地址輸入控制器
   final TextEditingController hostInputController;
@@ -38,6 +39,15 @@ class WidgetScreenSettings extends StatefulWidget {
 
   /// 本地儲存實例
   final SharedPreferences? prefs;
+
+  /// 構造函數
+  /// @param hostInputController 主機地址輸入控制器
+  /// @param hostLoading 主機檢查載入狀態標記
+  /// @param hostInvalidUrl URL格式是否無效標記
+  /// @param hostInvalidHost 主機連接是否失敗標記
+  /// @param checkHost 檢查主機連接的回調函數
+  /// @param useHost 是否使用固定主機標記
+  /// @param prefs 本地儲存實例
   const WidgetScreenSettings({
     super.key,
     required this.hostInputController,
@@ -53,7 +63,9 @@ class WidgetScreenSettings extends StatefulWidget {
 }
 
 class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
+  /// 本地儲存實例引用
   SharedPreferences? prefs;
+
   /// 圖標大小動畫值
   double iconSize = 1;
 
@@ -69,6 +81,7 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
     _initPrefs();
   }
 
+  /// 初始化本地儲存實例
   Future<void> _initPrefs() async {
     if (widget.prefs != null) {
       prefs = widget.prefs;
@@ -78,6 +91,8 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
     setState(() {});
   }
 
+  /// 構建主頁面佈局
+  /// 包含頂部欄、主體內容和底部提示
   @override
   Widget build(BuildContext context) {
     if (!animatedInitialized) {
@@ -107,7 +122,7 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
               padding: const EdgeInsets.only(left: 16, right: 16),
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  var column1 = buildColumn1(context);
+                  var column1 = widget.useHost ? const SizedBox.shrink() : buildColumn1(context);
                   var column2 = buildColumn2(context);
                   animatedDesktop = isDesktopLayoutNotRequired(context);
                   return Column(
@@ -153,7 +168,7 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
           },
           decoration: InputDecoration(
             labelText: AppLocalizations.of(context)!.settingsHost,
-            hintText: "http://localhost:11434",
+            hintText: "http://dr_ai.com:11434",
             prefixIcon: IconButton(
               enableFeedback: false,
               tooltip: AppLocalizations.of(context)!.tooltipAddHostHeaders,
@@ -240,6 +255,7 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
 
   /// 構建右側欄位
   /// 包含各種設置選項按鈕
+  /// 包括行為設置、界面設置、語音設置、導出和關於等
   Widget buildColumn2(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -413,7 +429,7 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
   Future<void> addHostHeaders() async {
     selectionHaptic();
     if (prefs == null) return;
-    
+
     String tmp = await prompt(
       context,
       placeholder: "{\"Authorization\": \"Bearer ...\"}",

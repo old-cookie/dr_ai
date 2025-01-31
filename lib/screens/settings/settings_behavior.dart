@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../main.dart';
-import '../services/haptic.dart';
-import '../widgets/widgets_settings/widget_behavior.dart';
+import '../../main.dart';
+import '../../services/services_haptic.dart';
+import '../../widgets/widgets_screens/widgets_settings/widget_behavior.dart';
 
 /// 行為設置頁面
 /// 用於配置系統提示詞和 Markdown 相關選項

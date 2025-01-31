@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:dynamic_color/dynamic_color.dart';
-import '../../main.dart';
-import '../../services/desktop.dart';
-import '../../widgets/widgets_units/widget_button.dart';
+import '../../../main.dart';
+import '../../../services/services_desktop.dart';
+import '../../widgets_units/widget_button.dart';
 
 /// 匯出設置組件
 /// 用於提供聊天記錄的匯出和匯入功能界面

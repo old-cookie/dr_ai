@@ -4,12 +4,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:dynamic_color/dynamic_color.dart';
-import 'package:dr_ai/services/haptic.dart';
-import 'package:dr_ai/services/theme.dart';
-import '../main.dart';
-import '../widgets/widgets_units/widget_toggle.dart';
-import '../widgets/widgets_units/widget_title.dart';
-import '../widgets/widgets_units/widget_button.dart';
+import 'package:dr_ai/services/services_haptic.dart';
+import 'package:dr_ai/services/services_theme.dart';
+import '../../main.dart';
+import '../../widgets/widgets_units/widget_toggle.dart';
+import '../../widgets/widgets_units/widget_title.dart';
+import '../../widgets/widgets_units/widget_button.dart';
 
 /// 語音設置頁面
 /// 用於設置語音識別和語音合成相關選項

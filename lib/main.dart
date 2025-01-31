@@ -11,9 +11,9 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:pwa_install/pwa_install.dart' as pwa;
-import 'widgets/widget_main.dart';
-import 'services/desktop.dart';
-import 'services/theme.dart';
+import 'widgets/widgets_screens/widget_main.dart';
+import 'services/services_desktop.dart';
+import 'services/services_theme.dart';
 
 ///*******************************************
 /// 客戶端配置部分
@@ -36,7 +36,7 @@ const String fixedModel = "oldcookie/dr_ai:q5_1";
 
 /// 推薦模型列表
 /// 在模型選擋中會標記星號
-const List<String> recommendedModels = ["gemma", "llama3"];
+const List<String> recommendedModels = ["oldcookie/dr_ai:q5_1", "oldcookie/dr_ai:q8_0"];
 
 /// 是否允許打開設置頁面
 const bool allowSettings = true;

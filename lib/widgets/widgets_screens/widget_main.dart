@@ -16,14 +16,15 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:pwa_install/pwa_install.dart' as pwa;
 import 'package:universal_html/html.dart' as html;
-import '../screens/screen_settings.dart';
-import '../screens/screen_voice.dart';
-import '../services/setter.dart';
-import '../services/haptic.dart';
-import '../services/sender.dart';
-import '../services/desktop.dart';
-import '../services/theme.dart';
-import '../main.dart';
+import '../../screens/screen_settings.dart';
+import '../../screens/screen_voice.dart';
+//import '../../screens/screen_vaccine_record.dart';
+import '../../services/services_setter.dart';
+import '../../services/services_haptic.dart';
+import '../../services/services_sender.dart';
+import '../../services/services_desktop.dart';
+import '../../services/services_theme.dart';
+import '../../main.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
@@ -135,6 +136,41 @@ class _MainAppState extends State<MainApp> {
                         const SizedBox(width: 16),
                       ])))))
           : const SizedBox.shrink(),
+
+///Button nevigate to ScreenVaccineRecord
+/*
+(Padding(
+padding: padding,
+child: InkWell(
+enableFeedback: false,
+customBorder: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50))),
+onTap: () {
+selectionHaptic();
+if (!shouldUseDesktopLayout(context)) {
+Navigator.of(context).pop();
+}
+setState(() {
+///State
+vaccineOpen = true;
+});
+///Navigator
+Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenVaccineRecord()));
+},
+child: Padding(
+padding: const EdgeInsets.only(top: 16, bottom: 16),
+child: Row(children: [
+///Icon
+Padding(padding: const EdgeInsets.only(left: 16, right: 12), child: const Icon(Icons.vaccines_rounded)),
+Expanded(
+///Text
+child: Text(AppLocalizations.of(context)!.optionVaccine,
+softWrap: false, overflow: TextOverflow.fade, style: const TextStyle(fontWeight: FontWeight.w500)),
+),
+const SizedBox(width: 16),
+])))))
+: const SizedBox.shrink(),
+*/
+
       (pwa.PWAInstall().installPromptEnabled && pwa.PWAInstall().launchMode == pwa.LaunchMode.browser)
           ? (Padding(
               padding: padding,

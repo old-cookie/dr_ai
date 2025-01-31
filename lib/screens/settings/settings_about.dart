@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
-import '../widgets/widgets_settings/widget_about.dart';
+import '../../widgets/widgets_screens/widgets_settings/widget_about.dart';
 
 /// 應用程式關於頁面
 /// 展示應用程式相關信息和版權聲明

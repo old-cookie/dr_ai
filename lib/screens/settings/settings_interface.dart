@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../main.dart';
-import '../widgets/widgets_settings/widget_interface.dart';
+import '../../main.dart';
+import '../../widgets/widgets_screens/widgets_settings/widget_interface.dart';
 
 /// 介面設置頁面
 /// 用於配置應用程式的外觀和顯示相關選項

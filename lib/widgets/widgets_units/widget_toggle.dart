@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../main.dart';
-import '../../services/haptic.dart';
+import '../../services/services_haptic.dart';
 
 /// 開關按鈕組件
 /// 用於創建帶有文字說明和開關按鈕的可配置組件
