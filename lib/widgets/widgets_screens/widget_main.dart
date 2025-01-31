@@ -150,19 +150,19 @@ if (!shouldUseDesktopLayout(context)) {
 Navigator.of(context).pop();
 }
 setState(() {
-///State
+///TODO: State(add in main.dart)
 vaccineOpen = true;
 });
-///Navigator
+///TODO: Navigator
 Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenVaccineRecord()));
 },
 child: Padding(
 padding: const EdgeInsets.only(top: 16, bottom: 16),
 child: Row(children: [
-///Icon
+///TODO: Icon(search from material icon)
 Padding(padding: const EdgeInsets.only(left: 16, right: 12), child: const Icon(Icons.vaccines_rounded)),
 Expanded(
-///Text
+///TODO: Text(app_xx.arb)
 child: Text(AppLocalizations.of(context)!.optionVaccine,
 softWrap: false, overflow: TextOverflow.fade, style: const TextStyle(fontWeight: FontWeight.w500)),
 ),
