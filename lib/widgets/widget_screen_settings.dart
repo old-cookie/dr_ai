@@ -4,10 +4,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'widgets_units/widget_title.dart';
 import 'widgets_units/widget_button.dart';
-
 import '../services/haptic.dart';
 import '../services/setter.dart';
 import '../settings/behavior.dart';
@@ -17,16 +15,29 @@ import '../settings/export.dart';
 import '../settings/about.dart';
 import '../services/desktop.dart';
 
-
+/// 設置頁面組件
+/// 用於顯示和管理應用程序的各項設置
 class WidgetScreenSettings extends StatefulWidget {
+  /// 主機地址輸入控制器
   final TextEditingController hostInputController;
-  final bool hostLoading;
-  final bool hostInvalidUrl;
-  final bool hostInvalidHost;
-  final VoidCallback checkHost;
-  final bool useHost;
-  final SharedPreferences prefs;
 
+  /// 主機檢查載入狀態
+  final bool hostLoading;
+
+  /// URL 格式是否無效
+  final bool hostInvalidUrl;
+
+  /// 主機連接是否失敗
+  final bool hostInvalidHost;
+
+  /// 檢查主機連接的回調
+  final VoidCallback checkHost;
+
+  /// 是否使用固定主機
+  final bool useHost;
+
+  /// 本地儲存實例
+  final SharedPreferences? prefs;
   const WidgetScreenSettings({
     super.key,
     required this.hostInputController,
@@ -35,17 +46,37 @@ class WidgetScreenSettings extends StatefulWidget {
     required this.hostInvalidHost,
     required this.checkHost,
     required this.useHost,
-    required this.prefs,
+    this.prefs,
   });
-
   @override
   State<WidgetScreenSettings> createState() => _WidgetScreenSettingsState();
 }
 
 class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
+  SharedPreferences? prefs;
+  /// 圖標大小動畫值
   double iconSize = 1;
+
+  /// 動畫初始化標記
   bool animatedInitialized = false;
+
+  /// 桌面佈局動畫標記
   bool animatedDesktop = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initPrefs();
+  }
+
+  Future<void> _initPrefs() async {
+    if (widget.prefs != null) {
+      prefs = widget.prefs;
+    } else {
+      prefs = await SharedPreferences.getInstance();
+    }
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +84,6 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
       animatedInitialized = true;
       animatedDesktop = isDesktopLayoutNotRequired(context);
     }
-
     return PopScope(
       canPop: !widget.hostLoading,
       onPopInvokedWithResult: (didPop, result) {
@@ -79,9 +109,7 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
                 builder: (context, constraints) {
                   var column1 = buildColumn1(context);
                   var column2 = buildColumn2(context);
-
                   animatedDesktop = isDesktopLayoutNotRequired(context);
-
                   return Column(
                     children: [
                       Expanded(
@@ -102,6 +130,8 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
     );
   }
 
+  /// 構建左側欄位
+  /// 包含主機設置相關內容
   Widget buildColumn1(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -208,6 +238,8 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
     );
   }
 
+  /// 構建右側欄位
+  /// 包含各種設置選項按鈕
   Widget buildColumn2(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -274,6 +306,8 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
     );
   }
 
+  /// 構建桌面端佈局
+  /// 左右雙欄佈局
   Widget buildDesktopLayout(BuildContext context, Widget column1, Widget column2) {
     return Row(
       mainAxisSize: MainAxisSize.max,
@@ -318,6 +352,8 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
     );
   }
 
+  /// 構建移動端佈局
+  /// 單欄滾動佈局
   Widget buildMobileLayout(BuildContext context, Widget column1, Widget column2) {
     return ListView(
       children: [
@@ -336,6 +372,7 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
     );
   }
 
+  /// 構建自動保存提示按鈕
   Widget buildSavedAutomaticallyButton(BuildContext context) {
     return isDesktopLayoutNotRequired(context)
         ? const SizedBox.shrink()
@@ -347,6 +384,10 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
           );
   }
 
+  /// 構建設置選項按鈕
+  /// @param title 按鈕標題
+  /// @param icon 按鈕圖標
+  /// @param onPressed 點擊回調
   Widget buildSettingsButton(
     String title,
     IconData icon,
@@ -367,13 +408,17 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
     );
   }
 
+  /// 添加主機請求頭
+  /// 顯示對話框讓使用者輸入 JSON 格式的請求頭
   Future<void> addHostHeaders() async {
     selectionHaptic();
+    if (prefs == null) return;
+    
     String tmp = await prompt(
       context,
       placeholder: "{\"Authorization\": \"Bearer ...\"}",
       title: AppLocalizations.of(context)!.settingsHostHeaderTitle,
-      value: (widget.prefs.getString("hostHeaders") ?? ""),
+      value: (prefs?.getString("hostHeaders") ?? ""),
       enableSuggestions: false,
       valueIfCanceled: "{}",
       validator: (content) async {
@@ -386,11 +431,12 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
         }
       },
       validatorError: AppLocalizations.of(context)!.settingsHostHeaderInvalid,
-      prefill: !((widget.prefs.getString("hostHeaders") ?? {}) == "{}"),
+      prefill: !((prefs?.getString("hostHeaders") ?? {}) == "{}"),
     );
-    widget.prefs.setString("hostHeaders", tmp);
+    prefs?.setString("hostHeaders", tmp);
   }
 
+  /// 執行圖標動畫效果
   void animateIcon() async {
     if (iconSize != 1) return;
     heavyHaptic();

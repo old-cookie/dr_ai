@@ -5,7 +5,6 @@ import 'package:dartx/dartx.dart';
 import 'package:duration_picker/duration_picker.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../services/haptic.dart';
 import '../../services/desktop.dart';
 import '../../services/theme.dart';
@@ -13,29 +12,31 @@ import '../widgets_units/widget_toggle.dart';
 import '../widgets_units/widget_title.dart';
 import '../widgets_units/widget_button.dart';
 
+/// 介面設置組件
+/// 用於配置應用程序的外觀和行為設置
 class WidgetInterface extends StatefulWidget {
+  /// 本地儲存實例
   final SharedPreferences prefs;
-  final Function? setMainAppState;
 
+  /// 主應用狀態更新函數
+  final Function? setMainAppState;
   const WidgetInterface({
     super.key,
     required this.prefs,
     this.setMainAppState,
   });
-
   @override
   State<WidgetInterface> createState() => _WidgetInterfaceState();
 }
 
+/// 格式化持續時間
+/// 將秒數轉換為分鐘和秒的格式
 String _formatDuration(double seconds) {
   if (seconds <= 60) return "";
-
   final minutes = seconds ~/ 60;
   final remainingSeconds = (seconds % 60).toInt();
-
   String formattedDuration = "${minutes}m";
   if (remainingSeconds > 0) formattedDuration += " ${remainingSeconds}s";
-
   return "($formattedDuration)";
 }
 
@@ -63,18 +64,23 @@ class _WidgetInterfaceState extends State<WidgetInterface> {
                 Expanded(
                   child: ListView(
                     children: [
+                      /// 模型標籤顯示設置
                       _buildToggle(
                         context,
                         AppLocalizations.of(context)!.settingsShowModelTags,
                         widget.prefs.getBool("modelTags") ?? false,
                         (value) => widget.prefs.setBool("modelTags", value),
                       ),
+
+                      /// 模型預加載設置
                       _buildToggle(
                         context,
                         AppLocalizations.of(context)!.settingsPreloadModels,
                         widget.prefs.getBool("preloadModel") ?? true,
                         (value) => widget.prefs.setBool("preloadModel", value),
                       ),
+
+                      /// 模型切換重置設置
                       _buildToggle(
                         context,
                         AppLocalizations.of(context)!.settingsResetOnModelChange,
@@ -82,6 +88,8 @@ class _WidgetInterfaceState extends State<WidgetInterface> {
                         (value) => widget.prefs.setBool("resetOnModelSelect", value),
                       ),
                       titleDivider(bottom: isDesktopLayoutNotRequired(context) ? 38 : 20, context: context),
+
+                      /// 請求類型選擇器
                       _buildRequestTypeSegmentedButton(context),
                       const SizedBox(height: 16),
                       _buildToggle(
@@ -145,8 +153,7 @@ class _WidgetInterfaceState extends State<WidgetInterface> {
                         duration: const Duration(milliseconds: 200),
                         height: isDesktopLayoutNotRequired(context) ? 16 : 8,
                       ),
-                      if (colorSchemeLight != null && colorSchemeDark != null)
-                        _buildThemeSegmentedButton(context),
+                      if (colorSchemeLight != null && colorSchemeDark != null) _buildThemeSegmentedButton(context),
                       titleDivider(),
                       _buildTemporaryFixesButton(context),
                       const SizedBox(height: 16),
@@ -161,6 +168,11 @@ class _WidgetInterfaceState extends State<WidgetInterface> {
     );
   }
 
+  /// 構建開關組件
+  /// @param context 上下文
+  /// @param text 顯示文字
+  /// @param value 當前值
+  /// @param onChanged 值變更回調
   Widget _buildToggle(
     BuildContext context,
     String text,
@@ -179,6 +191,7 @@ class _WidgetInterfaceState extends State<WidgetInterface> {
     );
   }
 
+  /// 構建請求類型選擇器
   Widget _buildRequestTypeSegmentedButton(BuildContext context) {
     return SegmentedButton(
       segments: [
@@ -203,6 +216,7 @@ class _WidgetInterfaceState extends State<WidgetInterface> {
     );
   }
 
+  /// 構建模型保持載入設置按鈕
   Widget _buildKeepModelLoadedButton(BuildContext context) {
     return widgetButton(
       int.parse(widget.prefs.getString("keepAlive") ?? "300") > 0
@@ -224,12 +238,12 @@ class _WidgetInterfaceState extends State<WidgetInterface> {
             );
           },
         );
-        // ignore: use_build_context_synchronously
         resetSystemNavigation(context);
       },
     );
   }
 
+  /// 構建模型保持載入時間選擇對話框
   Widget _buildKeepModelLoadedDialog(BuildContext context) {
     bool loaded = false;
     return StatefulBuilder(
@@ -270,6 +284,7 @@ class _WidgetInterfaceState extends State<WidgetInterface> {
     );
   }
 
+  /// 增加模型保持載入時間
   Future<void> _incrementKeepAlive(void Function(void Function()) setLocalState) async {
     try {
       while (int.parse(widget.prefs.getString("keepAlive")!) < 300) {
@@ -284,6 +299,7 @@ class _WidgetInterfaceState extends State<WidgetInterface> {
     }
   }
 
+  /// 構建超時時間倍數滑塊
   Widget _buildTimeoutMultiplierSlider(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -313,6 +329,7 @@ class _WidgetInterfaceState extends State<WidgetInterface> {
     );
   }
 
+  /// 構建超時時間倍數示例
   Widget _buildTimeoutMultiplierExample(BuildContext context) {
     final multiplier = widget.prefs.getDouble("timeoutMultiplier") ?? 1;
     final formattedMultiplier = multiplier == 10 ? "${multiplier.round()}." : multiplier.toString().padRight(3, "0");
@@ -326,6 +343,7 @@ class _WidgetInterfaceState extends State<WidgetInterface> {
     );
   }
 
+  /// 構建亮度模式選擇器
   Widget _buildBrightnessSegmentedButton(BuildContext context) {
     return SegmentedButton(
       segments: [
@@ -355,6 +373,7 @@ class _WidgetInterfaceState extends State<WidgetInterface> {
     );
   }
 
+  /// 構建主題選擇器
   Widget _buildThemeSegmentedButton(BuildContext context) {
     return SegmentedButton(
       segments: [
@@ -379,6 +398,7 @@ class _WidgetInterfaceState extends State<WidgetInterface> {
     );
   }
 
+  /// 構建臨時修復選項按鈕
   Widget _buildTemporaryFixesButton(BuildContext context) {
     return widgetButton(
       AppLocalizations.of(context)!.settingsTemporaryFixes,

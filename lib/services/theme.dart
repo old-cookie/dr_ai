@@ -1,48 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-
 import '../main.dart';
 
+/// 存儲淺色主題的顏色方案
 ColorScheme? colorSchemeLight;
-ColorScheme? colorSchemeDark;
 
+/// 存儲深色主題的顏色方案
+ColorScheme? colorSchemeDark;
 // 重置系統導航欄顏色
-void resetSystemNavigation(BuildContext context,
-    {Color? color,
-    Color? statusBarColor,
-    Color? systemNavigationBarColor,
-    Duration? delay}) {
+/// 重置系統導航欄和狀態欄的顏色設置
+/// @param context 上下文
+/// @param color 主要顏色
+/// @param statusBarColor 狀態欄顏色
+/// @param systemNavigationBarColor 導航欄顏色
+/// @param delay 延遲時間
+void resetSystemNavigation(BuildContext context, {Color? color, Color? statusBarColor, Color? systemNavigationBarColor, Duration? delay}) {
   WidgetsBinding.instance.addPostFrameCallback((_) async {
     if (delay != null) {
       await Future.delayed(delay);
     }
-    // ignore: use_build_context_synchronously
     color ??= themeCurrent(context).colorScheme.surface;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarIconBrightness:
-          (((statusBarColor != null) ? statusBarColor : color)!.computeLuminance() > 0.179)
-              ? Brightness.dark
-              : Brightness.light,
-      statusBarColor:
-          ((((statusBarColor != null) ? statusBarColor : color)!.value !=
-                      // ignore: use_build_context_synchronously
-                      themeCurrent(context).colorScheme.surface.value) ||
-                  kIsWeb)
-              ? (statusBarColor != null)
-                  ? statusBarColor
-                  : color
-              : Colors.transparent,
-      systemNavigationBarColor:
-          (systemNavigationBarColor != null) ? systemNavigationBarColor : color,
+      statusBarIconBrightness: (((statusBarColor != null) ? statusBarColor : color)!.computeLuminance() > 0.179) ? Brightness.dark : Brightness.light,
+      statusBarColor: ((((statusBarColor != null) ? statusBarColor : color)!.value != themeCurrent(context).colorScheme.surface.value) || kIsWeb)
+          ? (statusBarColor != null)
+              ? statusBarColor
+              : color
+          : Colors.transparent,
+      systemNavigationBarColor: (systemNavigationBarColor != null) ? systemNavigationBarColor : color,
     ));
   });
 }
 
 // 修改主題
+/// 修改預設主題設置
+/// @param theme 要修改的主題
 ThemeData themeModifier(ThemeData theme) {
   return theme.copyWith(
-
       pageTransitionsTheme: const PageTransitionsTheme(
     builders: <TargetPlatform, PageTransitionsBuilder>{
       TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
@@ -51,6 +46,9 @@ ThemeData themeModifier(ThemeData theme) {
 }
 
 // 獲取當前主題
+/// 獲取當前使用的主題
+/// 根據系統設置或用戶偏好返回對應主題
+/// @param context 上下文
 ThemeData themeCurrent(BuildContext context) {
   if (themeMode() == ThemeMode.system) {
     if (MediaQuery.of(context).platformBrightness == Brightness.light) {
@@ -68,9 +66,10 @@ ThemeData themeCurrent(BuildContext context) {
 }
 
 // 獲取淺色主題
+/// 獲取淺色主題設置
+/// 如果未使用設備主題,則返回預設淺色主題
 ThemeData themeLight() {
-  if (!(prefs?.getBool("useDeviceTheme") ?? false) ||
-      colorSchemeLight == null) {
+  if (!(prefs?.getBool("useDeviceTheme") ?? false) || colorSchemeLight == null) {
     return themeModifier(ThemeData.from(
         colorScheme: const ColorScheme(
             brightness: Brightness.light,
@@ -88,6 +87,8 @@ ThemeData themeLight() {
 }
 
 // 獲取深色主題
+/// 獲取深色主題設置
+/// 如果未使用設備主題,則返回預設深色主題
 ThemeData themeDark() {
   if (!(prefs?.getBool("useDeviceTheme") ?? false) || colorSchemeDark == null) {
     return themeModifier(ThemeData.from(
@@ -107,10 +108,10 @@ ThemeData themeDark() {
 }
 
 // 獲取主題模式
+/// 獲取當前主題模式
+/// 返回系統、淺色或深色模式
 ThemeMode themeMode() {
   return ((prefs?.getString("brightness") ?? "system") == "system")
       ? ThemeMode.system
-      : ((prefs!.getString("brightness") == "dark")
-          ? ThemeMode.dark
-          : ThemeMode.light);
+      : ((prefs!.getString("brightness") == "dark") ? ThemeMode.dark : ThemeMode.light);
 }

@@ -3,29 +3,34 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:simple_icons/simple_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../../services/haptic.dart';
 import '../../services/desktop.dart';
 import '../widgets_units/widget_title.dart';
 import '../widgets_units/widget_button.dart';
 
+/// 關於頁面組件
+/// 用於顯示應用程式相關信息、外部鏈接和許可證
 class WidgetAbout extends StatelessWidget {
   const WidgetAbout({super.key});
-
   @override
   Widget build(BuildContext context) {
     return WindowBorder(
       color: Theme.of(context).colorScheme.surface,
       child: Scaffold(
+        /// 標題欄
         appBar: AppBar(
           title: Row(
             children: [
               Text(AppLocalizations.of(context)!.settingsTitleAbout),
+
+              /// 可拖動區域(僅桌面端)
               Expanded(child: SizedBox(height: 200, child: MoveWindow())),
             ],
           ),
           actions: getDesktopControlsActions(context),
         ),
+
+        /// 主體內容
         body: Center(
           child: Container(
             constraints: const BoxConstraints(maxWidth: 1000),
@@ -36,18 +41,24 @@ class WidgetAbout extends StatelessWidget {
                   child: ListView(
                     children: [
                       titleDivider(context: context),
+
+                      /// GitHub 倉庫鏈接
                       buildButton(
                         context,
                         AppLocalizations.of(context)!.settingsGithub,
                         SimpleIcons.github,
                         "https://github.com/old-cookie/dr_ai",
                       ),
+
+                      /// 問題報告鏈接
                       buildButton(
                         context,
                         AppLocalizations.of(context)!.settingsReportIssue,
                         Icons.report_rounded,
                         "https://github.com/old-cookie/dr_ai/issues",
                       ),
+
+                      /// 許可證信息按鈕
                       buildLicensesButton(context),
                       const SizedBox(height: 16),
                     ],
@@ -61,6 +72,11 @@ class WidgetAbout extends StatelessWidget {
     );
   }
 
+  /// 構建外部鏈接按鈕
+  /// @param context 上下文
+  /// @param text 按鈕文字
+  /// @param icon 按鈕圖標
+  /// @param url 目標URL
   Widget buildButton(BuildContext context, String text, IconData icon, String url) {
     return widgetButton(
       text,
@@ -72,6 +88,8 @@ class WidgetAbout extends StatelessWidget {
     );
   }
 
+  /// 構建許可證信息按鈕
+  /// 顯示應用程式的許可證頁面
   Widget buildLicensesButton(BuildContext context) {
     return widgetButton(
       AppLocalizations.of(context)!.settingsLicenses,

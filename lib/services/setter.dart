@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -9,26 +8,30 @@ import 'package:dartx/dartx.dart';
 import 'package:uuid/uuid.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-
+import '../main.dart';
 import 'desktop.dart';
 import 'haptic.dart';
-import '../main.dart';
 import 'sender.dart';
 import 'theme.dart';
 
+/// 設置 AI 模型的對話框
+/// 顯示可用模型列表供使用者選擇
 void setModel(BuildContext context, Function setState) {
-  List<String> models = [];
-  List<String> modelsReal = [];
-  List<bool> modal = [];
-  int usedIndex = -1;
-  int oldIndex = -1;
-  int addIndex = -1;
-  bool loaded = false;
+  List<String> models = []; // 存儲模型名稱
+  List<String> modelsReal = []; // 存儲完整模型標識符
+  List<bool> modal = []; // 存儲模型是否支援多模態
+  int usedIndex = -1; // 當前選中的模型索引
+  int oldIndex = -1; // 上一個選中的模型索引
+  int addIndex = -1; // "添加模型"選項的索引
+  bool loaded = false; // 是否已加載模型列表
   Function? setModalState;
   desktopTitleVisible = false;
   setState(() {});
+
+  /// 載入模型列表
   void load() async {
     try {
+      // 從 API 獲取模型列表
       var list =
           await llama.OllamaClient(headers: (jsonDecode(prefs!.getString("hostHeaders") ?? "{}") as Map).cast<String, String>(), baseUrl: "$host/api")
               .listModels()
@@ -39,9 +42,7 @@ void setModel(BuildContext context, Function setState) {
         modal.add((list.models![i].details!.families ?? []).contains("clip"));
       }
       addIndex = models.length;
-      // ignore: use_build_context_synchronously
       models.add(AppLocalizations.of(context)!.modelDialogAddModel);
-      // ignore: use_build_context_synchronously
       modelsReal.add(AppLocalizations.of(context)!.modelDialogAddModel);
       modal.add(false);
       for (var i = 0; i < modelsReal.length; i++) {
@@ -67,20 +68,15 @@ void setModel(BuildContext context, Function setState) {
       setState(() {
         desktopTitleVisible = true;
       });
-      // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
-      // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(
-          // ignore: use_build_context_synchronously
-          AppLocalizations.of(context)!.settingsHostInvalid("timeout")), showCloseIcon: true));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.settingsHostInvalid("timeout")), showCloseIcon: true));
     }
   }
 
   if (useModel) return;
   selectionHaptic();
-
   load();
-
   var content = StatefulBuilder(builder: (context, setLocalState) {
     setModalState = setLocalState;
     return PopScope(
@@ -105,11 +101,9 @@ void setModel(BuildContext context, Function setState) {
             prefs?.remove("model");
           }
           prefs?.setBool("multimodal", multimodal);
-
           if (model != null && preload && int.parse(prefs!.getString("keepAlive") ?? "300") != 0 && (prefs!.getBool("preloadModel") ?? true)) {
             setLocalState(() {});
             try {
-              // don't use llama client, package doesn't support just loading without content
               await http
                   .post(
                     Uri.parse("$host/api/generate"),
@@ -119,11 +113,8 @@ void setModel(BuildContext context, Function setState) {
                   )
                   .timeout(Duration(seconds: (10.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0)).round()));
             } catch (_) {
-              // ignore: use_build_context_synchronously
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  // ignore: use_build_context_synchronously
-                  content: Text(AppLocalizations.of(context)!.settingsHostInvalid("timeout")),
-                  showCloseIcon: true));
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.settingsHostInvalid("timeout")), showCloseIcon: true));
               setState(() {
                 model = null;
                 chatAllowed = false;
@@ -132,7 +123,6 @@ void setModel(BuildContext context, Function setState) {
             setState(() {
               desktopTitleVisible = true;
             });
-            // ignore: use_build_context_synchronously
             Navigator.of(context).pop();
           } else {
             setState(() {
@@ -212,7 +202,6 @@ void setModel(BuildContext context, Function setState) {
                             )))
                   ])));
   });
-
   if (isDesktopLayoutNotRequired(context)) {
     showDialog(
         context: context,
@@ -230,6 +219,8 @@ void setModel(BuildContext context, Function setState) {
   }
 }
 
+/// 添加新的 AI 模型
+/// 顯示輸入對話框讓使用者輸入模型名稱並下載
 void addModel(BuildContext context, Function setState) async {
   var client = llama.OllamaClient(headers: (jsonDecode(prefs!.getString("hostHeaders") ?? "{}") as Map).cast<String, String>(), baseUrl: "$host/api");
   bool canceled = false;
@@ -401,7 +392,6 @@ void addModel(BuildContext context, Function setState) async {
       }
       setDialogState!(() {});
     }
-    // done downloading
     if (prefs!.getBool("resetOnModelSelect") ?? true && allowMultipleChats) {
       messages = [];
       chatUuid = null;
@@ -451,6 +441,8 @@ void addModel(BuildContext context, Function setState) async {
   }
 }
 
+/// 儲存當前聊天記錄
+/// @param uuid 聊天的唯一標識符
 void saveChat(String uuid, Function setState) async {
   int index = -1;
   for (var i = 0; i < (prefs!.getStringList("chats") ?? []).length; i++) {
@@ -513,6 +505,8 @@ void saveChat(String uuid, Function setState) async {
   setState(() {});
 }
 
+/// 載入指定的聊天記錄
+/// @param uuid 要載入的聊天記錄的唯一標識符
 void loadChat(String uuid, Function setState) {
   int index = -1;
   for (var i = 0; i < (prefs!.getStringList("chats") ?? []).length; i++) {
@@ -546,11 +540,17 @@ void loadChat(String uuid, Function setState) {
   setState(() {});
 }
 
+/// 刪除聊天記錄的確認對話框
+/// @param context 上下文
+/// @param setState 狀態更新函數
+/// @param takeAction 是否執行刪除操作
+/// @param additionalCondition 額外條件
+/// @param uuid 要刪除的聊天記錄的唯一標識符
+/// @param popSidebar 是否關閉側邊欄
 Future<bool> deleteChatDialog(BuildContext context, Function setState,
     {bool takeAction = true, bool? additionalCondition, String? uuid, bool popSidebar = false}) async {
   additionalCondition ??= true;
   uuid ??= chatUuid;
-
   bool returnValue = false;
   void delete(BuildContext context) {
     returnValue = true;
@@ -574,12 +574,7 @@ Future<bool> deleteChatDialog(BuildContext context, Function setState,
   }
 
   if ((prefs!.getBool("askBeforeDeletion") ?? false) && additionalCondition) {
-    // ignore: use_build_context_synchronously
-    resetSystemNavigation(context,
-        systemNavigationBarColor: Color.alphaBlend(
-            Colors.black54,
-            // ignore: use_build_context_synchronously
-            Theme.of(context).colorScheme.surface));
+    resetSystemNavigation(context, systemNavigationBarColor: Color.alphaBlend(Colors.black54, Theme.of(context).colorScheme.surface));
     await showDialog(
         context: context,
         builder: (context) {
@@ -606,7 +601,6 @@ Future<bool> deleteChatDialog(BuildContext context, Function setState,
                 ]);
           });
         });
-    // ignore: use_build_context_synchronously
     resetSystemNavigation(context);
   } else {
     delete(context);
@@ -615,6 +609,13 @@ Future<bool> deleteChatDialog(BuildContext context, Function setState,
   return returnValue;
 }
 
+/// 通用輸入對話框
+/// @param context 上下文
+/// @param description 描述文字
+/// @param value 預設值
+/// @param title 標題
+/// @param keyboard 鍵盤類型
+/// @param validator 輸入驗證函數
 Future<String> prompt(BuildContext context,
     {String description = "",
     String value = "",
@@ -666,7 +667,6 @@ Future<String> prompt(BuildContext context,
               }
             }
             returnText = controller.text;
-            // ignore: use_build_context_synchronously
             Navigator.of(context).pop();
           }
 
@@ -707,7 +707,6 @@ Future<String> prompt(BuildContext context,
                                       setLocalState(() {
                                         loading = true;
                                       });
-
                                       try {
                                         var title = await getTitleAi(getHistoryString(uuid));
                                         controller.text = title;
@@ -719,10 +718,8 @@ Future<String> prompt(BuildContext context,
                                           setLocalState(() {
                                             loading = false;
                                           });
-                                          // ignore: use_build_context_synchronously
-                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(
-                                              // ignore: use_build_context_synchronously
-                                              context)!.settingsHostInvalid("timeout")), showCloseIcon: true));
+                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                              content: Text(AppLocalizations.of(context)!.settingsHostInvalid("timeout")), showCloseIcon: true));
                                         } catch (_) {}
                                       }
                                     },
