@@ -72,13 +72,13 @@ final assistant = types.User(id: const Uuid().v4());
 
 /// UI 狀態控制
 bool settingsOpen = false;
+bool vaccineOpen = false;
 bool desktopTitleVisible = true;
 bool logoVisible = true;
 bool menuVisible = false;
 bool sendable = false;
 bool updateDetectedOnStart = false;
 double sidebarIconSize = 1;
-bool vaccineOpen = false;
 
 /// 語音相關功能
 SpeechToText speech = SpeechToText();
