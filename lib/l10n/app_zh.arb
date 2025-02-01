@@ -146,5 +146,6 @@
   "settingsGithub": "GitHub",
   "settingsReportIssue": "問題反饋",
   "settingsLicenses": "開源許可證",
+  "optionVaccine": "疫苗記錄",
   "settingsVersion": "Dr.AI v{version}"
 }

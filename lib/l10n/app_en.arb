@@ -764,6 +764,11 @@
         "description": "Text displayed as description for licenses button",
         "context": "Visible in the settings view"
     },
+    "optionVaccine": "Vaccine Record",
+    "@optionVaccine": {
+        "description": "Text displayed for Vaccine Record",
+        "context": "Visible in the side bar"
+    },
     "settingsVersion": "Dr.AI v{version}",
     "@settingsVersion": {
         "description": "Text displayed as description for version",

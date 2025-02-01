@@ -40,6 +40,7 @@ const List<String> recommendedModels = ["oldcookie/dr_ai:q5_1", "oldcookie/dr_ai
 
 /// 是否允許打開設置頁面
 const bool allowSettings = true;
+const bool allowVaccine = true;
 
 /// 是否允許多個聊天對話
 const bool allowMultipleChats = true;
@@ -77,6 +78,7 @@ bool menuVisible = false;
 bool sendable = false;
 bool updateDetectedOnStart = false;
 double sidebarIconSize = 1;
+bool vaccineOpen = false;
 
 /// 語音相關功能
 SpeechToText speech = SpeechToText();
