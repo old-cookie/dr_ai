@@ -25,6 +25,7 @@ const bool useHost = true;
 
 /// Ollama 服務器地址，必須能從客戶端訪問
 /// 不需要包含結尾的斜線
+//const String fixedHost = "http://192.168.50.12:11434";
 const String fixedHost = "http://100.64.50.12:11434";
 
 /// 是否使用固定模型
