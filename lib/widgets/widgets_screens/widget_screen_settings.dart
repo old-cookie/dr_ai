@@ -280,8 +280,9 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
           context: context,
           description: "\n${AppLocalizations.of(context)!.settingsDescriptionInterface}",
         ),
-        (!isDesktopPlatform(includeWeb: true))
-            ? buildSettingsButton(
+        //(!isDesktopPlatform(includeWeb: true))
+            //?
+        buildSettingsButton(
                 AppLocalizations.of(context)!.settingsTitleVoice,
                 Icons.headphones_rounded,
                 () {
@@ -292,7 +293,8 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
                 description: "\n${AppLocalizations.of(context)!.settingsDescriptionVoice}",
                 badge: AppLocalizations.of(context)!.settingsExperimentalBeta,
               )
-            : const SizedBox.shrink(),
+            //: const SizedBox.shrink()
+        ,
         buildSettingsButton(
           AppLocalizations.of(context)!.settingsTitleExport,
           Icons.share_rounded,

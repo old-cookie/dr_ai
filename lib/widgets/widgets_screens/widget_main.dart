@@ -48,7 +48,6 @@ class _MainAppState extends State<MainApp> {
                   enableFeedback: false,
                   customBorder: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50))),
                   onTap: () async {
-                    // ester egg? gimmick? not sure if it should be kept
                     return;
                     // ignore: dead_code
                     if (sidebarIconSize != 1) return;
