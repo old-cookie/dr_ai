@@ -20,9 +20,9 @@ List<String> images = [];
 /// [addToSystem] 可選的系統提示附加訊息
 /// 返回: 格式化後的歷史訊息列表
 Future<List<llama.Message>> getHistory([String? addToSystem]) async {
-  var system = prefs?.getString("system") ?? "You are a helpful assistant";
+  var system = prefs?.getString("system") ?? "您是一位提供一般醫療資訊和指導的人工智慧醫生。您可以提供事實，提出常見病症的可能原因和治療方法，並提倡健康的習慣。然而，您無法取代專業的醫療建議、診斷或治療。始終提醒使用者諮詢合格的醫療保健提供者以獲得個人化護理。";
   if (prefs!.getBool("noMarkdown") ?? false) {
-    system += "\nYou must not use markdown or any other formatting language in any way!";
+    system += "\n您不得以任何方式使用 markdown 或任何其他格式語言！";
   }
   if (addToSystem != null) {
     system += "\n$addToSystem";
@@ -88,7 +88,7 @@ Future<String> getTitleAi(List history) async {
             const llama.Message(
               role: llama.MessageRole.system,
               content:
-                  "Generate a three to six word title for the conversation provided by the user. If an object or person is very important in the conversation, put it in the title as well; keep the focus on the main subject. You must not put the assistant in the focus and you must not put the word 'assistant' in the title! Do preferably use title case. Use a formal tone, don't use dramatic words, like 'mystery' Use spaces between words, do not use camel case! You must not use markdown or any other formatting language! You must not use emojis or any other symbols! You must not use general clauses like 'assistance', 'help' or 'session' in your title! \n\n~~User Introduces Themselves~~ -> User Introduction\n~~User Asks for Help with a Problem~~ -> Problem Help\n~~User has a _**big**_ Problem~~ -> Big Problem",
+                  "為使用者提供的對話產生一個三到六個字的標題。如果對話中某個物件或人非常重要，也請將其放入標題中",
             ),
             llama.Message(role: llama.MessageRole.user, content: "```\n${jsonEncode(history)}\n```"),
           ],
