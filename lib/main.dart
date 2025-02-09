@@ -1,7 +1,8 @@
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
+import 'package:encrypt_shared_preferences/provider.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:uuid/uuid.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
@@ -50,8 +51,9 @@ const bool allowMultipleChats = true;
 /// 全局變量
 ///*******************************************
 
-/// 本地存儲實例
-SharedPreferences? prefs;
+/// 本地存儲實例與加密金鑰
+const String encryptionKey = "draidraidraidrai";
+late EncryptedSharedPreferences prefs;
 
 /// 當前選擇的模型和主機
 String? model;
@@ -91,21 +93,36 @@ BuildContext? mainContext;
 void Function(void Function())? setGlobalState;
 void Function(void Function())? setMainAppState;
 
-void main() {
-  pwa.PWAInstall().setup(installCallback: () {});
+void main() async {
+  // 確保 Flutter 綁定已初始化
+  WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const App());
+  try {
+    // 初始化加密存儲
+    await EncryptedSharedPreferences.initialize(encryptionKey);
+    prefs = EncryptedSharedPreferences.getInstance();
 
-  if (isDesktopPlatform()) {
-    doWhenWindowReady(() {
-      appWindow.minSize = const Size(600, 450);
-      appWindow.size = const Size(1200, 650);
-      appWindow.alignment = Alignment.center;
-      if (prefs!.getBool("maximizeOnStart") ?? false) {
-        appWindow.maximize();
-      }
-      appWindow.show();
-    });
+    // PWA 設定
+    pwa.PWAInstall().setup(installCallback: () {});
+
+    // 運行應用程式
+    runApp(const App());
+
+    // 桌面平台視窗設定
+    if (isDesktopPlatform()) {
+      doWhenWindowReady(() {
+        appWindow.minSize = const Size(600, 450);
+        appWindow.size = const Size(1200, 650);
+        appWindow.alignment = Alignment.center;
+        if (prefs.getBool("maximizeOnStart") ?? false) {
+          appWindow.maximize();
+        }
+        appWindow.show();
+      });
+    }
+  } catch (e) {
+    debugPrint('初始化錯誤: $e');
+    rethrow;
   }
 }
 
@@ -117,6 +134,8 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+
+
   @override
   void initState() {
     super.initState();
@@ -126,23 +145,20 @@ class _AppState extends State<App> {
         await FlutterDisplayMode.setHighRefreshRate();
       } catch (_) {}
 
-      SharedPreferences.setPrefix("ollama.");
-      SharedPreferences tmp = await SharedPreferences.getInstance();
-      setState(() {
-        prefs = tmp;
-      });
-
       try {
-        if ((await Permission.bluetoothConnect.isGranted) && (await Permission.microphone.isGranted)) {
+        if ((await Permission.bluetoothConnect.isGranted) && 
+            (await Permission.microphone.isGranted)) {
           voiceSupported = await speech.initialize();
         } else {
-          prefs!.setBool("voiceModeEnabled", false);
+          prefs.setBool("voiceModeEnabled", false);
           voiceSupported = false;
         }
       } catch (_) {
-        prefs!.setBool("voiceModeEnabled", false);
+        prefs.setBool("voiceModeEnabled", false);
         voiceSupported = false;
       }
+      
+      setState(() {});
     }
 
     load();

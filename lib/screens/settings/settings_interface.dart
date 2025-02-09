@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:encrypt_shared_preferences/provider.dart';
 import '../../main.dart';
 import '../../widgets/widgets_screens/widgets_settings/widget_interface.dart';
 
@@ -12,7 +12,7 @@ class ScreenSettingsInterface extends StatefulWidget {
 }
 
 class _ScreenSettingsInterfaceState extends State<ScreenSettingsInterface> {
-  SharedPreferences? _prefs;
+  EncryptedSharedPreferences? _prefs;
   bool _loading = true;
 
   @override
@@ -22,7 +22,7 @@ class _ScreenSettingsInterfaceState extends State<ScreenSettingsInterface> {
   }
 
   Future<void> _initPrefs() async {
-    _prefs = await SharedPreferences.getInstance();
+    _prefs = EncryptedSharedPreferences.getInstance();
     if (mounted) {
       setState(() {
         _loading = false;

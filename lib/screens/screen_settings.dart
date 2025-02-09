@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:encrypt_shared_preferences/provider.dart';
 import '../services/service_haptic.dart';
 import '../widgets/widgets_screens/widget_screen_settings.dart';
 import '../main.dart' show useHost, fixedHost;
@@ -19,7 +19,7 @@ class ScreenSettings extends StatefulWidget {
 
 class _ScreenSettingsState extends State<ScreenSettings> {
   /// 本地儲存實例
-  SharedPreferences? _prefs;
+  EncryptedSharedPreferences? _prefs;
 
   /// 當前使用的主機地址
   /// 用於臨時存儲有效的主機配置
@@ -52,7 +52,7 @@ class _ScreenSettingsState extends State<ScreenSettings> {
   /// 從 SharedPreferences 中讀取已保存的主機設置
   /// 並根據固定主機模式決定是否進行連接測試
   Future<void> _loadPrefs() async {
-    _prefs = await SharedPreferences.getInstance();
+    _prefs = EncryptedSharedPreferences.getInstance();
     if (!mounted) return;
 
     setState(() {

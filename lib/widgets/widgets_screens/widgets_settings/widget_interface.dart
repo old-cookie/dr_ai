@@ -4,7 +4,7 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:dartx/dartx.dart';
 import 'package:duration_picker/duration_picker.dart';
 import 'package:dynamic_color/dynamic_color.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:encrypt_shared_preferences/provider.dart';
 import '../../../services/service_haptic.dart';
 import '../../../services/service_desktop.dart';
 import '../../../services/service_theme.dart';
@@ -16,7 +16,7 @@ import '../../widgets_units/widget_button.dart';
 /// 用於配置應用程序的外觀和行為設置
 class WidgetInterface extends StatefulWidget {
   /// 本地儲存實例
-  final SharedPreferences prefs;
+  final EncryptedSharedPreferences prefs;
 
   /// 主應用狀態更新函數
   final Function? setMainAppState;

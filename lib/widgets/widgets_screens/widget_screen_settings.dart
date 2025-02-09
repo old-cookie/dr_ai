@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:dynamic_color/dynamic_color.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:encrypt_shared_preferences/provider.dart';
 import '../widgets_units/widget_title.dart';
 import '../widgets_units/widget_button.dart';
 import '../../services/service_haptic.dart';
@@ -38,7 +38,7 @@ class WidgetScreenSettings extends StatefulWidget {
   final bool useHost;
 
   /// 本地儲存實例
-  final SharedPreferences? prefs;
+  final EncryptedSharedPreferences? prefs;
 
   /// 構造函數
   /// @param hostInputController 主機地址輸入控制器
@@ -64,7 +64,7 @@ class WidgetScreenSettings extends StatefulWidget {
 
 class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
   /// 本地儲存實例引用
-  SharedPreferences? prefs;
+  EncryptedSharedPreferences? prefs;
 
   /// 圖標大小動畫值
   double iconSize = 1;
@@ -86,7 +86,7 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
     if (widget.prefs != null) {
       prefs = widget.prefs;
     } else {
-      prefs = await SharedPreferences.getInstance();
+      prefs = EncryptedSharedPreferences.getInstance();
     }
     setState(() {});
   }
