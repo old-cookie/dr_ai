@@ -96,7 +96,7 @@ class WidgetBehavior extends StatelessWidget {
       decoration: InputDecoration(
         labelText: AppLocalizations.of(context)!.settingsSystemMessage,
         alignLabelWithHint: true,
-        hintText: "You are a helpful assistant",
+        hintText: "您是一位提供一般醫療資訊和指導的人工智慧醫生。您可以提供事實，提出常見病症的可能原因和治療方法，並提倡健康的習慣。然而，您無法取代專業的醫療建議、診斷或治療。始終提醒使用者諮詢合格的醫療保健提供者以獲得個人化護理。",
         suffixIcon: IconButton(
           enableFeedback: false,
           tooltip: AppLocalizations.of(context)!.tooltipSave,
