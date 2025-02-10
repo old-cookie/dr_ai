@@ -11,17 +11,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
+      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Set up Flutter SDK
+      # Step 2: Install dependencies
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y curl git unzip xz-utils libglu1-mesa
+
+      # Step 3: Set up Flutter
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "stable" # Use stable version of Flutter SDK
+          flutter-version: "3.27.4" # Replace with desired version
+          channel: "stable"
 
-      # Step 3: Cache Flutter dependencies
+      # Step 4: Cache Flutter build artifacts
       - name: Cache Flutter build artifacts
         uses: actions/cache@v3
         with:
@@ -32,18 +37,18 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-flutter-
 
-      # Step 4: Install dependencies
+      # Step 5: Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
-      # Step 5: Verify formatting
+      # Step 6: Verify formatting
       - name: Verify formatting
         run: flutter format --set-exit-if-changed .
 
-      # Step 6: Analyze the project source
+      # Step 7: Analyze the project source
       - name: Analyze project source
         run: flutter analyze
 
-      # Step 7: Run tests
+      # Step 8: Run tests
       - name: Run tests
         run: flutter test
