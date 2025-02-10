@@ -81,27 +81,18 @@ jobs:
           PUB_CACHE: /home/runner/.pub-cache
           VERSION: ${{ env.VERSION }}
 
-      - uses: cedvdb/action-flutter-build-web@v1
-        with:
-          build-cmd: flutter build web --release
-          working-directory: ./
-
-      - name: Archive Production artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: release
-          path: build/web
-
-
-
-
-
+      - run: flutter build web
+      - name: Zip web build
+        run: |
+          cd build/web
+          zip -r ../web.zip .
+          cd ../..
 
       # Step 10: Create Release
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: build/app/outputs/flutter-apk/app-release.apk
+          artifacts: "build/app/outputs/flutter-apk/app-release.apk,build/web.zip"
           tag: v${{ env.VERSION }}
           generateReleaseNotes: false
           makeLatest: legacy
