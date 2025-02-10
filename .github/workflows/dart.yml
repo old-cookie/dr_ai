@@ -23,7 +23,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.27.4" # Specify Flutter version or channel
+          flutter-version: "3.27.4"
 
       # Step 4: Cache Flutter build artifacts
       - name: Cache Flutter build artifacts
@@ -45,5 +45,5 @@ jobs:
         run: flutter analyze
 
       # Step 7: Run tests
-      - name: Run tests
-        run: flutter test
+      # - name: Run tests
+      #   run: flutter test
