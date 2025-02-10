@@ -121,7 +121,7 @@ class _MainAppState extends State<MainApp> {
                     }
                     setState(() {
                       ///TODO: State(add in main.dart)
-                    //vaccineOpen = true;
+                      //vaccineOpen = true;
                     });
 
                     ///TODO: Navigator
@@ -212,7 +212,7 @@ class _MainAppState extends State<MainApp> {
       (isDesktopLayoutNotRequired(context) && (!allowMultipleChats && !allowSettings))
           ? const SizedBox.shrink()
           : Divider(color: shouldUseDesktopLayout(context) ? Theme.of(context).colorScheme.onSurface.withAlpha(20) : null),
-      ((prefs?.getStringList("chats") ?? []).isNotEmpty)
+      ((prefs.getStringList("chats") ?? []).isNotEmpty)
           ? const SizedBox.shrink()
           : (Padding(
               padding: padding,
@@ -242,7 +242,7 @@ class _MainAppState extends State<MainApp> {
                     : (tipId == 3)
                         ? AppLocalizations.of(context)!.tip3
                         : AppLocalizations.of(context)!.tip4;
-        return (!(prefs?.getBool("tips") ?? true) || (prefs?.getStringList("chats") ?? []).isNotEmpty || !allowSettings)
+        return (!(prefs.getBool("tips") ?? true) || (prefs.getStringList("chats") ?? []).isNotEmpty || !allowSettings)
             ? const SizedBox.shrink()
             : (Padding(
                 padding: padding,
@@ -275,7 +275,7 @@ class _MainAppState extends State<MainApp> {
                 )));
       }),
     ])
-      ..addAll((prefs?.getStringList("chats") ?? []).map((item) {
+      ..addAll((prefs.getStringList("chats") ?? []).map((item) {
         var child = Padding(
             padding: padding,
             child: InkWell(
@@ -309,16 +309,16 @@ class _MainAppState extends State<MainApp> {
                         String oldTitle = jsonDecode(item)["title"];
                         var newTitle = await prompt(context,
                             title: AppLocalizations.of(context)!.dialogEnterNewTitle, value: oldTitle, uuid: jsonDecode(item)["uuid"]);
-                        var tmp = (prefs!.getStringList("chats") ?? []);
+                        var tmp = (prefs.getStringList("chats") ?? []);
                         for (var i = 0; i < tmp.length; i++) {
-                          if (jsonDecode((prefs!.getStringList("chats") ?? [])[i])["uuid"] == jsonDecode(item)["uuid"]) {
+                          if (jsonDecode((prefs.getStringList("chats") ?? [])[i])["uuid"] == jsonDecode(item)["uuid"]) {
                             var tmp2 = jsonDecode(tmp[i]);
                             tmp2["title"] = newTitle;
                             tmp[i] = jsonEncode(tmp2);
                             break;
                           }
                         }
-                        prefs!.setStringList("chats", tmp);
+                        prefs.setStringList("chats", tmp);
                         setState(() {});
                       },
                 child: Padding(
@@ -354,11 +354,11 @@ class _MainAppState extends State<MainApp> {
                                           return;
                                         }
                                         if (!allowMultipleChats) {
-                                          for (var i = 0; i < (prefs!.getStringList("chats") ?? []).length; i++) {
-                                            if (jsonDecode((prefs!.getStringList("chats") ?? [])[i])["uuid"] == jsonDecode(item)["uuid"]) {
-                                              List<String> tmp = prefs!.getStringList("chats")!;
+                                          for (var i = 0; i < (prefs.getStringList("chats") ?? []).length; i++) {
+                                            if (jsonDecode((prefs.getStringList("chats") ?? [])[i])["uuid"] == jsonDecode(item)["uuid"]) {
+                                              List<String> tmp = prefs.getStringList("chats")!;
                                               tmp.removeAt(i);
-                                              prefs!.setStringList("chats", tmp);
+                                              prefs.setStringList("chats", tmp);
                                               break;
                                             }
                                           }
@@ -404,9 +404,9 @@ class _MainAppState extends State<MainApp> {
                                                                   title: AppLocalizations.of(context)!.dialogEnterNewTitle,
                                                                   value: oldTitle,
                                                                   uuid: jsonDecode(item)["uuid"]);
-                                                              var tmp = (prefs!.getStringList("chats") ?? []);
+                                                              var tmp = (prefs.getStringList("chats") ?? []);
                                                               for (var i = 0; i < tmp.length; i++) {
-                                                                if (jsonDecode((prefs!.getStringList("chats") ?? [])[i])["uuid"] ==
+                                                                if (jsonDecode((prefs.getStringList("chats") ?? [])[i])["uuid"] ==
                                                                     jsonDecode(item)["uuid"]) {
                                                                   var tmp2 = jsonDecode(tmp[i]);
                                                                   tmp2["title"] = newTitle;
@@ -414,7 +414,7 @@ class _MainAppState extends State<MainApp> {
                                                                   break;
                                                                 }
                                                               }
-                                                              prefs!.setStringList("chats", tmp);
+                                                              prefs.setStringList("chats", tmp);
                                                               setState(() {});
                                                             },
                                                             icon: const Icon(Icons.edit_rounded),
@@ -452,11 +452,11 @@ class _MainAppState extends State<MainApp> {
                 },
                 onDismissed: (direction) {
                   selectionHaptic();
-                  for (var i = 0; i < (prefs!.getStringList("chats") ?? []).length; i++) {
-                    if (jsonDecode((prefs!.getStringList("chats") ?? [])[i])["uuid"] == jsonDecode(item)["uuid"]) {
-                      List<String> tmp = prefs!.getStringList("chats")!;
+                  for (var i = 0; i < (prefs.getStringList("chats") ?? []).length; i++) {
+                    if (jsonDecode((prefs.getStringList("chats") ?? [])[i])["uuid"] == jsonDecode(item)["uuid"]) {
+                      List<String> tmp = prefs.getStringList("chats")!;
                       tmp.removeAt(i);
-                      prefs!.setStringList("chats", tmp);
+                      prefs.setStringList("chats", tmp);
                       break;
                     }
                   }
@@ -484,12 +484,6 @@ class _MainAppState extends State<MainApp> {
 
     WidgetsBinding.instance.addPostFrameCallback(
       (_) async {
-        if (prefs == null) {
-          await Future.doWhile(() => Future.delayed(const Duration(milliseconds: 1)).then((_) {
-                return prefs == null;
-              }));
-        }
-
         if (!(allowSettings || useHost)) {
           // ignore: use_build_context_synchronously
           resetSystemNavigation(context, statusBarColor: Colors.black, systemNavigationBarColor: Colors.black);
@@ -513,16 +507,16 @@ class _MainAppState extends State<MainApp> {
               });
         }
 
-        if (!allowMultipleChats && (prefs!.getStringList("chats") ?? []).isNotEmpty) {
-          chatUuid = jsonDecode((prefs!.getStringList("chats") ?? [])[0])["uuid"];
+        if (!allowMultipleChats && (prefs.getStringList("chats") ?? []).isNotEmpty) {
+          chatUuid = jsonDecode((prefs.getStringList("chats") ?? [])[0])["uuid"];
           loadChat(chatUuid!, setState);
         }
 
         setState(() {
-          model = useModel ? fixedModel : prefs!.getString("model");
+          model = useModel ? fixedModel : prefs.getString("model");
           chatAllowed = !(model == null);
-          multimodal = prefs?.getBool("multimodal") ?? false;
-          host = useHost ? fixedHost : prefs?.getString("host");
+          multimodal = prefs.getBool("multimodal") ?? false;
+          host = useHost ? fixedHost : prefs.getString("host");
         });
 
         if (host == null) {
@@ -834,7 +828,7 @@ class _MainAppState extends State<MainApp> {
                               onMessageLongPress: (context, p1) async {
                                 selectionHaptic();
 
-                                if (!(prefs!.getBool("enableEditing") ?? true)) {
+                                if (!(prefs.getBool("enableEditing") ?? true)) {
                                   return;
                                 }
 
@@ -866,7 +860,7 @@ class _MainAppState extends State<MainApp> {
                                 setState(() {});
                               },
                               onAttachmentPressed: (!multimodal)
-                                  ? (prefs?.getBool("voiceModeEnabled") ?? false)
+                                  ? (prefs.getBool("voiceModeEnabled") ?? false)
                                       ? (model != null)
                                           ? () {
                                               selectionHaptic();
@@ -909,7 +903,7 @@ class _MainAppState extends State<MainApp> {
                                                 width: double.infinity,
                                                 padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
                                                 child: Column(mainAxisSize: MainAxisSize.min, children: [
-                                                  (prefs?.getBool("voiceModeEnabled") ?? false)
+                                                  (prefs.getBool("voiceModeEnabled") ?? false)
                                                       ? SizedBox(
                                                           width: double.infinity,
                                                           child: OutlinedButton.icon(
@@ -925,7 +919,7 @@ class _MainAppState extends State<MainApp> {
                                                               icon: const Icon(Icons.headphones_rounded),
                                                               label: Text(AppLocalizations.of(context)!.settingsTitleVoice)))
                                                       : const SizedBox.shrink(),
-                                                  (prefs?.getBool("voiceModeEnabled") ?? false) ? const SizedBox(height: 8) : const SizedBox.shrink(),
+                                                  (prefs.getBool("voiceModeEnabled") ?? false) ? const SizedBox(height: 8) : const SizedBox.shrink(),
                                                   SizedBox(
                                                       width: double.infinity,
                                                       child: OutlinedButton.icon(
@@ -1021,7 +1015,7 @@ class _MainAppState extends State<MainApp> {
                                       backgroundColor: themeLight().colorScheme.surface,
                                       primaryColor: themeLight().colorScheme.primary,
                                       attachmentButtonIcon: !multimodal
-                                          ? (prefs?.getBool("voiceModeEnabled") ?? false)
+                                          ? (prefs.getBool("voiceModeEnabled") ?? false)
                                               ? Icon(Icons.headphones_rounded, color: Theme.of(context).iconTheme.color)
                                               : null
                                           : Icon(Icons.add_a_photo_rounded, color: Theme.of(context).iconTheme.color),
@@ -1031,7 +1025,7 @@ class _MainAppState extends State<MainApp> {
                                             backgroundColor: Theme.of(context).iconTheme.color,
                                             radius: 12,
                                             child: Icon(Icons.arrow_upward_rounded,
-                                                color: (prefs?.getBool("useDeviceTheme") ?? false) ? Theme.of(context).colorScheme.surface : null)),
+                                                color: (prefs.getBool("useDeviceTheme") ?? false) ? Theme.of(context).colorScheme.surface : null)),
                                       ),
                                       sendButtonMargin: EdgeInsets.zero,
                                       attachmentButtonMargin: EdgeInsets.zero,
@@ -1055,7 +1049,7 @@ class _MainAppState extends State<MainApp> {
                                       primaryColor: themeDark().colorScheme.primary.withAlpha(40),
                                       secondaryColor: themeDark().colorScheme.primary.withAlpha(20),
                                       attachmentButtonIcon: !multimodal
-                                          ? (prefs?.getBool("voiceModeEnabled") ?? false)
+                                          ? (prefs.getBool("voiceModeEnabled") ?? false)
                                               ? Icon(Icons.headphones_rounded, color: Theme.of(context).iconTheme.color)
                                               : null
                                           : Icon(Icons.add_a_photo_rounded, color: Theme.of(context).iconTheme.color),
@@ -1065,7 +1059,7 @@ class _MainAppState extends State<MainApp> {
                                             backgroundColor: Theme.of(context).iconTheme.color,
                                             radius: 12,
                                             child: Icon(Icons.arrow_upward_rounded,
-                                                color: (prefs?.getBool("useDeviceTheme") ?? false) ? Theme.of(context).colorScheme.surface : null)),
+                                                color: (prefs.getBool("useDeviceTheme") ?? false) ? Theme.of(context).colorScheme.surface : null)),
                                       ),
                                       sendButtonMargin: EdgeInsets.zero,
                                       attachmentButtonMargin: EdgeInsets.zero,
@@ -1093,7 +1087,7 @@ class _MainAppState extends State<MainApp> {
             ],
           ),
           drawerEdgeDragWidth:
-              (prefs?.getBool("fixCodeblockScroll") ?? false) ? null : (shouldUseDesktopLayout(context) ? null : MediaQuery.of(context).size.width),
+              (prefs.getBool("fixCodeblockScroll") ?? false) ? null : (shouldUseDesktopLayout(context) ? null : MediaQuery.of(context).size.width),
           drawer: Builder(builder: (context) {
             if (isDesktopLayoutRequired(context) && !settingsOpen) {
               WidgetsBinding.instance.addPostFrameCallback((_) {

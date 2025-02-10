@@ -20,14 +20,14 @@ List<String> images = [];
 /// [addToSystem] 可選的系統提示附加訊息
 /// 返回: 格式化後的歷史訊息列表
 Future<List<llama.Message>> getHistory([String? addToSystem]) async {
-  var system = prefs?.getString("system") ?? "您是一位提供一般醫療資訊和指導的人工智慧醫生。您可以提供事實，提出常見病症的可能原因和治療方法，並提倡健康的習慣。然而，您無法取代專業的醫療建議、診斷或治療。始終提醒使用者諮詢合格的醫療保健提供者以獲得個人化護理。";
-  if (prefs!.getBool("noMarkdown") ?? false) {
+  var system = prefs.getString("system") ?? "您是一位提供一般醫療資訊和指導的人工智慧醫生。您可以提供事實，提出常見病症的可能原因和治療方法，並提倡健康的習慣。然而，您無法取代專業的醫療建議、診斷或治療。始終提醒使用者諮詢合格的醫療保健提供者以獲得個人化護理。";
+  if (prefs.getBool("noMarkdown") ?? false) {
     system += "\n您不得以任何方式使用 markdown 或任何其他格式語言！";
   }
   if (addToSystem != null) {
     system += "\n$addToSystem";
   }
-  List<llama.Message> history = (prefs!.getBool("useSystem") ?? true) ? [llama.Message(role: llama.MessageRole.system, content: system)] : [];
+  List<llama.Message> history = (prefs.getBool("useSystem") ?? true) ? [llama.Message(role: llama.MessageRole.system, content: system)] : [];
   List<llama.Message> history2 = [];
   images = [];
   for (var message in messages) {
@@ -56,7 +56,7 @@ Future<List<llama.Message>> getHistory([String? addToSystem]) async {
 List getHistoryString([String? uuid]) {
   uuid ??= chatUuid!;
   List messages = [];
-  for (var chat in prefs!.getStringList("chats") ?? []) {
+  for (var chat in prefs.getStringList("chats") ?? []) {
     if (jsonDecode(chat)["uuid"] == uuid) {
       messages = jsonDecode(jsonDecode(chat)["messages"]);
       break;
@@ -78,7 +78,7 @@ List getHistoryString([String? uuid]) {
 /// 返回: 生成的標題
 Future<String> getTitleAi(List history) async {
   final generated = await (llama.OllamaClient(
-    headers: (jsonDecode(prefs!.getString("hostHeaders") ?? "{}") as Map).cast<String, String>(),
+    headers: (jsonDecode(prefs.getString("hostHeaders") ?? "{}") as Map).cast<String, String>(),
     baseUrl: "$host/api",
   ))
       .generateChatCompletion(
@@ -92,10 +92,10 @@ Future<String> getTitleAi(List history) async {
             ),
             llama.Message(role: llama.MessageRole.user, content: "```\n${jsonEncode(history)}\n```"),
           ],
-          keepAlive: int.parse(prefs!.getString("keepAlive") ?? "300"),
+          keepAlive: int.parse(prefs.getString("keepAlive") ?? "300"),
         ),
       )
-      .timeout(Duration(seconds: (10.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0)).round()));
+      .timeout(Duration(seconds: (10.0 * (prefs.getDouble("timeoutMultiplier") ?? 1.0)).round()));
   var title = generated.message.content;
   title = title.replaceAll("\n", " ");
   var terms = ['"', "'", "*", "_", ".", ",", "!", "?", ":", ";", "(", ")", "[", "]", "{", "}"];
@@ -117,7 +117,7 @@ Future<String> getTitleAi(List history) async {
 Future<void> setTitleAi(List history) async {
   try {
     var title = await getTitleAi(history);
-    var chats = prefs!.getStringList("chats") ?? [];
+    var chats = prefs.getStringList("chats") ?? [];
     for (var i = 0; i < chats.length; i++) {
       if (jsonDecode(chats[i])["uuid"] == chatUuid) {
         var chat = jsonDecode(chats[i]);
@@ -126,7 +126,7 @@ Future<void> setTitleAi(List history) async {
         break;
       }
     }
-    prefs!.setStringList("chats", chats);
+    prefs.setStringList("chats", chats);
   } catch (_) {}
 }
 
@@ -174,9 +174,9 @@ Future<String> send(
   if (chatUuid == null) {
     newChat = true;
     chatUuid = const Uuid().v4();
-    prefs!.setStringList(
+    prefs.setStringList(
       "chats",
-      (prefs!.getStringList("chats") ?? []).append([
+      (prefs.getStringList("chats") ?? []).append([
         jsonEncode({
           "title": AppLocalizations.of(context)!.newChatTitle,
           "uuid": chatUuid,
@@ -198,20 +198,20 @@ Future<String> send(
   String text = "";
   String newId = const Uuid().v4();
   llama.OllamaClient client = llama.OllamaClient(
-    headers: (jsonDecode(prefs!.getString("hostHeaders") ?? "{}") as Map).cast<String, String>(),
+    headers: (jsonDecode(prefs.getString("hostHeaders") ?? "{}") as Map).cast<String, String>(),
     baseUrl: "$host/api",
   );
   try {
-    if ((prefs!.getString("requestType") ?? "stream") == "stream") {
+    if ((prefs.getString("requestType") ?? "stream") == "stream") {
       final stream = client
           .generateChatCompletionStream(
             request: llama.GenerateChatCompletionRequest(
               model: model!,
               messages: history,
-              keepAlive: int.parse(prefs!.getString("keepAlive") ?? "300"),
+              keepAlive: int.parse(prefs.getString("keepAlive") ?? "300"),
             ),
           )
-          .timeout(Duration(seconds: (30.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0)).round()));
+          .timeout(Duration(seconds: (30.0 * (prefs.getDouble("timeoutMultiplier") ?? 1.0)).round()));
       await for (final res in stream) {
         text += res.message.content;
         messages.removeWhere((message) => message.id == newId);
@@ -229,10 +229,10 @@ Future<String> send(
             request: llama.GenerateChatCompletionRequest(
               model: model!,
               messages: history,
-              keepAlive: int.parse(prefs!.getString("keepAlive") ?? "300"),
+              keepAlive: int.parse(prefs.getString("keepAlive") ?? "300"),
             ),
           )
-          .timeout(Duration(seconds: (30.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0)).round()));
+          .timeout(Duration(seconds: (30.0 * (prefs.getDouble("timeoutMultiplier") ?? 1.0)).round()));
       if (chatAllowed) return "";
       messages.insert(0, types.TextMessage(author: assistant, id: newId, text: request.message.content));
       text = request.message.content;
@@ -245,9 +245,9 @@ Future<String> send(
       chatAllowed = true;
       messages.removeAt(0);
       if (messages.isEmpty) {
-        var chats = prefs!.getStringList("chats") ?? [];
+        var chats = prefs.getStringList("chats") ?? [];
         chats.removeWhere((chat) => jsonDecode(chat)["uuid"] == chatUuid);
-        prefs!.setStringList("chats", chats);
+        prefs.setStringList("chats", chats);
         chatUuid = null;
       }
     });
@@ -257,11 +257,11 @@ Future<String> send(
     ));
     return "";
   }
-  if ((prefs!.getString("requestType") ?? "stream") == "stream" && onStream != null) {
+  if ((prefs.getString("requestType") ?? "stream") == "stream" && onStream != null) {
     onStream(text, true);
   }
   saveChat(chatUuid!, setState);
-  if (newChat && (prefs!.getBool("generateTitles") ?? true)) {
+  if (newChat && (prefs.getBool("generateTitles") ?? true)) {
     await setTitleAi(getHistoryString());
     setState(() {});
   }

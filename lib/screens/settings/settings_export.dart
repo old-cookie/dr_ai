@@ -28,7 +28,7 @@ class _ScreenSettingsExportState extends State<ScreenSettingsExport> {
     selectionHaptic();
     // 生成導出文件名,包含時間戳
     var name = "DrAI-export-${DateFormat('yyyy-MM-dd-H-m-s').format(DateTime.now())}.json";
-    var content = jsonEncode(prefs!.getStringList("chats") ?? []);
+    var content = jsonEncode(prefs.getStringList("chats") ?? []);
     // 根據平台選擇導出方式
     if (kIsWeb) {
       await _exportChatsWeb(name, content);
@@ -80,7 +80,7 @@ class _ScreenSettingsExportState extends State<ScreenSettingsExport> {
         type: FileType.custom,
         allowedExtensions: ["json"],
         fileName: name,
-        bytes: utf8.encode(jsonEncode(prefs!.getStringList("chats") ?? [])),
+        bytes: utf8.encode(jsonEncode(prefs.getStringList("chats") ?? [])),
       );
     }
     selectionHaptic();
@@ -154,7 +154,7 @@ class _ScreenSettingsExportState extends State<ScreenSettingsExport> {
                 // 解析並儲存導入的聊天記錄
                 List<dynamic> tmpHistory = jsonDecode(content);
                 List<String> history = tmpHistory.map((item) => item.toString()).toList();
-                prefs!.setStringList("chats", history);
+                prefs.setStringList("chats", history);
                 // 清空當前聊天
                 messages = [];
                 chatUuid = null;

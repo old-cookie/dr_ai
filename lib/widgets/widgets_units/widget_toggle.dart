@@ -114,7 +114,7 @@ Widget widgetToggle(
               trackOutlineColor: disabled ? WidgetStatePropertyAll(Theme.of(context).colorScheme.primary.withAlpha(150)) : null,
               thumbColor: disabled
                   ? WidgetStatePropertyAll(Theme.of(context).colorScheme.primary.withAlpha(150))
-                  : !(prefs?.getBool("useDeviceTheme") ?? false) && value
+                  : !(prefs.getBool("useDeviceTheme") ?? false) && value
                       ? WidgetStatePropertyAll(Theme.of(context).colorScheme.secondary)
                       : null,
             ),

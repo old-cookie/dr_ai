@@ -93,13 +93,13 @@ class _ScreenSettingsVoiceState extends State<ScreenSettingsVoice> {
                             (permissionBluetooth &&
                                 permissionRecord &&
                                 voiceSupported &&
-                                voiceLanguageOptionsAvailable.contains((prefs!.getString("voiceLanguage") ?? "en_US"))))
+                                voiceLanguageOptionsAvailable.contains((prefs.getString("voiceLanguage") ?? "en_US"))))
                         ? const SizedBox.shrink()
                         : widgetButton(
                             permissionLoading
                                 ? AppLocalizations.of(context)!.settingsVoicePermissionLoading
-                                : (!voiceLanguageOptionsAvailable.contains((prefs!.getString("voiceLanguage") ?? "en_US")) &&
-                                        (prefs!.getBool("voiceModeEnabled") ?? false))
+                                : (!voiceLanguageOptionsAvailable.contains((prefs.getString("voiceLanguage") ?? "en_US")) &&
+                                        (prefs.getBool("voiceModeEnabled") ?? false))
                                     ? AppLocalizations.of(context)!.settingsVoiceTtsNotSupported
                                     : !(permissionBluetooth && permissionRecord)
                                         ? AppLocalizations.of(context)!.settingsVoicePermissionNot
@@ -129,24 +129,24 @@ class _ScreenSettingsVoiceState extends State<ScreenSettingsVoice> {
                               }
 
                               load();
-                            } else if (!voiceLanguageOptions.contains((prefs!.getString("voiceLanguage") ?? "en_US"))) {
+                            } else if (!voiceLanguageOptions.contains((prefs.getString("voiceLanguage") ?? "en_US"))) {
                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                   content: Text(AppLocalizations.of(context)!.settingsVoiceTtsNotSupportedDescription), showCloseIcon: true));
                             }
                           }),
                     // 語音模式開關
-                    widgetToggle(context, AppLocalizations.of(context)!.settingsVoiceEnable, (prefs!.getBool("voiceModeEnabled") ?? false), (value) {
+                    widgetToggle(context, AppLocalizations.of(context)!.settingsVoiceEnable, (prefs.getBool("voiceModeEnabled") ?? false), (value) {
                       selectionHaptic();
-                      prefs!.setBool("voiceModeEnabled", value);
+                      prefs.setBool("voiceModeEnabled", value);
                       setState(() {});
                     }, disabled: !voiceSupported),
                     // 語言選擇按鈕
                     widgetButton(
-                        ((prefs!.getString("voiceLanguage") ?? "") == "" || languageOptions.isEmpty)
+                        ((prefs.getString("voiceLanguage") ?? "") == "" || languageOptions.isEmpty)
                             ? AppLocalizations.of(context)!.settingsVoiceNoLanguage
                             : () {
                                 for (int i = 0; i < languageOptionIds.length; i++) {
-                                  if (languageOptionIds.elementAt(i) == prefs!.getString("voiceLanguage")) {
+                                  if (languageOptionIds.elementAt(i) == prefs.getString("voiceLanguage")) {
                                     return languageOptions.elementAt(i);
                                   }
                                 }
@@ -162,9 +162,9 @@ class _ScreenSettingsVoiceState extends State<ScreenSettingsVoice> {
                                 setModalState = setLocalState;
                                 void loadSelected() async {
                                   await load();
-                                  if ((prefs!.getString("voiceLanguage") ?? "") != "") {
+                                  if ((prefs.getString("voiceLanguage") ?? "") != "") {
                                     for (int i = 0; i < languageOptionIds.length; i++) {
-                                      if (languageOptionIds.elementAt(i) == (prefs!.getString("voiceLanguage") ?? "")) {
+                                      if (languageOptionIds.elementAt(i) == (prefs.getString("voiceLanguage") ?? "")) {
                                         setModalState!(() {
                                           usedIndex = i;
                                         });
@@ -181,7 +181,7 @@ class _ScreenSettingsVoiceState extends State<ScreenSettingsVoice> {
                                 return PopScope(
                                     onPopInvokedWithResult: (didPop, result) {
                                       if (usedIndex == -1) return;
-                                      prefs!.setString("voiceLanguage", languageOptionIds.elementAt(usedIndex));
+                                      prefs.setString("voiceLanguage", languageOptionIds.elementAt(usedIndex));
                                       setState(() {
                                         dialogMustLoad = true;
                                       });
@@ -212,18 +212,18 @@ class _ScreenSettingsVoiceState extends State<ScreenSettingsVoice> {
                                                               : (voiceLanguageOptionsAvailable.contains(languageOptionIds.elementAt(index)))
                                                                   ? const Icon(Icons.spatial_tracking_rounded)
                                                                   : null,
-                                                          checkmarkColor: (usedIndex == index && !(prefs?.getBool("useDeviceTheme") ?? false))
+                                                          checkmarkColor: (usedIndex == index && !(prefs.getBool("useDeviceTheme") ?? false))
                                                               ? ((MediaQuery.of(context).platformBrightness == Brightness.light)
                                                                   ? themeLight().colorScheme.secondary
                                                                   : themeDark().colorScheme.secondary)
                                                               : null,
-                                                          labelStyle: (usedIndex == index && !(prefs?.getBool("useDeviceTheme") ?? false))
+                                                          labelStyle: (usedIndex == index && !(prefs.getBool("useDeviceTheme") ?? false))
                                                               ? TextStyle(
                                                                   color: (MediaQuery.of(context).platformBrightness == Brightness.light)
                                                                       ? themeLight().colorScheme.secondary
                                                                       : themeDark().colorScheme.secondary)
                                                               : null,
-                                                          selectedColor: (prefs?.getBool("useDeviceTheme") ?? false)
+                                                          selectedColor: (prefs.getBool("useDeviceTheme") ?? false)
                                                               ? null
                                                               : (MediaQuery.of(context).platformBrightness == Brightness.light)
                                                                   ? themeLight().colorScheme.primary
@@ -240,21 +240,21 @@ class _ScreenSettingsVoiceState extends State<ScreenSettingsVoice> {
                                                   )))
                                         ])));
                               }));
-                    }, disabled: (!voiceSupported || !(prefs!.getBool("voiceModeEnabled") ?? false))),
+                    }, disabled: (!voiceSupported || !(prefs.getBool("voiceModeEnabled") ?? false))),
                     titleDivider(),
                     // 限制語言選項開關
-                    widgetToggle(context, AppLocalizations.of(context)!.settingsVoiceLimitLanguage, (prefs!.getBool("voiceLimitLanguage") ?? true),
+                    widgetToggle(context, AppLocalizations.of(context)!.settingsVoiceLimitLanguage, (prefs.getBool("voiceLimitLanguage") ?? true),
                         (value) {
                       selectionHaptic();
-                      prefs!.setBool("voiceLimitLanguage", value);
+                      prefs.setBool("voiceLimitLanguage", value);
                       setState(() {});
-                    }, disabled: (!voiceSupported || !(prefs!.getBool("voiceModeEnabled") ?? false))),
+                    }, disabled: (!voiceSupported || !(prefs.getBool("voiceModeEnabled") ?? false))),
                     // 標點符號選項開關
-                    widgetToggle(context, AppLocalizations.of(context)!.settingsVoicePunctuation, (prefs!.getBool("aiPunctuation") ?? true), (value) {
+                    widgetToggle(context, AppLocalizations.of(context)!.settingsVoicePunctuation, (prefs.getBool("aiPunctuation") ?? true), (value) {
                       selectionHaptic();
-                      prefs!.setBool("aiPunctuation", value);
+                      prefs.setBool("aiPunctuation", value);
                       setState(() {});
-                    }, disabled: (!voiceSupported || !(prefs!.getBool("voiceModeEnabled") ?? false)))
+                    }, disabled: (!voiceSupported || !(prefs.getBool("voiceModeEnabled") ?? false)))
                   ]),
                 ),
                 const SizedBox(height: 8),

@@ -56,7 +56,7 @@ class _ScreenVoiceState extends State<ScreenVoice> {
     text = "";
     // 開始語音識別
     speech.listen(
-        localeId: (prefs!.getString("voiceLanguage") ?? "en-US"),
+        localeId: (prefs.getString("voiceLanguage") ?? "en-US"),
         listenOptions: stt.SpeechListenOptions(listenMode: stt.ListenMode.dictation),
         onResult: (result) {
           lightHaptic();
@@ -114,9 +114,9 @@ class _ScreenVoiceState extends State<ScreenVoice> {
     aiThinking = true;
     try {
       // 添加標點符號(如果啟用)
-      if (prefs!.getBool("aiPunctuation") ?? true) {
+      if (prefs.getBool("aiPunctuation") ?? true) {
         final generated = await llama.OllamaClient(
-          headers: (jsonDecode(prefs!.getString("hostHeaders") ?? "{}") as Map).cast<String, String>(),
+          headers: (jsonDecode(prefs.getString("hostHeaders") ?? "{}") as Map).cast<String, String>(),
           baseUrl: "$host/api",
         )
             .generateCompletion(
@@ -124,9 +124,9 @@ class _ScreenVoiceState extends State<ScreenVoice> {
                   model: model!,
                   prompt:
                       "Add punctuation and syntax to the following sentence. You must not change order of words or a word in itself! You must not add any word or phrase or remove one! Do not change between formal and personal form, keep the original one!\n\n$text",
-                  keepAlive: int.parse(prefs!.getString("keepAlive") ?? "300")),
+                  keepAlive: int.parse(prefs.getString("keepAlive") ?? "300")),
             )
-            .timeout(Duration(seconds: (10.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0)).round()));
+            .timeout(Duration(seconds: (10.0 * (prefs.getDouble("timeoutMultiplier") ?? 1.0)).round()));
         setState(() {
           text = generated.response!;
         });
@@ -151,8 +151,8 @@ class _ScreenVoiceState extends State<ScreenVoice> {
           } catch (_) {}
           return;
         }
-        if ((await voice.getLanguages as List).contains((prefs!.getString("voiceLanguage") ?? "en_US").replaceAll("_", "-"))) {
-          voice.setLanguage((prefs!.getString("voiceLanguage") ?? "en_US").replaceAll("_", "-"));
+        if ((await voice.getLanguages as List).contains((prefs.getString("voiceLanguage") ?? "en_US").replaceAll("_", "-"))) {
+          voice.setLanguage((prefs.getString("voiceLanguage") ?? "en_US").replaceAll("_", "-"));
           voice.setSpeechRate(0.6);
           voice.setCompletionHandler(() async {
             speaking = false;
@@ -170,8 +170,8 @@ class _ScreenVoiceState extends State<ScreenVoice> {
       }
     },
         // 設置語言限制
-        addToSystem: (prefs!.getBool("voiceLimitLanguage") ?? true)
-            ? "You must write in the following language: ${prefs!.getString("voiceLanguage") ?? "en_US"}!"
+        addToSystem: (prefs.getBool("voiceLimitLanguage") ?? true)
+            ? "You must write in the following language: ${prefs.getString("voiceLanguage") ?? "en_US"}!"
             : null);
   }
 

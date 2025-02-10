@@ -24,9 +24,9 @@ class _ScreenSettingsBehaviorState extends State<ScreenSettingsBehavior> {
   void initState() {
     super.initState();
     // 初始化系統提示詞和相關設置
-    systemInputController = TextEditingController(text: prefs?.getString("system") ?? "您是一位提供一般醫療資訊和指導的人工智慧醫生。您可以提供事實，提出常見病症的可能原因和治療方法，並提倡健康的習慣。然而，您無法取代專業的醫療建議、診斷或治療。始終提醒使用者諮詢合格的醫療保健提供者以獲得個人化護理。");
-    useSystem = prefs?.getBool("useSystem") ?? true;
-    noMarkdown = prefs?.getBool("noMarkdown") ?? false;
+    systemInputController = TextEditingController(text: prefs.getString("system") ?? "您是一位提供一般醫療資訊和指導的人工智慧醫生。您可以提供事實，提出常見病症的可能原因和治療方法，並提倡健康的習慣。然而，您無法取代專業的醫療建議、診斷或治療。始終提醒使用者諮詢合格的醫療保健提供者以獲得個人化護理。");
+    useSystem = prefs.getBool("useSystem") ?? true;
+    noMarkdown = prefs.getBool("noMarkdown") ?? false;
   }
 
   @override
@@ -41,7 +41,7 @@ class _ScreenSettingsBehaviorState extends State<ScreenSettingsBehavior> {
     selectionHaptic();
     setState(() {
       useSystem = value;
-      prefs?.setBool("useSystem", value);
+      prefs.setBool("useSystem", value);
     });
   }
 
@@ -50,14 +50,14 @@ class _ScreenSettingsBehaviorState extends State<ScreenSettingsBehavior> {
     selectionHaptic();
     setState(() {
       noMarkdown = value;
-      prefs?.setBool("noMarkdown", value);
+      prefs.setBool("noMarkdown", value);
     });
   }
 
   /// 儲存系統提示詞設置
   void _onSystemMessageSaved() {
     selectionHaptic();
-    prefs?.setString("system", systemInputController.text.isNotEmpty ? systemInputController.text : "您是一位提供一般醫療資訊和指導的人工智慧醫生。您可以提供事實，提出常見病症的可能原因和治療方法，並提倡健康的習慣。然而，您無法取代專業的醫療建議、診斷或治療。始終提醒使用者諮詢合格的醫療保健提供者以獲得個人化護理。");
+    prefs.setString("system", systemInputController.text.isNotEmpty ? systemInputController.text : "您是一位提供一般醫療資訊和指導的人工智慧醫生。您可以提供事實，提出常見病症的可能原因和治療方法，並提倡健康的習慣。然而，您無法取代專業的醫療建議、診斷或治療。始終提醒使用者諮詢合格的醫療保健提供者以獲得個人化護理。");
   }
 
   @override

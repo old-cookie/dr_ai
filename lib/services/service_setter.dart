@@ -33,9 +33,9 @@ void setModel(BuildContext context, Function setState) {
     try {
       // 從 API 獲取模型列表
       var list =
-          await llama.OllamaClient(headers: (jsonDecode(prefs!.getString("hostHeaders") ?? "{}") as Map).cast<String, String>(), baseUrl: "$host/api")
+          await llama.OllamaClient(headers: (jsonDecode(prefs.getString("hostHeaders") ?? "{}") as Map).cast<String, String>(), baseUrl: "$host/api")
               .listModels()
-              .timeout(Duration(seconds: (10.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0)).round()));
+              .timeout(Duration(seconds: (10.0 * (prefs.getDouble("timeoutMultiplier") ?? 1.0)).round()));
       for (var i = 0; i < list.models!.length; i++) {
         models.add(list.models![i].model!.split(":")[0]);
         modelsReal.add(list.models![i].model!);
@@ -51,11 +51,11 @@ void setModel(BuildContext context, Function setState) {
           oldIndex = usedIndex;
         }
       }
-      if (prefs!.getBool("modelTags") == null) {
+      if (prefs.getBool("modelTags") == null) {
         List duplicateFinder = [];
         for (var model in models) {
           if (duplicateFinder.contains(model)) {
-            prefs!.setBool("modelTags", true);
+            prefs.setBool("modelTags", true);
             break;
           } else {
             duplicateFinder.add(model);
@@ -87,7 +87,7 @@ void setModel(BuildContext context, Function setState) {
           bool preload = false;
           if (usedIndex >= 0 && modelsReal[usedIndex] != model) {
             preload = true;
-            if (prefs!.getBool("resetOnModelSelect") ?? true && allowMultipleChats) {
+            if (prefs.getBool("resetOnModelSelect") ?? true && allowMultipleChats) {
               messages = [];
               chatUuid = null;
             }
@@ -96,22 +96,22 @@ void setModel(BuildContext context, Function setState) {
           chatAllowed = !(model == null);
           multimodal = (usedIndex >= 0) ? modal[usedIndex] : false;
           if (model != null) {
-            prefs?.setString("model", model!);
+            prefs.setString("model", model!);
           } else {
-            prefs?.remove("model");
+            prefs.remove("model");
           }
-          prefs?.setBool("multimodal", multimodal);
-          if (model != null && preload && int.parse(prefs!.getString("keepAlive") ?? "300") != 0 && (prefs!.getBool("preloadModel") ?? true)) {
+          prefs.setBool("multimodal", multimodal);
+          if (model != null && preload && int.parse(prefs.getString("keepAlive") ?? "300") != 0 && (prefs.getBool("preloadModel") ?? true)) {
             setLocalState(() {});
             try {
               await http
                   .post(
                     Uri.parse("$host/api/generate"),
                     headers:
-                        {"Content-Type": "application/json", ...(jsonDecode(prefs!.getString("hostHeaders") ?? "{}") as Map)}.cast<String, String>(),
-                    body: jsonEncode({"model": model!, "keep_alive": int.parse(prefs!.getString("keepAlive") ?? "300")}),
+                        {"Content-Type": "application/json", ...(jsonDecode(prefs.getString("hostHeaders") ?? "{}") as Map)}.cast<String, String>(),
+                    body: jsonEncode({"model": model!, "keep_alive": int.parse(prefs.getString("keepAlive") ?? "300")}),
                   )
-                  .timeout(Duration(seconds: (10.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0)).round()));
+                  .timeout(Duration(seconds: (10.0 * (prefs.getDouble("timeoutMultiplier") ?? 1.0)).round()));
             } catch (_) {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.settingsHostInvalid("timeout")), showCloseIcon: true));
@@ -154,7 +154,7 @@ void setModel(BuildContext context, Function setState) {
                                   return ChoiceChip(
                                     label: Row(mainAxisSize: MainAxisSize.min, children: [
                                       Text(models[index]),
-                                      ((prefs!.getBool("modelTags") ?? false) && modelsReal[index].split(":").length > 1)
+                                      ((prefs.getBool("modelTags") ?? false) && modelsReal[index].split(":").length > 1)
                                           ? Text(":${modelsReal[index].split(":")[1]}", style: const TextStyle(color: Colors.grey))
                                           : const SizedBox.shrink()
                                     ]),
@@ -166,18 +166,18 @@ void setModel(BuildContext context, Function setState) {
                                             : ((recommendedModels.contains(models[index]))
                                                 ? const Icon(Icons.star_rounded)
                                                 : ((modal[index]) ? const Icon(Icons.collections_rounded) : null)),
-                                    checkmarkColor: (usedIndex == index && !(prefs?.getBool("useDeviceTheme") ?? false))
+                                    checkmarkColor: (usedIndex == index && !(prefs.getBool("useDeviceTheme") ?? false))
                                         ? ((MediaQuery.of(context).platformBrightness == Brightness.light)
                                             ? themeLight().colorScheme.secondary
                                             : themeDark().colorScheme.secondary)
                                         : null,
-                                    labelStyle: (usedIndex == index && !(prefs?.getBool("useDeviceTheme") ?? false))
+                                    labelStyle: (usedIndex == index && !(prefs.getBool("useDeviceTheme") ?? false))
                                         ? TextStyle(
                                             color: (MediaQuery.of(context).platformBrightness == Brightness.light)
                                                 ? themeLight().colorScheme.secondary
                                                 : themeDark().colorScheme.secondary)
                                         : null,
-                                    selectedColor: (prefs?.getBool("useDeviceTheme") ?? false)
+                                    selectedColor: (prefs.getBool("useDeviceTheme") ?? false)
                                         ? null
                                         : (MediaQuery.of(context).platformBrightness == Brightness.light)
                                             ? themeLight().colorScheme.primary
@@ -222,7 +222,7 @@ void setModel(BuildContext context, Function setState) {
 /// 添加新的 AI 模型
 /// 顯示輸入對話框讓使用者輸入模型名稱並下載
 void addModel(BuildContext context, Function setState) async {
-  var client = llama.OllamaClient(headers: (jsonDecode(prefs!.getString("hostHeaders") ?? "{}") as Map).cast<String, String>(), baseUrl: "$host/api");
+  var client = llama.OllamaClient(headers: (jsonDecode(prefs.getString("hostHeaders") ?? "{}") as Map).cast<String, String>(), baseUrl: "$host/api");
   bool canceled = false;
   bool networkError = false;
   bool ratelimitError = false;
@@ -249,7 +249,7 @@ void addModel(BuildContext context, Function setState) async {
       ratelimitError = false;
       alreadyExists = false;
       try {
-        var request = await client.listModels().timeout(Duration(seconds: (10.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0)).round()));
+        var request = await client.listModels().timeout(Duration(seconds: (10.0 * (prefs.getDouble("timeoutMultiplier") ?? 1.0)).round()));
         for (var element in request.models!) {
           var localModel = element.model!.removeSuffix(":latest");
           if (localModel == model) {
@@ -263,7 +263,7 @@ void addModel(BuildContext context, Function setState) async {
       }
       var endpoint = "https://ollama.com/library/";
       if (kIsWeb) {
-        if (!(prefs!.getBool("allowWebProxy") ?? false)) {
+        if (!(prefs.getBool("allowWebProxy") ?? false)) {
           bool returnValue = false;
           await showDialog(
               context: mainContext!,
@@ -291,14 +291,14 @@ void addModel(BuildContext context, Function setState) async {
                     ]);
               });
           if (!returnValue) return false;
-          prefs!.setBool("allowWebProxy", true);
+          prefs.setBool("allowWebProxy", true);
         }
         endpoint = "https://end.jhubi1.com/ollama-proxy/";
       }
       http.Response response;
       try {
         response =
-            await http.get(Uri.parse("$endpoint$model")).timeout(Duration(seconds: (10.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0)).round()));
+            await http.get(Uri.parse("$endpoint$model")).timeout(Duration(seconds: (10.0 * (prefs.getDouble("timeoutMultiplier") ?? 1.0)).round()));
       } catch (_) {
         networkError = true;
         return false;
@@ -378,7 +378,7 @@ void addModel(BuildContext context, Function setState) async {
   try {
     final stream = client
         .pullModelStream(request: llama.PullModelRequest(model: requestedModel))
-        .timeout(Duration(seconds: (10.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0)).round()));
+        .timeout(Duration(seconds: (10.0 * (prefs.getDouble("timeoutMultiplier") ?? 1.0)).round()));
     bool alreadyProgressed = false;
     await for (final res in stream) {
       double tmpPercent = ((res.completed ?? 0).toInt() / (res.total ?? 100).toInt());
@@ -392,7 +392,7 @@ void addModel(BuildContext context, Function setState) async {
       }
       setDialogState!(() {});
     }
-    if (prefs!.getBool("resetOnModelSelect") ?? true && allowMultipleChats) {
+    if (prefs.getBool("resetOnModelSelect") ?? true && allowMultipleChats) {
       messages = [];
       chatUuid = null;
     }
@@ -402,7 +402,7 @@ void addModel(BuildContext context, Function setState) async {
     }
     bool exists = false;
     try {
-      var request = await client.listModels().timeout(Duration(seconds: (10.0 * (prefs!.getDouble("timeoutMultiplier") ?? 1.0)).round()));
+      var request = await client.listModels().timeout(Duration(seconds: (10.0 * (prefs.getDouble("timeoutMultiplier") ?? 1.0)).round()));
       for (var element in request.models!) {
         if (element.model == model) {
           exists = true;
@@ -418,8 +418,8 @@ void addModel(BuildContext context, Function setState) async {
         multimodal = false;
         chatAllowed = false;
       });
-      prefs?.remove("model");
-      prefs?.setBool("multimodal", multimodal);
+      prefs.remove("model");
+      prefs.setBool("multimodal", multimodal);
       Navigator.of(mainContext!).pop();
       if (!exists) {
         ScaffoldMessenger.of(mainContext!).showSnackBar(SnackBar(content: Text(downloadFailedText), showCloseIcon: true));
@@ -428,8 +428,8 @@ void addModel(BuildContext context, Function setState) async {
       }
       return;
     }
-    prefs?.setString("model", model!);
-    prefs?.setBool("multimodal", multimodal);
+    prefs.setString("model", model!);
+    prefs.setBool("multimodal", multimodal);
     setState(() {
       chatAllowed = true;
     });
@@ -445,8 +445,8 @@ void addModel(BuildContext context, Function setState) async {
 /// @param uuid 聊天的唯一標識符
 void saveChat(String uuid, Function setState) async {
   int index = -1;
-  for (var i = 0; i < (prefs!.getStringList("chats") ?? []).length; i++) {
-    if (jsonDecode((prefs!.getStringList("chats") ?? [])[i])["uuid"] == uuid) {
+  for (var i = 0; i < (prefs.getStringList("chats") ?? []).length; i++) {
+    if (jsonDecode((prefs.getStringList("chats") ?? [])[i])["uuid"] == uuid) {
       index = i;
     }
   }
@@ -469,39 +469,39 @@ void saveChat(String uuid, Function setState) async {
     }
   }
   if (messages.isEmpty && uuid == chatUuid) {
-    for (var i = 0; i < (prefs!.getStringList("chats") ?? []).length; i++) {
-      if (jsonDecode((prefs!.getStringList("chats") ?? [])[i])["uuid"] == chatUuid) {
-        List<String> tmp = prefs!.getStringList("chats")!;
+    for (var i = 0; i < (prefs.getStringList("chats") ?? []).length; i++) {
+      if (jsonDecode((prefs.getStringList("chats") ?? [])[i])["uuid"] == chatUuid) {
+        List<String> tmp = prefs.getStringList("chats")!;
         tmp.removeAt(i);
-        prefs!.setStringList("chats", tmp);
+        prefs.setStringList("chats", tmp);
         chatUuid = null;
         return;
       }
     }
   }
-  if (jsonDecode((prefs!.getStringList("chats") ?? [])[index])["messages"].length >= 1) {
-    if (jsonDecode(jsonDecode((prefs!.getStringList("chats") ?? [])[index])["messages"])[0]["role"] == "system") {
-      history.add({"role": "system", "content": jsonDecode(jsonDecode((prefs!.getStringList("chats") ?? [])[index])["messages"])[0]["content"]});
+  if (jsonDecode((prefs.getStringList("chats") ?? [])[index])["messages"].length >= 1) {
+    if (jsonDecode(jsonDecode((prefs.getStringList("chats") ?? [])[index])["messages"])[0]["role"] == "system") {
+      history.add({"role": "system", "content": jsonDecode(jsonDecode((prefs.getStringList("chats") ?? [])[index])["messages"])[0]["content"]});
     }
   } else {
-    var system = prefs?.getString("system") ?? "您是一位提供一般醫療資訊和指導的人工智慧醫生。您可以提供事實，提出常見病症的可能原因和治療方法，並提倡健康的習慣。然而，您無法取代專業的醫療建議、診斷或治療。始終提醒使用者諮詢合格的醫療保健提供者以獲得個人化護理。";
-    if (prefs!.getBool("noMarkdown") ?? false) {
+    var system = prefs.getString("system") ?? "您是一位提供一般醫療資訊和指導的人工智慧醫生。您可以提供事實，提出常見病症的可能原因和治療方法，並提倡健康的習慣。然而，您無法取代專業的醫療建議、診斷或治療。始終提醒使用者諮詢合格的醫療保健提供者以獲得個人化護理。";
+    if (prefs.getBool("noMarkdown") ?? false) {
       system += " You must not use markdown or any other formatting language in any way!";
     }
     history.add({"role": "system", "content": system});
   }
   history = history.reversed.toList();
-  List<String> tmp = prefs!.getStringList("chats") ?? [];
+  List<String> tmp = prefs.getStringList("chats") ?? [];
   tmp.removeAt(index);
   tmp.insert(
       0,
       jsonEncode({
-        "title": jsonDecode((prefs!.getStringList("chats") ?? [])[index])["title"],
+        "title": jsonDecode((prefs.getStringList("chats") ?? [])[index])["title"],
         "uuid": uuid,
         "model": model,
         "messages": jsonEncode(history)
       }));
-  prefs!.setStringList("chats", tmp);
+  prefs.setStringList("chats", tmp);
   setState(() {});
 }
 
@@ -509,8 +509,8 @@ void saveChat(String uuid, Function setState) async {
 /// @param uuid 要載入的聊天記錄的唯一標識符
 void loadChat(String uuid, Function setState) {
   int index = -1;
-  for (var i = 0; i < (prefs!.getStringList("chats") ?? []).length; i++) {
-    if (jsonDecode((prefs!.getStringList("chats") ?? [])[i])["uuid"] == uuid) {
+  for (var i = 0; i < (prefs.getStringList("chats") ?? []).length; i++) {
+    if (jsonDecode((prefs.getStringList("chats") ?? [])[i])["uuid"] == uuid) {
       index = i;
     }
   }
@@ -518,7 +518,7 @@ void loadChat(String uuid, Function setState) {
   messages = [];
   model = null;
   setState(() {});
-  var history = jsonDecode(jsonDecode((prefs!.getStringList("chats") ?? [])[index])["messages"]);
+  var history = jsonDecode(jsonDecode((prefs.getStringList("chats") ?? [])[index])["messages"]);
   for (var i = 0; i < history.length; i++) {
     if (history[i]["role"] != "system") {
       if ((history[i] as Map).containsKey("type") && history[i]["type"] == "image") {
@@ -536,7 +536,7 @@ void loadChat(String uuid, Function setState) {
       }
     }
   }
-  model = jsonDecode((prefs!.getStringList("chats") ?? [])[index])["model"];
+  model = jsonDecode((prefs.getStringList("chats") ?? [])[index])["model"];
   setState(() {});
 }
 
@@ -555,11 +555,11 @@ Future<bool> deleteChatDialog(BuildContext context, Function setState,
   void delete(BuildContext context) {
     returnValue = true;
     if (takeAction) {
-      for (var i = 0; i < (prefs!.getStringList("chats") ?? []).length; i++) {
-        if (jsonDecode((prefs!.getStringList("chats") ?? [])[i])["uuid"] == uuid) {
-          List<String> tmp = prefs!.getStringList("chats")!;
+      for (var i = 0; i < (prefs.getStringList("chats") ?? []).length; i++) {
+        if (jsonDecode((prefs.getStringList("chats") ?? [])[i])["uuid"] == uuid) {
+          List<String> tmp = prefs.getStringList("chats")!;
           tmp.removeAt(i);
-          prefs!.setStringList("chats", tmp);
+          prefs.setStringList("chats", tmp);
           break;
         }
       }
@@ -573,7 +573,7 @@ Future<bool> deleteChatDialog(BuildContext context, Function setState,
     }
   }
 
-  if ((prefs!.getBool("askBeforeDeletion") ?? false) && additionalCondition) {
+  if ((prefs.getBool("askBeforeDeletion") ?? false) && additionalCondition) {
     resetSystemNavigation(context, systemNavigationBarColor: Color.alphaBlend(Colors.black54, Theme.of(context).colorScheme.surface));
     await showDialog(
         context: context,

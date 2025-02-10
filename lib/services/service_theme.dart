@@ -74,7 +74,7 @@ ThemeData themeCurrent(BuildContext context) {
 /// 獲取淺色主題設置
 /// 如果未使用設備主題,則返回預設淺色主題
 ThemeData themeLight() {
-  if (!(prefs?.getBool("useDeviceTheme") ?? false) || colorSchemeLight == null) {
+  if (!(prefs.getBool("useDeviceTheme") ?? false) || colorSchemeLight == null) {
     return themeModifier(ThemeData.from(
         colorScheme: const ColorScheme(
             brightness: Brightness.light,
@@ -95,7 +95,7 @@ ThemeData themeLight() {
 /// 獲取深色主題設置
 /// 如果未使用設備主題,則返回預設深色主題
 ThemeData themeDark() {
-  if (!(prefs?.getBool("useDeviceTheme") ?? false) || colorSchemeDark == null) {
+  if (!(prefs.getBool("useDeviceTheme") ?? false) || colorSchemeDark == null) {
     return themeModifier(ThemeData.from(
         colorScheme: const ColorScheme(
             brightness: Brightness.dark,
@@ -116,7 +116,7 @@ ThemeData themeDark() {
 /// 獲取當前主題模式
 /// 返回系統、淺色或深色模式
 ThemeMode themeMode() {
-  return ((prefs?.getString("brightness") ?? "system") == "system")
+  return ((prefs.getString("brightness") ?? "system") == "system")
       ? ThemeMode.system
-      : ((prefs!.getString("brightness") == "dark") ? ThemeMode.dark : ThemeMode.light);
+      : ((prefs.getString("brightness") == "dark") ? ThemeMode.dark : ThemeMode.light);
 }

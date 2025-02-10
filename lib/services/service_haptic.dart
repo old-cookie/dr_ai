@@ -7,7 +7,7 @@ import '../main.dart';
 /// 檢查觸覺反饋是否已啟用
 /// 返回: true 表示已啟用，false 表示已禁用
 bool _isHapticEnabled() {
-  return prefs?.getBool('enableHaptic') ?? true;
+  return prefs.getBool('enableHaptic') ?? true;
 }
 
 /// 執行觸覺反饋的通用方法
