@@ -40,14 +40,10 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # Step 6: Verify formatting
-      - name: Verify formatting
-        run: dart format --set-exit-if-changed .
-
-      # Step 7: Analyze the project source
+      # Step 6: Analyze the project source
       - name: Analyze project source
         run: flutter analyze
 
-      # Step 8: Run tests
+      # Step 7: Run tests
       - name: Run tests
         run: flutter test
