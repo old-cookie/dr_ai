@@ -23,8 +23,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.27.4" # Replace with desired version
-          channel: "stable"
+          flutter-version: "3.27.4" # Specify Flutter version or channel
 
       # Step 4: Cache Flutter build artifacts
       - name: Cache Flutter build artifacts
@@ -43,7 +42,7 @@ jobs:
 
       # Step 6: Verify formatting
       - name: Verify formatting
-        run: flutter format --set-exit-if-changed .
+        run: dart format --set-exit-if-changed .
 
       # Step 7: Analyze the project source
       - name: Analyze project source
