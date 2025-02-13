@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -9,6 +10,8 @@ import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'service_haptic.dart';
 import 'service_setter.dart';
 import '../main.dart';
+import 'package:flutter_opencc_ffi/flutter_opencc_ffi.dart';
+Converter converter = createConverter('assets/OpenCC-ver.1.1.9/data/config/s2hk.json');
 
 /// 提供聊天訊息發送和歷史記錄管理的服務
 /// 包含與 Ollama API 通訊、訊息歷史處理和標題生成等功能
@@ -234,8 +237,10 @@ Future<String> send(
           )
           .timeout(Duration(seconds: (30.0 * (prefs.getDouble("timeoutMultiplier") ?? 1.0)).round()));
       if (chatAllowed) return "";
-      messages.insert(0, types.TextMessage(author: assistant, id: newId, text: request.message.content));
-      text = request.message.content;
+      String text = request.message.content;
+      log(text);
+      String s2hkText = converter.convert(text);
+      messages.insert(0, types.TextMessage(author: assistant, id: newId, text: (s2hkText)));
       setState(() {});
       heavyHaptic();
     }

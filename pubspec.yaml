@@ -1,7 +1,7 @@
 name: dr_ai
 description: "A new Flutter project."
 publish_to: 'none'
-version: 2.0.0+2
+version: 2.1.0+2
 
 environment:
   sdk: ^3.5.3
@@ -45,6 +45,7 @@ dependencies:
   universal_html: ^2.2.4
   pwa_install: ^0.0.6
   flutter_chat_types: ^3.6.2
+  flutter_opencc_ffi: ^0.0.3
 
 dev_dependencies:
   flutter_test:
