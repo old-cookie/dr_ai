@@ -5,6 +5,8 @@ import '../widgets/widgets_units/mirai_dropdown_item_widget.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screen_vaccine_record.dart'; // Ensure you import the Result screen
+import '../widgets/widgets_units/widget_button.dart';
+import '../widgets/widgets_units/widget_title.dart';
 
 class ScreenAddVaccineRecord extends StatefulWidget {
   const ScreenAddVaccineRecord({super.key});
@@ -87,14 +89,13 @@ class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 15,
-          color: Colors.blue,
         ),
       ),
       initialDateTime: DateTime.now(),
       maxDateTime: DateTime.now(),
       minDateTime: DateTime(1980),
-      pickerTextStyle: const TextStyle(
-        color: Colors.blue,
+      pickerTextStyle: TextStyle(
+        color: Theme.of(context).primaryColor,
         fontWeight: FontWeight.bold,
         fontSize: 12,
       ),
@@ -115,9 +116,8 @@ class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Vaccines Record'),
-        backgroundColor: Theme.of(context).primaryColorDark,
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: ListView(
@@ -125,7 +125,7 @@ class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
             const SizedBox(height: 16),
 
             // First Dropdown for Vaccine Selection
-            const Text('Vaccine Name'),
+            widgetTitle('Vaccine Name', top: 0, bottom: 8),
             MiraiDropdownWidget<String>(
               valueNotifier: valueNotifierFirst,
               showOtherAndItsTextField: true,
@@ -146,7 +146,7 @@ class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
             const SizedBox(height: 16),
 
             // Second Dropdown for Dose Sequence
-            const Text('Dose Sequence'),
+            widgetTitle('Dose Sequence', top: 0, bottom: 8),
             MiraiDropdownWidget<String>(
               valueNotifier: valueNotifierSecond,
               showOtherAndItsTextField: true,
@@ -167,21 +167,31 @@ class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
             const SizedBox(height: 16),
 
             // Date Picker Section
-            const Text('Date Received'),
+            widgetTitle('Date Received', top: 0, bottom: 8),
             ElevatedButton(
               onPressed: () => _openDatePicker(context),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                foregroundColor: Theme.of(context).colorScheme.onPrimary,
+              ),
               child: const Text('Select Date'),
             ),
             if (selectedDate != null) 
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Text('Selected Date: $selectedDate', style: TextStyle(fontSize: 16)),
+                child: Text(
+                  'Selected Date: $selectedDate',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                ),
               ),
 
             const SizedBox(height: 16),
 
             // Third Dropdown for Place Given
-            const Text('Place Given (Optional)'),
+            widgetTitle('Place Given (Optional)', top: 0, bottom: 8),
             MiraiDropdownWidget<String>(
               valueNotifier: valueNotifierThird,
               showOtherAndItsTextField: true,
@@ -202,7 +212,7 @@ class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
             const SizedBox(height: 16),
 
             // Remark Section
-            const Text('Remark (Optional)'),
+            widgetTitle('Remark (Optional)', top: 0, bottom: 8),
             TextField(
               controller: remarkController,
               maxLines: 3,
@@ -215,20 +225,16 @@ class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
             const SizedBox(height: 16),
 
             // Save Button
-            ElevatedButton(
-              onPressed: _saveRecord,
-              child: const Text('Save'),
+            widgetButton(
+              'Save',
+              Icons.save,
+              _saveRecord,
+              context: context,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pop(context); // Navigate back to Result page
-        },
-        child: const Icon(Icons.check),
-        tooltip: 'Save and return to results',
-      ),
+      )
     );
   }
 }
