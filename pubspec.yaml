@@ -47,6 +47,14 @@ dependencies:
   flutter_chat_types: ^3.6.2
   flutter_opencc_ffi: ^0.0.3
 
+  
+  bottom_picker: ^2.9.0
+  cupertino_icons: ^1.0.8
+  google_fonts: ^6.2.1
+  font_awesome_flutter: ^10.7.0
+  mirai_dropdown_menu: ^0.0.9+1
+  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

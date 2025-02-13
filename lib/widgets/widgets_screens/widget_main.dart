@@ -18,7 +18,7 @@ import 'package:pwa_install/pwa_install.dart' as pwa;
 import 'package:universal_html/html.dart' as html;
 import '../../screens/screen_settings.dart';
 import '../../screens/screen_voice.dart';
-//import '../../screens/screen_vaccine_record.dart';
+import '../../screens/screen_vaccine_record.dart';
 import '../../services/service_setter.dart';
 import '../../services/service_haptic.dart';
 import '../../services/service_sender.dart';
@@ -125,7 +125,7 @@ class _MainAppState extends State<MainApp> {
                     });
 
                     ///TODO: Navigator
-                    //Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenVaccineRecord()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenVaccineRecord()));
                   },
                   child: Padding(
                       padding: const EdgeInsets.only(top: 16, bottom: 16),
