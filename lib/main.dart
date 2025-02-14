@@ -1,3 +1,6 @@
+/// Dr.AI Flutter 應用程式主要入口檔案
+/// 包含應用程式配置、初始化和主要UI結構
+
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -18,20 +21,21 @@ import 'services/service_theme.dart';
 
 ///*******************************************
 /// 客戶端配置部分
+/// 包含所有可自定義的應用程式設定
 ///*******************************************
 
 /// 是否使用固定主機地址
-/// 若為 false，則顯示對話框讓用戶輸入
+/// 設為 false 時會顯示主機輸入對話框
 const bool useHost = true;
 
-/// Ollama 服務器地址，必須能從客戶端訪問
-/// 不需要包含結尾的斜線
-//const String fixedHost = "http://192.168.50.12:11434";
+/// Ollama 服務器地址設定
+/// 必須確保客戶端可以訪問此地址
+/// @note 不要包含結尾的斜線
 const String fixedHost = "http://100.64.50.12:11434";
 
 /// 是否使用固定模型
 /// 若為 false，則顯示模型選擇器
-const bool useModel = true;
+const bool useModel = false;
 
 /// 預設的 AI 模型名稱
 const String fixedModel = "oldcookie/dr_ai:q5_1";
@@ -49,13 +53,18 @@ const bool allowMultipleChats = true;
 
 ///*******************************************
 /// 全局變量
+/// 應用程式運行時的關鍵狀態管理
 ///*******************************************
 
-/// 本地存儲實例與加密金鑰
+/// 加密存儲相關設定
+/// @param encryptionKey 用於加密本地存儲的金鑰
+/// @param prefs 加密的SharedPreferences實例
 const String encryptionKey = "draidraidraidrai";
 late EncryptedSharedPreferences prefs;
 
-/// 當前選擇的模型和主機
+/// 模型和主機配置
+/// @param model 當前選擇的AI模型
+/// @param host 當前連接的服務器地址
 String? model;
 String? host;
 
@@ -70,8 +79,8 @@ String hoveredChat = "";
 
 /// 主要組件引用
 GlobalKey<ChatState>? chatKey;
-final user = types.User(id: const Uuid().v4());
-final assistant = types.User(id: const Uuid().v4());
+final user = types.User(id: const Uuid().v8());
+final assistant = types.User(id: const Uuid().v8());
 
 /// UI 狀態控制
 bool settingsOpen = false;
@@ -93,6 +102,8 @@ BuildContext? mainContext;
 void Function(void Function())? setGlobalState;
 void Function(void Function())? setMainAppState;
 
+/// 主應用程式入口
+/// 初始化必要的服務和配置
 void main() async {
   // 確保 Flutter 綁定已初始化
   WidgetsFlutterBinding.ensureInitialized();
@@ -126,6 +137,8 @@ void main() async {
   }
 }
 
+/// 主應用程式狀態管理類
+/// 負責管理應用程式的整體生命週期和狀態
 class App extends StatefulWidget {
   const App({super.key});
 
@@ -133,9 +146,9 @@ class App extends StatefulWidget {
   State<App> createState() => _AppState();
 }
 
+/// 應用程式狀態實現
+/// 包含初始化邏輯和UI構建
 class _AppState extends State<App> {
-
-
   @override
   void initState() {
     super.initState();
@@ -146,8 +159,7 @@ class _AppState extends State<App> {
       } catch (_) {}
 
       try {
-        if ((await Permission.bluetoothConnect.isGranted) && 
-            (await Permission.microphone.isGranted)) {
+        if ((await Permission.bluetoothConnect.isGranted) && (await Permission.microphone.isGranted)) {
           voiceSupported = await speech.initialize();
         } else {
           prefs.setBool("voiceModeEnabled", false);
@@ -157,7 +169,7 @@ class _AppState extends State<App> {
         prefs.setBool("voiceModeEnabled", false);
         voiceSupported = false;
       }
-      
+
       setState(() {});
     }
 

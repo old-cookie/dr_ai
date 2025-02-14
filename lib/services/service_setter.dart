@@ -14,8 +14,12 @@ import 'service_haptic.dart';
 import 'service_sender.dart';
 import 'service_theme.dart';
 
-/// 設置 AI 模型的對話框
-/// 顯示可用模型列表供使用者選擇
+/// 設定服務模組
+/// 處理應用程式的全域設定，包含模型選擇、聊天記錄管理等功能
+
+/// 顯示模型選擇對話框
+/// @param context 上下文
+/// @param setState 狀態更新函數
 void setModel(BuildContext context, Function setState) {
   List<String> models = []; // 存儲模型名稱
   List<String> modelsReal = []; // 存儲完整模型標識符
@@ -219,8 +223,9 @@ void setModel(BuildContext context, Function setState) {
   }
 }
 
-/// 添加新的 AI 模型
-/// 顯示輸入對話框讓使用者輸入模型名稱並下載
+/// 顯示新增模型對話框
+/// @param context 上下文
+/// @param setState 狀態更新函數
 void addModel(BuildContext context, Function setState) async {
   var client = llama.OllamaClient(headers: (jsonDecode(prefs.getString("hostHeaders") ?? "{}") as Map).cast<String, String>(), baseUrl: "$host/api");
   bool canceled = false;
@@ -526,13 +531,13 @@ void loadChat(String uuid, Function setState) {
             0,
             types.ImageMessage(
                 author: (history[i]["role"] == "user") ? user : assistant,
-                id: const Uuid().v4(),
+                id: const Uuid().v8(),
                 name: history[i]["name"],
                 size: int.parse(history[i]["size"]),
                 uri: "data:image/png;base64,${history[i]["content"]}"));
       } else {
         messages.insert(
-            0, types.TextMessage(author: (history[i]["role"] == "user") ? user : assistant, id: const Uuid().v4(), text: history[i]["content"]));
+            0, types.TextMessage(author: (history[i]["role"] == "user") ? user : assistant, id: const Uuid().v8(), text: history[i]["content"]));
       }
     }
   }
@@ -540,12 +545,12 @@ void loadChat(String uuid, Function setState) {
   setState(() {});
 }
 
-/// 刪除聊天記錄的確認對話框
+/// 顯示刪除聊天記錄的確認對話框
 /// @param context 上下文
 /// @param setState 狀態更新函數
-/// @param takeAction 是否執行刪除操作
-/// @param additionalCondition 額外條件
-/// @param uuid 要刪除的聊天記錄的唯一標識符
+/// @param takeAction 是否執行實際刪除操作
+/// @param additionalCondition 額外的條件檢查
+/// @param uuid 要刪除的聊天記錄標識符
 /// @param popSidebar 是否關閉側邊欄
 Future<bool> deleteChatDialog(BuildContext context, Function setState,
     {bool takeAction = true, bool? additionalCondition, String? uuid, bool popSidebar = false}) async {

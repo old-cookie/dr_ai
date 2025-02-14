@@ -11,17 +11,16 @@ import 'service_haptic.dart';
 import 'service_setter.dart';
 import '../main.dart';
 import 'package:flutter_opencc_ffi/flutter_opencc_ffi.dart';
-Converter converter = createConverter('assets/OpenCC-ver.1.1.9/data/config/s2hk.json');
+/// 訊息發送服務
+/// 處理與 AI 模型的通訊、訊息歷史記錄管理和對話標題生成
+/// 簡體轉繁體（香港）轉換器實例
+Converter converter = createConverter('s2hk');
 
-/// 提供聊天訊息發送和歷史記錄管理的服務
-/// 包含與 Ollama API 通訊、訊息歷史處理和標題生成等功能
-
-/// 存儲當前對話中的圖片列表
+/// 當前對話中的圖片列表
 List<String> images = [];
 
-/// 獲取聊天歷史記錄
-/// [addToSystem] 可選的系統提示附加訊息
-/// 返回: 格式化後的歷史訊息列表
+/// 組裝聊天歷史記錄
+/// @param addToSystem 可選的系統提示附加訊息
 Future<List<llama.Message>> getHistory([String? addToSystem]) async {
   var system = prefs.getString("system") ?? "您是一位提供一般醫療資訊和指導的人工智慧醫生。您可以提供事實，提出常見病症的可能原因和治療方法，並提倡健康的習慣。然而，您無法取代專業的醫療建議、診斷或治療。始終提醒使用者諮詢合格的醫療保健提供者以獲得個人化護理。";
   if (prefs.getBool("noMarkdown") ?? false) {
@@ -53,9 +52,8 @@ Future<List<llama.Message>> getHistory([String? addToSystem]) async {
   return history;
 }
 
-/// 獲取指定UUID的聊天歷史記錄字符串形式
-/// [uuid] 聊天會話的唯一標識符
-/// 返回: 歷史訊息列表
+/// 獲取指定對話的歷史記錄字符串形式
+/// @param uuid 對話的唯一標識符
 List getHistoryString([String? uuid]) {
   uuid ??= chatUuid!;
   List messages = [];
@@ -76,9 +74,9 @@ List getHistoryString([String? uuid]) {
   return messages;
 }
 
-/// 使用 AI 為對話生成標題
-/// [history] 聊天歷史記錄
-/// 返回: 生成的標題
+/// 使用AI生成對話標題
+/// @param history 對話歷史記錄
+/// @returns 生成的標題文字
 Future<String> getTitleAi(List history) async {
   final generated = await (llama.OllamaClient(
     headers: (jsonDecode(prefs.getString("hostHeaders") ?? "{}") as Map).cast<String, String>(),
@@ -115,8 +113,8 @@ Future<String> getTitleAi(List history) async {
   return title.trim();
 }
 
-/// 設置 AI 生成的對話標題
-/// [history] 聊天歷史記錄
+/// 設置AI生成的對話標題
+/// @param history 對話歷記錄
 Future<void> setTitleAi(List history) async {
   try {
     var title = await getTitleAi(history);
@@ -133,13 +131,13 @@ Future<void> setTitleAi(List history) async {
   } catch (_) {}
 }
 
-/// 發送訊息並處理回應
-/// [value] 要發送的訊息內容
-/// [context] 構建上下文
-/// [setState] 狀態更新函數
-/// [onStream] 串流回調函數
-/// [addToSystem] 附加系統提示
-/// 返回: AI 的回應文本
+/// 發送訊息並處理AI回應
+/// @param value 要發送的訊息內容
+/// @param context 當前上下文
+/// @param setState 狀態更新函數
+/// @param onStream 串流回調函數
+/// @param addToSystem 附加系統提示
+/// @returns AI的回應文本
 Future<String> send(
   String value,
   BuildContext context,
@@ -176,7 +174,7 @@ Future<String> send(
   bool newChat = false;
   if (chatUuid == null) {
     newChat = true;
-    chatUuid = const Uuid().v4();
+    chatUuid = const Uuid().v8();
     prefs.setStringList(
       "chats",
       (prefs.getStringList("chats") ?? []).append([
@@ -194,12 +192,12 @@ Future<String> send(
     content: value.trim(),
     images: images.isNotEmpty ? images : null,
   ));
-  messages.insert(0, types.TextMessage(author: user, id: const Uuid().v4(), text: value.trim()));
+  messages.insert(0, types.TextMessage(author: user, id: const Uuid().v8(), text: value.trim()));
   saveChat(chatUuid!, setState);
   setState(() {});
   chatAllowed = false;
   String text = "";
-  String newId = const Uuid().v4();
+  String newId = const Uuid().v8();
   llama.OllamaClient client = llama.OllamaClient(
     headers: (jsonDecode(prefs.getString("hostHeaders") ?? "{}") as Map).cast<String, String>(),
     baseUrl: "$host/api",
@@ -219,13 +217,33 @@ Future<String> send(
         text += res.message.content;
         messages.removeWhere((message) => message.id == newId);
         if (chatAllowed) return "";
-        messages.insert(0, types.TextMessage(author: assistant, id: newId, text: text));
+        // 包裹 opencc 轉換以捕捉例外，避免連線中斷
+        String translated;
+        try {
+          translated = converter.convert(text);
+        } catch (error) {
+          log("OpenCC conversion error: $error");
+          translated = text;
+        }
+        messages.insert(0, types.TextMessage(author: assistant, id: newId, text: translated));
         if (onStream != null) {
-          onStream(text, false);
+          onStream(translated, false);
         }
         setState(() {});
         heavyHaptic();
       }
+      // 串流回應完成後檢查
+      messages.removeWhere((message) => message.id == newId);
+      String finalText = text;
+      if (finalText.trim().startsWith("<think>")) {
+        finalText = finalText.replaceAll(RegExp(r"<think>.*?</think>", dotAll: true), "");
+      }
+      try {
+        finalText = converter.convert(finalText);
+      } catch (_) {}
+      messages.insert(0, types.TextMessage(author: assistant, id: newId, text: finalText));
+      // 記錄整體的 AI 回應（串流形式）
+      log("AI response stream: $text");
     } else {
       llama.GenerateChatCompletionResponse request = await client
           .generateChatCompletion(
@@ -238,9 +256,19 @@ Future<String> send(
           .timeout(Duration(seconds: (30.0 * (prefs.getDouble("timeoutMultiplier") ?? 1.0)).round()));
       if (chatAllowed) return "";
       String text = request.message.content;
-      log(text);
-      String s2hkText = converter.convert(text);
-      messages.insert(0, types.TextMessage(author: assistant, id: newId, text: (s2hkText)));
+      if (text.trim().startsWith("<think>")) {
+        text = text.replaceAll(RegExp(r"<think>.*?</think>", dotAll: true), "");
+      }
+      // 記錄 AI 回應（非串流形式）
+      log("AI response non-stream: $text");
+      String s2hkText;
+      try {
+        s2hkText = converter.convert(text);
+      } catch (error) {
+        log("OpenCC conversion error: $error");
+        s2hkText = text;
+      }
+      messages.insert(0, types.TextMessage(author: assistant, id: newId, text: s2hkText));
       setState(() {});
       heavyHaptic();
     }

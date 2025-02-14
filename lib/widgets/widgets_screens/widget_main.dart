@@ -18,14 +18,15 @@ import 'package:pwa_install/pwa_install.dart' as pwa;
 import 'package:universal_html/html.dart' as html;
 import '../../screens/screen_settings.dart';
 import '../../screens/screen_voice.dart';
-import '../../screens/screen_vaccine_record.dart';
+import '../../screens/vaccine/screen_vaccine_record.dart';
 import '../../services/service_setter.dart';
 import '../../services/service_haptic.dart';
 import '../../services/service_sender.dart';
 import '../../services/service_desktop.dart';
 import '../../services/service_theme.dart';
 import '../../main.dart';
-
+import 'package:flutter_opencc_ffi/flutter_opencc_ffi.dart';
+Converter converter = createConverter('assets/OpenCC-ver.1.1.9/data/config/s2hk.json');
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
 
@@ -119,21 +120,13 @@ class _MainAppState extends State<MainApp> {
                     if (!shouldUseDesktopLayout(context)) {
                       Navigator.of(context).pop();
                     }
-                    setState(() {
-                      ///TODO: State(add in main.dart)
-                      //vaccineOpen = true;
-                    });
-
-                    ///TODO: Navigator
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenVaccineRecord()));
                   },
                   child: Padding(
                       padding: const EdgeInsets.only(top: 16, bottom: 16),
                       child: Row(children: [
-                        ///TODO: Icon(search from material icon)
                         Padding(padding: const EdgeInsets.only(left: 16, right: 12), child: const Icon(Icons.vaccines_rounded)),
                         Expanded(
-                          ///TODO: Text(app_xx.arb)
                           child: Text(AppLocalizations.of(context)!.optionVaccine,
                               softWrap: false, overflow: TextOverflow.fade, style: const TextStyle(fontWeight: FontWeight.w500)),
                         ),
@@ -886,7 +879,7 @@ class _MainAppState extends State<MainApp> {
                                               0,
                                               types.ImageMessage(
                                                   author: user,
-                                                  id: const Uuid().v4(),
+                                                  id: const Uuid().v8(),
                                                   name: value.files.first.name,
                                                   size: value.files.first.size,
                                                   uri: "data:image/png;base64,$encoded"));
@@ -941,7 +934,7 @@ class _MainAppState extends State<MainApp> {
                                                               author: user,
                                                               createdAt: DateTime.now().millisecondsSinceEpoch,
                                                               height: image.height.toDouble(),
-                                                              id: const Uuid().v4(),
+                                                              id: const Uuid().v8(),
                                                               name: result.name,
                                                               size: bytes.length,
                                                               uri: result.path,
@@ -976,7 +969,7 @@ class _MainAppState extends State<MainApp> {
                                                               author: user,
                                                               createdAt: DateTime.now().millisecondsSinceEpoch,
                                                               height: image.height.toDouble(),
-                                                              id: const Uuid().v4(),
+                                                              id: const Uuid().v8(),
                                                               name: result.name,
                                                               size: bytes.length,
                                                               uri: result.path,

@@ -779,5 +779,130 @@
                 "description": "Version number of the app"
             }
         }
+    },
+    "vaccineRecordTitle": "Vaccine Record",
+    "@vaccineRecordTitle": {
+        "description": "Title of the vaccine record page"
+    },
+    "vaccineDetailTitle": "Vaccination Details",
+    "@vaccineDetailTitle": {
+        "description": "Title of the vaccine detail page"
+    },
+    "vaccineAddTitle": "Add Vaccination Record",
+    "@vaccineAddTitle": {
+        "description": "Title of add vaccine record page"
+    },
+    "vaccineName": "Vaccine Name",
+    "@vaccineName": {
+        "description": "Label for vaccine name field"
+    },
+    "vaccineDose": "Dose Sequence",
+    "@vaccineDose": {
+        "description": "Label for dose sequence field"
+    },
+    "vaccineDate": "Date Received",
+    "@vaccineDate": {
+        "description": "Label for date field"
+    },
+    "vaccinePlace": "Place Given (Optional)",
+    "@vaccinePlace": {
+        "description": "Label for place field"
+    },
+    "vaccineRemark": "Remark (Optional)",
+    "@vaccineRemark": {
+        "description": "Label for remark field"
+    },
+    "vaccinePhoto": "Vaccination Record Photo (Optional)",
+    "@vaccinePhoto": {
+        "description": "Label for photo upload"
+    },
+    "pickImage": "Pick Image",
+    "@pickImage": {
+        "description": "Button text for image picker"
+    },
+    "saveRecord": "Save",
+    "@saveRecord": {
+        "description": "Button text for save record"
+    },
+    "deleteRecord": "Delete Record",
+    "@deleteRecord": {
+        "description": "Title for delete confirmation"
+    },
+    "deleteConfirm": "Are you sure you want to delete this record?",
+    "@deleteConfirm": {
+        "description": "Confirmation message for deletion"
+    },
+    "cancel": "Cancel",
+    "@cancel": {
+        "description": "Button text for cancel"
+    },
+    "delete": "Delete",
+    "@delete": {
+        "description": "Button text for delete"
+    },
+    "selectDate": "Select Date",
+    "@selectDate": {
+        "description": "Button text for date picker"
+    },
+    "imageFormat": "Only PNG or JPG images supported",
+    "@imageFormat": {
+        "description": "Error message for invalid image format"
+    },
+    "cropImage": "Crop Image",
+    "@cropImage": {
+        "description": "Title of the crop image screen",
+        "context": "Visible in the crop image view"
+    },
+    "saveImage": "Save Image",
+    "@saveImage": {
+        "description": "Button text for save cropped image",
+        "context": "Visible in the crop image view"
+    },
+    "errorLoadingRecords": "Error loading records.",
+    "noRecordsFound": "No records found.",
+    "notSelected": "Not selected",
+    "@notSelected": {
+        "description": "Text shown when no date is selected",
+        "context": "Used in various places where a selection is required"
+    },
+    "vaccineFieldDate": "Date: {date}",
+    "@vaccineFieldDate": {
+        "description": "Date field label with value",
+        "placeholders": {
+            "date": {
+                "type": "String",
+                "example": "2023/12/31"
+            }
+        }
+    },
+    "vaccineFieldDose": "Dose: {dose}",
+    "@vaccineFieldDose": {
+        "description": "Dose field label with value",
+        "placeholders": {
+            "dose": {
+                "type": "String",
+                "example": "1st"
+            }
+        }
+    },
+    "vaccineFieldPlace": "Place: {place}",
+    "@vaccineFieldPlace": {
+        "description": "Place field label with value",
+        "placeholders": {
+            "place": {
+                "type": "String",
+                "example": "Hospital"
+            }
+        }
+    },
+    "vaccineFieldRemarks": "Remarks: {remarks}",
+    "@vaccineFieldRemarks": {
+        "description": "Remarks field label with value",
+        "placeholders": {
+            "remarks": {
+                "type": "String",
+                "example": "No side effects"
+            }
+        }
     }
 }
