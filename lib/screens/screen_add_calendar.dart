@@ -6,6 +6,7 @@ import '../widgets/widgets_units/widget_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/service_calendar_event.dart';
 import 'dart:convert';
+import '../services/service_notification.dart';
 
 class ScreenAddCalendar extends StatefulWidget {
   const ScreenAddCalendar({super.key});
@@ -72,10 +73,20 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
       notificationMinutes: notificationMinutes,
     );
 
+    // 儲存事件
     final prefs = await SharedPreferences.getInstance();
     List<String> events = prefs.getStringList('calendar_events') ?? [];
     events.add(jsonEncode(event.toJson()));
     await prefs.setStringList('calendar_events', events);
+
+    // 設定通知
+    await NotificationService().scheduleNotification(
+      id: event.dateTime.millisecondsSinceEpoch ~/ 1000,
+      title: '預約提醒',
+      body: '您有一個預約：${event.title}',
+      scheduledDate: event.dateTime,
+      minutesBefore: event.notificationMinutes,
+    );
 
     if (mounted) {
       Navigator.pop(context, true);

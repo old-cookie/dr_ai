@@ -15,6 +15,7 @@ import 'package:pwa_install/pwa_install.dart' as pwa;
 import 'widgets/widgets_screens/widget_main.dart';
 import 'services/service_desktop.dart';
 import 'services/service_theme.dart';
+import 'services/service_notification.dart';
 
 ///*******************************************
 /// 客戶端配置部分
@@ -105,6 +106,7 @@ void Function(void Function())? setMainAppState;
 void main() async {
   // 確保 Flutter 綁定已初始化
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService().initialize();
 
   try {
     // 初始化加密存儲

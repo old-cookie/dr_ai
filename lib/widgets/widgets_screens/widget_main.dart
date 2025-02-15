@@ -26,10 +26,9 @@ import '../../services/service_sender.dart';
 import '../../services/service_desktop.dart';
 import '../../services/service_theme.dart';
 import '../../main.dart';
-import 'package:flutter_opencc_ffi/flutter_opencc_ffi.dart';
-
-Converter converter = createConverter('assets/OpenCC-ver.1.1.9/data/config/s2hk.json');
-
+//import 'package:flutter_opencc_ffi/flutter_opencc_ffi.dart';
+//import 'package:opencc/opencc.dart';
+//import 'package:flutter_open_chinese_convert/flutter_open_chinese_convert.dart';
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
 
