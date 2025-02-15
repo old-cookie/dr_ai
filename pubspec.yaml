@@ -12,7 +12,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   ollama_dart: ^0.2.1
-  intl: any
+  intl: ^0.19.0
   markdown: ^7.3.0
   shared_preferences: ^2.5.1
   encrypt_shared_preferences: ^0.9.8
@@ -50,7 +50,8 @@ dependencies:
   crop_your_image: ^2.0.0
   dropdown_search: ^6.0.2
   omni_datetime_picker: ^2.0.6
-
+  table_calendar: ^3.1.3
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

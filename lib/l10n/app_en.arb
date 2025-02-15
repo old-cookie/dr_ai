@@ -769,6 +769,11 @@
         "description": "Text displayed for Vaccine Record",
         "context": "Visible in the side bar"
     },
+    "optionCalendar": "Calendar",
+    "@optionCalendar": {
+        "description": "Text displayed for Calendar",
+        "context": "Visible in the side bar"
+    },
     "settingsVersion": "Dr.AI v{version}",
     "@settingsVersion": {
         "description": "Text displayed as description for version",
@@ -783,6 +788,10 @@
     "vaccineRecordTitle": "Vaccine Record",
     "@vaccineRecordTitle": {
         "description": "Title of the vaccine record page"
+    },
+    "calendarTitle": "Calendar",
+    "@calendarTitle": {
+        "description": "Title of the Calendar page"
     },
     "vaccineDetailTitle": "Vaccination Details",
     "@vaccineDetailTitle": {

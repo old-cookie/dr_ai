@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:encrypt_shared_preferences/provider.dart';
 import '../../widgets/widgets_units/widget_button.dart';
 import '../../widgets/widgets_units/widget_title.dart';
 import 'dart:convert';
@@ -93,7 +93,6 @@ class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
           });
         }
       }
-    } catch (e) {
     } finally {
       setState(() => _isLoading = false);
     }
@@ -107,7 +106,7 @@ class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
       String selectedPlace = this.selectedPlace ?? thirdListOfItem.first;
       String remarks = remarkController.text;
 
-      final prefs = await SharedPreferences.getInstance();
+      final prefs = EncryptedSharedPreferences.getInstance();
 
       final l10n = AppLocalizations.of(context);
       Map<String, dynamic> recordMap = {

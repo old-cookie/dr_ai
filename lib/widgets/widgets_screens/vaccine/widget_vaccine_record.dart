@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:encrypt_shared_preferences/provider.dart';
 import 'dart:convert';
 import '../../../screens/vaccine/screen_add_vaccine_record.dart';
 import '../../widgets_units/widget_button.dart';
@@ -15,14 +15,14 @@ class WidgetVaccineRecord extends StatefulWidget {
 
 class _WidgetVaccineRecordState extends State<WidgetVaccineRecord> {
   Future<void> _deleteRecord(int index, List<String> submissions) async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = EncryptedSharedPreferences.getInstance();
     submissions.removeAt(index);
     await prefs.setStringList('submissions', submissions);
     setState(() {});
   }
 
   Future<List<String>> _loadSubmissions() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = EncryptedSharedPreferences.getInstance();
     return prefs.getStringList('submissions') ?? [];
   }
 

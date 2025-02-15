@@ -1,6 +1,3 @@
-/// Dr.AI Flutter 應用程式主要入口檔案
-/// 包含應用程式配置、初始化和主要UI結構
-
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -47,6 +44,7 @@ const List<String> recommendedModels = ["oldcookie/dr_ai:q5_1", "oldcookie/dr_ai
 /// 是否允許打開設置頁面
 const bool allowSettings = true;
 const bool allowVaccine = true;
+const bool allowCalendar = true;
 
 /// 是否允許多個聊天對話
 const bool allowMultipleChats = true;
