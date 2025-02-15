@@ -3,7 +3,7 @@ import 'package:table_calendar/table_calendar.dart';
 import '../../services/service_theme.dart';
 import '../../screens/screen_add_calendar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../models/model_calendar_event.dart';
+import '../../services/service_calendar_event.dart';
 import 'dart:convert';
 
 class WidgetCalendar extends StatefulWidget {

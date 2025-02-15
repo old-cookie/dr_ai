@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 import '../widgets/widgets_units/widget_title.dart';
 import '../widgets/widgets_units/widget_button.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/model_calendar_event.dart';
+import '../services/service_calendar_event.dart';
 import 'dart:convert';
 
 class ScreenAddCalendar extends StatefulWidget {
