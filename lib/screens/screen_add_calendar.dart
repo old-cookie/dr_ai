@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../services/service_calendar_event.dart';
 import 'dart:convert';
 import '../services/service_notification.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class ScreenAddCalendar extends StatefulWidget {
   const ScreenAddCalendar({super.key});
@@ -21,6 +22,14 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
   final TextEditingController eventController = TextEditingController();
   int? notificationMinutes = 15;  // 改為可為 null
   bool isPastDate = false;  // 新增判斷是否為過去時間
+
+  @override
+  void initState() {
+    super.initState();
+    if (kIsWeb) {
+      notificationMinutes = null;
+    }
+  }
 
   Future<void> _openDateTimePicker(BuildContext context) async {
     final DateTime? dateTime = await showOmniDateTimePicker(
@@ -155,7 +164,7 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
                   style: const TextStyle(fontSize: 16),
                 ),
               ),
-            if (!isPastDate && _selectedDateTime != null) ...[
+            if (!isPastDate && _selectedDateTime != null && !kIsWeb) ...[
               const SizedBox(height: 16),
               widgetTitle(l10n?.calendarEventNotification ?? 'Notification', top: 0, bottom: 8),
               DropdownButtonFormField<int?>(
@@ -177,7 +186,7 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
                   border: OutlineInputBorder(),
                 ),
               ),
-            ] else if (_selectedDateTime != null) ...[
+            ] else if (_selectedDateTime != null && isPastDate) ...[
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Text(

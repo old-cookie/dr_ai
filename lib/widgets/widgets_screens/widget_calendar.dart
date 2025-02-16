@@ -224,10 +224,13 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
-                        '${l10n?.calendarEventTime ?? 'Time'}: ${event.dateTime.hour.toString().padLeft(2, '0')}:'
-                        '${event.dateTime.minute.toString().padLeft(2, '0')}\n'
-                        '${l10n?.calendarEventNotification ?? 'Reminder'}: ${event.notificationMinutes} '
-                        '${l10n?.calendarEventNotification ?? 'minutes before'}',
+                        event.notificationMinutes > 0
+                            ? '${l10n?.calendarEventTime ?? 'Time'}: ${event.dateTime.hour.toString().padLeft(2, '0')}:'
+                              '${event.dateTime.minute.toString().padLeft(2, '0')}\n'
+                              '${l10n?.calendarEventNotification ?? 'Reminder'}: ${event.notificationMinutes} '
+                              '${l10n?.calendarEventNotification ?? 'minutes before'}'
+                            : '${l10n?.calendarEventTime ?? 'Time'}: ${event.dateTime.hour.toString().padLeft(2, '0')}:'
+                              '${event.dateTime.minute.toString().padLeft(2, '0')}',
                       ),
                     ),
                   ),
