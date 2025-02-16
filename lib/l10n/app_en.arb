@@ -1113,5 +1113,37 @@
     "bmiWHOObese": "• 肥胖：BMI ≥ 30",
     "@bmiWHOObese": {
         "description": "WHO adult BMI category - obese"
+    },
+    "bmiSeverelyWasted": "Severely Wasted",
+    "@bmiSeverelyWasted": {
+        "description": "BMI category - severely wasted"
+    },
+    "bmiUnderweight": "Underweight",
+    "@bmiUnderweight": {
+        "description": "BMI category - underweight"
+    },
+    "bmiWasted": "Wasted",
+    "@bmiWasted": {
+        "description": "BMI category - wasted"
+    },
+    "bmiNormal": "Normal",
+    "@bmiNormal": {
+        "description": "BMI category - normal"
+    },
+    "bmiNormalWeight": "Normal Weight",
+    "@bmiNormalWeight": {
+        "description": "BMI category - normal weight"
+    },
+    "bmiPossibleRiskOverweight": "Possible Risk of Overweight",
+    "@bmiPossibleRiskOverweight": {
+        "description": "BMI category - possible risk of overweight"
+    },
+    "bmiOverweight": "Overweight",
+    "@bmiOverweight": {
+        "description": "BMI category - overweight"
+    },
+    "bmiObese": "Obese",
+    "@bmiObese": {
+        "description": "BMI category - obese"
     }
 }

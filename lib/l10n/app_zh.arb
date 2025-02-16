@@ -228,5 +228,37 @@
   "bmiWHOUnderweight": "• 體重過輕：BMI < 18.5",
   "bmiWHONormal": "• 體重正常：18.5 ≤ BMI < 25",
   "bmiWHOOverweight": "• 體重過重：25 ≤ BMI < 30",
-  "bmiWHOObese": "• 肥胖：BMI ≥ 30"
+  "bmiWHOObese": "• 肥胖：BMI ≥ 30",
+  "bmiSeverelyWasted": "嚴重消瘦",
+  "@bmiSeverelyWasted": {
+    "description": "BMI category - severely wasted"
+  },
+  "bmiUnderweight": "體重過輕",
+  "@bmiUnderweight": {
+    "description": "BMI category - underweight"
+  },
+  "bmiWasted": "消瘦",
+  "@bmiWasted": {
+    "description": "BMI category - wasted"
+  },
+  "bmiNormal": "體重正常",
+  "@bmiNormal": {
+    "description": "BMI category - normal"
+  },
+  "bmiNormalWeight": "體重正常",
+  "@bmiNormalWeight": {
+    "description": "BMI category - normal weight"
+  },
+  "bmiPossibleRiskOverweight": "可能過重風險",
+  "@bmiPossibleRiskOverweight": {
+    "description": "BMI category - possible risk of overweight"
+  },
+  "bmiOverweight": "體重過重",
+  "@bmiOverweight": {
+    "description": "BMI category - overweight"
+  },
+  "bmiObese": "肥胖",
+  "@bmiObese": {
+    "description": "BMI category - obese"
+  }
 }

@@ -37,32 +37,60 @@ class _ScreenBMIState extends State<ScreenBMI> {
       
       final bmiValue = bmi.computeBMI();
       final interpretation = bmi.interpretBMI();
+      final l10n = AppLocalizations.of(context)!;
+      
+      // 轉換英文類別到本地化類別
+      String localizedCategory = interpretation;
+      switch (interpretation.toLowerCase()) {
+        case "severely wasted":
+          localizedCategory = l10n.bmiSeverelyWasted;
+          break;
+        case "wasted":
+          localizedCategory = l10n.bmiWasted;
+          break;
+        case "underweight":
+          localizedCategory = l10n.bmiUnderweight;
+          break;
+        case "normal":
+        case "normal weight":
+          localizedCategory = l10n.bmiNormal;
+          break;
+        case "possible risk of overweight":
+          localizedCategory = l10n.bmiPossibleRiskOverweight;
+          break;
+        case "overweight":
+          localizedCategory = l10n.bmiOverweight;
+          break;
+        case "obese":
+          localizedCategory = l10n.bmiObese;
+          break;
+      }
       
       setState(() {
         result = bmiValue.toStringAsFixed(1);
-        category = interpretation;
-        categoryColor = _getCategoryColor(interpretation);
+        category = localizedCategory;
+        categoryColor = _getCategoryColor(localizedCategory);
       });
     }
   }
 
   Color _getCategoryColor(String category) {
-    switch (category.toLowerCase()) {
-      case "severely wasted":
-      case "underweight":
-      case "wasted":
-        return Colors.blue;
-      case "normal":
-      case "normal weight":
-        return Colors.green;
-      case "possible risk of overweight":
-      case "overweight":
-        return Colors.orange;
-      case "obese":
-        return Colors.red;
-      default:
-        return Colors.grey;
+    final l10n = AppLocalizations.of(context)!;
+    
+    if (category == l10n.bmiSeverelyWasted ||
+        category == l10n.bmiUnderweight ||
+        category == l10n.bmiWasted) {
+      return Colors.blue;
+    } else if (category == l10n.bmiNormal ||
+               category == l10n.bmiNormalWeight) {
+      return Colors.green;
+    } else if (category == l10n.bmiPossibleRiskOverweight ||
+               category == l10n.bmiOverweight) {
+      return Colors.orange;
+    } else if (category == l10n.bmiObese) {
+      return Colors.red;
     }
+    return Colors.grey;
   }
 
   @override
