@@ -5,6 +5,8 @@ import '../../screens/screen_add_calendar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../services/service_calendar_event.dart';
 import 'dart:convert';
+import '../../services/service_notification.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';  // 添加這行
 
 class WidgetCalendar extends StatefulWidget {
   const WidgetCalendar({super.key});
@@ -33,6 +35,65 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
     });
   }
 
+  Future<void> _deleteEvent(CalendarEvent event, int index) async {
+    try {
+      final l10n = AppLocalizations.of(context);
+      // 獲取當前事件列表
+      final prefs = await SharedPreferences.getInstance();
+      List<String> events = prefs.getStringList('calendar_events') ?? [];
+      
+      // 刪除指定事件
+      events.removeAt(index);
+      await prefs.setStringList('calendar_events', events);
+
+      // 取消相關通知
+      await NotificationService().cancelNotification(index + 1);  // 因為我們使用 events.length 作為 ID
+
+      // 重新加載事件列表
+      await _loadEvents();
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(l10n?.calendarDeleteEvent(event.title) ?? 'Event deleted: ${event.title}'),
+            action: SnackBarAction(
+              label: l10n?.calendarDeleteEventUndo ?? 'Undo',
+              onPressed: () async {
+                // 復原刪除
+                events.insert(index, jsonEncode(event.toJson()));
+                await prefs.setStringList('calendar_events', events);
+                
+                // 如果事件有通知且在未來，重新設置通知
+                if (event.notificationMinutes > 0) {
+                  final notificationTime = event.dateTime
+                      .subtract(Duration(minutes: event.notificationMinutes));
+                  if (notificationTime.isAfter(DateTime.now())) {
+                    await NotificationService().scheduleNotification(
+                      id: events.length,
+                      title: l10n?.calendarReminderTitle ?? 'Appointment Reminder',
+                      body: l10n?.calendarReminderBody(event.title) ?? 
+                            'You have an upcoming appointment "${event.title}"',
+                      scheduledDate: notificationTime,
+                    );
+                  }
+                }
+                
+                await _loadEvents();
+              },
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint('刪除事件錯誤: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('刪除事件失敗')),
+        );
+      }
+    }
+  }
+
   List<CalendarEvent> _getEventsForDay(DateTime day) {
     return events.where((event) => isSameDay(event.dateTime, day)).toList();
   }
@@ -41,10 +102,13 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
   Widget build(BuildContext context) {
     final theme = themeCurrent(context);
     final selectedDayEvents = _getEventsForDay(_selectedDay ?? _focusedDay);
+    final l10n = AppLocalizations.of(context);
+    final locale = Localizations.localeOf(context).toString();
 
     return Column(
       children: [
         TableCalendar(
+          locale: locale, // 添加本地化支援
           firstDay: DateTime.utc(2000, 1, 1),
           lastDay: DateTime.utc(2100, 12, 31),
           focusedDay: _focusedDay,
@@ -92,7 +156,8 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${(_selectedDay ?? _focusedDay).year}年${(_selectedDay ?? _focusedDay).month}月${(_selectedDay ?? _focusedDay).day}日',
+                  // 使用 Intl 格式化日期
+                  '${_selectedDay?.year}年${_selectedDay?.month}月${_selectedDay?.day}日',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -111,16 +176,16 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
                       _loadEvents();
                     }
                   },
-                  child: const Text('新增預約'),
+                  child: Text(l10n?.calendarEventAdd ?? 'Add Event'),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 10),
           if (selectedDayEvents.isEmpty)
-            const Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Text('這一天沒有預約事件'),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(l10n?.calendarEventNoEvents ?? 'No events for this day'),
             )
           else
             ListView.builder(
@@ -129,24 +194,41 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
               itemCount: selectedDayEvents.length,
               itemBuilder: (context, index) {
                 final event = selectedDayEvents[index];
-                return Card(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: 4.0,
+                return Dismissible(  // 添加滑動刪除功能
+                  key: Key(event.dateTime.toIso8601String() + index.toString()),
+                  direction: DismissDirection.endToStart,
+                  background: Container(
+                    alignment: Alignment.centerRight,
+                    padding: const EdgeInsets.only(right: 20.0),
+                    color: Colors.red,
+                    child: const Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                    ),
                   ),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.event,
-                      color: theme.colorScheme.primary,
+                  onDismissed: (direction) {
+                    _deleteEvent(event, index);
+                  },
+                  child: Card(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 4.0,
                     ),
-                    title: Text(
-                      event.title,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text(
-                      '時間: ${event.dateTime.hour.toString().padLeft(2, '0')}:'
-                      '${event.dateTime.minute.toString().padLeft(2, '0')}\n'
-                      '提醒: ${event.notificationMinutes} 分鐘前',
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.event,
+                        color: theme.colorScheme.primary,
+                      ),
+                      title: Text(
+                        event.title,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        '${l10n?.calendarEventTime ?? 'Time'}: ${event.dateTime.hour.toString().padLeft(2, '0')}:'
+                        '${event.dateTime.minute.toString().padLeft(2, '0')}\n'
+                        '${l10n?.calendarEventNotification ?? 'Reminder'}: ${event.notificationMinutes} '
+                        '${l10n?.calendarEventNotification ?? 'minutes before'}',
+                      ),
                     ),
                   ),
                 );

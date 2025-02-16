@@ -173,5 +173,19 @@
   "vaccineFieldPlace": "地點：{place}",
   "vaccineFieldRemarks": "備註：{remarks}",
   "noRecordsFound": "目前沒有疫苗接種記錄",
-  "errorLoadingRecords": "載入記錄時發生錯誤"
+  "errorLoadingRecords": "載入記錄時發生錯誤",
+  "optionCalendar": "看診日曆",
+  "calendarTitle": "看診預約",
+  "calendarEventTitle": "新增預約",
+  "calendarEventDate": "預約日期",
+  "calendarEventTime": "預約時間",
+  "calendarEventNotification": "提前通知",
+  "calendarEventSave": "儲存預約",
+  "calendarEventDelete": "刪除預約",
+  "calendarEventNoEvents": "這一天沒有預約事件",
+  "calendarEventAdd": "新增預約",
+  "calendarReminderTitle": "預約提醒",
+  "calendarReminderBody": "您有一個預約「{eventTitle}」即將開始",
+  "calendarDeleteEvent": "已刪除事件：{eventTitle}",
+  "calendarDeleteEventUndo": "復原"
 }

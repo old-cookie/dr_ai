@@ -7,6 +7,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   dynamic_color
   file_selector_windows
   flutter_opencc_ffi_windows
+  flutter_timezone
   flutter_tts
   permission_handler_windows
   url_launcher_windows

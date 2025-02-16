@@ -769,7 +769,7 @@
         "description": "Text displayed for Vaccine Record",
         "context": "Visible in the side bar"
     },
-    "optionCalendar": "Calendar",
+    "optionCalendar": "Medical Calendar",
     "@optionCalendar": {
         "description": "Text displayed for Calendar",
         "context": "Visible in the side bar"
@@ -789,7 +789,7 @@
     "@vaccineRecordTitle": {
         "description": "Title of the vaccine record page"
     },
-    "calendarTitle": "Calendar",
+    "calendarTitle": "Medical Appointments",
     "@calendarTitle": {
         "description": "Title of the Calendar page"
     },
@@ -911,6 +911,36 @@
             "remarks": {
                 "type": "String",
                 "example": "No side effects"
+            }
+        }
+    },
+    "calendarEventTitle": "Add Appointment",
+    "calendarEventDate": "Appointment Date",
+    "calendarEventTime": "Appointment Time",
+    "calendarEventNotification": "Notify Before",
+    "calendarEventSave": "Save Appointment",
+    "calendarEventDelete": "Delete Appointment",
+    "calendarEventNoEvents": "No appointments for this day",
+    "calendarEventAdd": "Add Appointment",
+    "calendarReminderTitle": "Appointment Reminder",
+    "calendarReminderBody": "You have an upcoming appointment '{eventTitle}'",
+    "calendarDeleteEvent": "Deleted event: {eventTitle}",
+    "calendarDeleteEventUndo": "Undo",
+    "@calendarReminderBody": {
+        "description": "Message shown in appointment reminder notification",
+        "placeholders": {
+            "eventTitle": {
+                "type": "String",
+                "example": "Dental Check-up"
+            }
+        }
+    },
+    "@calendarDeleteEvent": {
+        "description": "Message shown when an event is deleted",
+        "placeholders": {
+            "eventTitle": {
+                "type": "String",
+                "example": "Dental Check-up"
             }
         }
     }

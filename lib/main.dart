@@ -12,10 +12,11 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:pwa_install/pwa_install.dart' as pwa;
+import 'package:intl/date_symbol_data_local.dart';
 import 'widgets/widgets_screens/widget_main.dart';
 import 'services/service_desktop.dart';
 import 'services/service_theme.dart';
-
+import 'services/service_notification.dart';
 ///*******************************************
 /// 客戶端配置部分
 /// 包含所有可自定義的應用程式設定
@@ -107,6 +108,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   try {
+    // 初始化通知服務
+    final notificationService = NotificationService();
+    await notificationService.initialize();
+    await NotificationService().requestPermission();
+
     // 初始化加密存儲
     await EncryptedSharedPreferences.initialize(encryptionKey);
     prefs = EncryptedSharedPreferences.getInstance();
@@ -115,7 +121,7 @@ void main() async {
     pwa.PWAInstall().setup(installCallback: () {});
 
     // 運行應用程式
-    runApp(const App());
+    initializeDateFormatting().then((_) => runApp(const App()));
 
     // 桌面平台視窗設定
     if (isDesktopPlatform()) {
