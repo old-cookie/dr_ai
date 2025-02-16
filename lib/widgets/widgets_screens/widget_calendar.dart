@@ -66,7 +66,7 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
               color: theme.colorScheme.onPrimary,
             ),
             todayDecoration: BoxDecoration(
-              color: theme.colorScheme.primary.withOpacity(0.3),
+              color: theme.colorScheme.primary.withAlpha(76),
               shape: BoxShape.circle,
             ),
             todayTextStyle: TextStyle(

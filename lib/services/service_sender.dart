@@ -7,14 +7,11 @@ import 'package:ollama_dart/ollama_dart.dart' as llama;
 import 'package:dartx/dartx.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+//import 'package:flutter_opencc_ffi/flutter_opencc_ffi.dart';
 import 'service_haptic.dart';
 import 'service_setter.dart';
+import 'service_chinese.dart';
 import '../main.dart';
-import 'package:flutter_opencc_ffi/flutter_opencc_ffi.dart';
-/// 訊息發送服務
-/// 處理與 AI 模型的通訊、訊息歷史記錄管理和對話標題生成
-/// 簡體轉繁體（香港）轉換器實例
-Converter converter = createConverter('s2hk');
 
 /// 當前對話中的圖片列表
 List<String> images = [];
@@ -22,7 +19,8 @@ List<String> images = [];
 /// 組裝聊天歷史記錄
 /// @param addToSystem 可選的系統提示附加訊息
 Future<List<llama.Message>> getHistory([String? addToSystem]) async {
-  var system = prefs.getString("system") ?? "您是一位提供一般醫療資訊和指導的人工智慧醫生。您可以提供事實，提出常見病症的可能原因和治療方法，並提倡健康的習慣。然而，您無法取代專業的醫療建議、診斷或治療。始終提醒使用者諮詢合格的醫療保健提供者以獲得個人化護理。";
+  var system =
+      prefs.getString("system") ?? "用繁體中文寫下一個適當完成請求的回答。由造成原因、自行解決方案，尋求專業建議三個方向回答在回答之前，請仔細思考問題，並建立逐步的思路鏈，以確保回答 合乎邏輯且準確。您是一位在臨床推理、診斷和治療計劃方面擁有高級知識的醫學專家。";
   if (prefs.getBool("noMarkdown") ?? false) {
     system += "\n您不得以任何方式使用 markdown 或任何其他格式語言！";
   }
@@ -88,8 +86,7 @@ Future<String> getTitleAi(List history) async {
           messages: [
             const llama.Message(
               role: llama.MessageRole.system,
-              content:
-                  "為使用者提供的對話產生一個三到六個字的標題。如果對話中某個物件或人非常重要，也請將其放入標題中",
+              content: "為使用者提供的對話產生一個三到六個字的標題。如果對話中某個物件或人非常重要，也請將其放入標題中",
             ),
             llama.Message(role: llama.MessageRole.user, content: "```\n${jsonEncode(history)}\n```"),
           ],
@@ -110,6 +107,7 @@ Future<String> getTitleAi(List history) async {
   while (title.contains("  ")) {
     title = title.replaceAll("  ", " ");
   }
+  title = await ChineseService.convertToTraditional(title);
   return title.trim();
 }
 
@@ -204,6 +202,8 @@ Future<String> send(
   );
   try {
     if ((prefs.getString("requestType") ?? "stream") == "stream") {
+      String currentResponse = "";
+      String displayText = "";
       final stream = client
           .generateChatCompletionStream(
             request: llama.GenerateChatCompletionRequest(
@@ -214,33 +214,53 @@ Future<String> send(
           )
           .timeout(Duration(seconds: (30.0 * (prefs.getDouble("timeoutMultiplier") ?? 1.0)).round()));
       await for (final res in stream) {
-        text += res.message.content;
-        messages.removeWhere((message) => message.id == newId);
-        if (chatAllowed) return "";
-        // 包裹 opencc 轉換以捕捉例外，避免連線中斷
-        String translated;
         try {
-          translated = converter.convert(text);
-        } catch (error) {
-          log("OpenCC conversion error: $error");
-          translated = text;
+          currentResponse += res.message.content;
+          displayText = currentResponse;
+          if (displayText.startsWith("<think>")) {
+            int endIndex = displayText.indexOf("</think>");
+            if (endIndex != -1) {
+              // 顯示思考後的內容
+              displayText = displayText.substring(endIndex + "</think>".length).trim();
+            } else {
+              // 顯示思考中提示
+              displayText = "🤔 AI正在思考中...";
+            }
+          }
+
+          messages.removeWhere((message) => message.id == newId);
+          if (chatAllowed) return "";
+
+          try {
+            if (displayText != "🤔 AI正在思考中...") {
+              displayText = await ChineseService.convertToTraditional(displayText);
+            }
+          } catch (_) {}
+
+          messages.insert(0, types.TextMessage(author: assistant, id: newId, text: displayText));
+
+          if (onStream != null) {
+            onStream(displayText, false);
+          }
+          setState(() {});
+          heavyHaptic();
+        } catch (streamError) {
+          log("Stream error: $streamError");
+          continue;
         }
-        messages.insert(0, types.TextMessage(author: assistant, id: newId, text: translated));
-        if (onStream != null) {
-          onStream(translated, false);
-        }
-        setState(() {});
-        heavyHaptic();
       }
+      
+      if (currentResponse.isEmpty) {
+        throw Exception("Empty response from server");
+      }
+      
       // 串流回應完成後檢查
       messages.removeWhere((message) => message.id == newId);
-      String finalText = text;
+      String finalText = currentResponse;
       if (finalText.trim().startsWith("<think>")) {
         finalText = finalText.replaceAll(RegExp(r"<think>.*?</think>", dotAll: true), "");
       }
-      try {
-        finalText = converter.convert(finalText);
-      } catch (_) {}
+      finalText = await ChineseService.convertToTraditional(finalText);
       messages.insert(0, types.TextMessage(author: assistant, id: newId, text: finalText));
       // 記錄整體的 AI 回應（串流形式）
       log("AI response stream: $text");
@@ -256,27 +276,28 @@ Future<String> send(
           .timeout(Duration(seconds: (30.0 * (prefs.getDouble("timeoutMultiplier") ?? 1.0)).round()));
       if (chatAllowed) return "";
       String text = request.message.content;
-      if (text.trim().startsWith("<think>")) {
-        text = text.replaceAll(RegExp(r"<think>.*?</think>", dotAll: true), "");
+      // 處理思考過程標記
+      if (text.startsWith("<think>")) {
+        int endIndex = text.indexOf("</think>");
+        if (endIndex != -1) {
+          text = text.substring(endIndex + "</think>".length).trim();
+        }
       }
       // 記錄 AI 回應（非串流形式）
       log("AI response non-stream: $text");
-      String s2hkText;
-      try {
-        s2hkText = converter.convert(text);
-      } catch (error) {
-        log("OpenCC conversion error: $error");
-        s2hkText = text;
-      }
+      String s2hkText = await ChineseService.convertToTraditional(text);
       messages.insert(0, types.TextMessage(author: assistant, id: newId, text: s2hkText));
       setState(() {});
       heavyHaptic();
     }
   } catch (e) {
+    log("Connection error: $e");
     messages.removeWhere((message) => message.id == newId);
     setState(() {
       chatAllowed = true;
-      messages.removeAt(0);
+      if (messages.isNotEmpty) {
+        messages.removeAt(0);
+      }
       if (messages.isEmpty) {
         var chats = prefs.getStringList("chats") ?? [];
         chats.removeWhere((chat) => jsonDecode(chat)["uuid"] == chatUuid);
@@ -284,12 +305,29 @@ Future<String> send(
         chatUuid = null;
       }
     });
+    
+    // 顯示更具體的錯誤訊息
+    String errorMessage = e.toString().contains("timeout") 
+        ? AppLocalizations.of(context)!.settingsHostInvalid("timeout")
+        : AppLocalizations.of(context)!.settingsHostInvalid("connection");
+        
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(AppLocalizations.of(context)!.settingsHostInvalid("timeout")),
+      content: Text(errorMessage),
       showCloseIcon: true,
+      duration: const Duration(seconds: 5),
     ));
+    
+    if (onStream != null) {
+      onStream("", true);
+    }
     return "";
   }
+
+  // 確保在完成後重置狀態
+  setState(() {
+    chatAllowed = true;
+  });
+  
   if ((prefs.getString("requestType") ?? "stream") == "stream" && onStream != null) {
     onStream(text, true);
   }
