@@ -46,7 +46,7 @@ const List<String> recommendedModels = ["oldcookie/dr_ai:q5_1", "oldcookie/dr_ai
 const bool allowSettings = true;
 const bool allowVaccine = true;
 const bool allowCalendar = true;
-
+const bool allowBMI = true;
 /// 是否允許多個聊天對話
 const bool allowMultipleChats = true;
 

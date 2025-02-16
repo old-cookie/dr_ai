@@ -89,6 +89,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "9.0.0"
+  bmi_calculator:
+    dependency: "direct main"
+    description:
+      name: bmi_calculator
+      sha256: fa098bbdcf712adb80f26fb183d94d00cc27e058d9b44bb25636f134c76bfbbe
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   boolean_selector:
     dependency: transitive
     description:

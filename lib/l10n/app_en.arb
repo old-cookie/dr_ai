@@ -769,6 +769,11 @@
         "description": "Text displayed for Vaccine Record",
         "context": "Visible in the side bar"
     },
+    "optionBMI": "Vaccine Record",
+    "@optionBMI": {
+        "description": "Text displayed for BMI",
+        "context": "Visible in the side bar"
+    },
     "optionCalendar": "Medical Calendar",
     "@optionCalendar": {
         "description": "Text displayed for Calendar",
@@ -943,5 +948,170 @@
                 "example": "Dental Check-up"
             }
         }
+    },
+    "bmiCalculator": "BMI Calculator",
+    "@bmiCalculator": {
+        "description": "Title of BMI calculator page"
+    },
+    "bmiHeight": "Height (cm)",
+    "@bmiHeight": {
+        "description": "Label for height input field"
+    },
+    "bmiWeight": "Weight (kg)", 
+    "@bmiWeight": {
+        "description": "Label for weight input field"
+    },
+    "bmiAge": "Age",
+    "@bmiAge": {
+        "description": "Label for age input field"
+    },
+    "bmiGender": "Gender",
+    "@bmiGender": {
+        "description": "Label for gender selection"
+    },
+    "bmiMale": "Male",
+    "@bmiMale": {
+        "description": "Male gender option"
+    },
+    "bmiFemale": "Female",
+    "@bmiFemale": {
+        "description": "Female gender option"
+    },
+    "bmiStandard": "BMI Standard",
+    "@bmiStandard": {
+        "description": "Label for BMI standard selection"
+    },
+    "bmiAsian": "Asian Standard",
+    "@bmiAsian": {
+        "description": "Asian BMI standard option"
+    },
+    "bmiWHO": "WHO Standard",
+    "@bmiWHO": {
+        "description": "WHO BMI standard option"
+    },
+    "bmiCalculate": "Calculate BMI",
+    "@bmiCalculate": {
+        "description": "Text for calculate button"
+    },
+    "bmiResult": "BMI Index: {value}",
+    "@bmiResult": {
+        "description": "BMI result text",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "bmiStandardTitle": "BMI Classification Standards:",
+    "@bmiStandardTitle": {
+        "description": "Title for BMI standards section"
+    },
+    "bmiChildStandardTitle": "Child/Teen BMI Standards:",
+    "@bmiChildStandardTitle": {
+        "description": "Title for child BMI standards"
+    },
+    "bmiAsianStandardTitle": "Asian Adult BMI Standards:",
+    "@bmiAsianStandardTitle": {
+        "description": "Title for Asian BMI standards"
+    },
+    "bmiWHOStandardTitle": "WHO Adult BMI Standards:",
+    "@bmiWHOStandardTitle": {
+        "description": "Title for WHO BMI standards"
+    },
+    "bmiValidationEnterHeight": "Please enter height",
+    "@bmiValidationEnterHeight": {
+        "description": "Validation message for height input"
+    },
+    "bmiValidationInvalidHeight": "Please enter valid height",
+    "@bmiValidationInvalidHeight": {
+        "description": "Validation message for invalid height"
+    },
+    "bmiValidationEnterWeight": "Please enter weight",
+    "@bmiValidationEnterWeight": {
+        "description": "Validation message for weight input"
+    },
+    "bmiValidationInvalidWeight": "Please enter valid weight",
+    "@bmiValidationInvalidWeight": {
+        "description": "Validation message for invalid weight"
+    },
+    "bmiValidationEnterAge": "Please enter age",
+    "@bmiValidationEnterAge": {
+        "description": "Validation message for age input"
+    },
+    "bmiValidationInvalidAge": "Please enter valid age",
+    "@bmiValidationInvalidAge": {
+        "description": "Validation message for invalid age"
+    },
+    "bmiClassificationTitle": "BMI 分類標準：",
+    "@bmiClassificationTitle": {
+        "description": "Title for BMI classification section"
+    },
+    "bmiChildStandard": "兒童/青少年 BMI 標準:",
+    "@bmiChildStandard": {
+        "description": "Title for child/teen BMI standards"
+    },
+    "bmiChildSeverelyWasted": "• 嚴重消瘦 (Severely wasted)",
+    "@bmiChildSeverelyWasted": {
+        "description": "Child BMI category - severely wasted"
+    },
+    "bmiChildWasted": "• 消瘦 (Wasted)",
+    "@bmiChildWasted": {
+        "description": "Child BMI category - wasted"
+    },
+    "bmiChildNormal": "• 正常體重 (Normal weight)",
+    "@bmiChildNormal": {
+        "description": "Child BMI category - normal"
+    },
+    "bmiChildRiskOverweight": "• 可能過重風險 (Risk of overweight)",
+    "@bmiChildRiskOverweight": {
+        "description": "Child BMI category - risk of overweight"
+    },
+    "bmiChildOverweight": "• 過重 (Overweight)",
+    "@bmiChildOverweight": {
+        "description": "Child BMI category - overweight"
+    },
+    "bmiChildObese": "• 肥胖 (Obese)",
+    "@bmiChildObese": {
+        "description": "Child BMI category - obese"
+    },
+    "bmiAsianAdultStandard": "亞洲成人 BMI 標準:",
+    "@bmiAsianAdultStandard": {
+        "description": "Title for Asian adult BMI standards"
+    },
+    "bmiAsianUnderweight": "• 體重過輕：BMI < 18.5",
+    "@bmiAsianUnderweight": {
+        "description": "Asian adult BMI category - underweight"
+    },
+    "bmiAsianNormal": "• 體重正常：18.5 ≤ BMI < 23",
+    "@bmiAsianNormal": {
+        "description": "Asian adult BMI category - normal"
+    },
+    "bmiAsianOverweight": "• 體重過重：23 ≤ BMI < 25",
+    "@bmiAsianOverweight": {
+        "description": "Asian adult BMI category - overweight"
+    },
+    "bmiAsianObese": "• 肥胖：BMI ≥ 25",
+    "@bmiAsianObese": {
+        "description": "Asian adult BMI category - obese"
+    },
+    "bmiWHOAdultStandard": "WHO成人 BMI 標準:",
+    "@bmiWHOAdultStandard": {
+        "description": "Title for WHO adult BMI standards"
+    },
+    "bmiWHOUnderweight": "• 體重過輕：BMI < 18.5",
+    "@bmiWHOUnderweight": {
+        "description": "WHO adult BMI category - underweight"
+    },
+    "bmiWHONormal": "• 體重正常：18.5 ≤ BMI < 25",
+    "@bmiWHONormal": {
+        "description": "WHO adult BMI category - normal"
+    },
+    "bmiWHOOverweight": "• 體重過重：25 ≤ BMI < 30",
+    "@bmiWHOOverweight": {
+        "description": "WHO adult BMI category - overweight" 
+    },
+    "bmiWHOObese": "• 肥胖：BMI ≥ 30",
+    "@bmiWHOObese": {
+        "description": "WHO adult BMI category - obese"
     }
 }
