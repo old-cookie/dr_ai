@@ -579,28 +579,17 @@ class _MainAppState extends State<MainApp> {
     resetSystemNavigation(context);
 
     Widget selector = InkWell(
-        onTap: !useModel
-            ? () {
-                if (host == null) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.noHostSelected), showCloseIcon: true));
-                  return;
-                }
-                setModel(context, setState);
-              }
-            : null,
+        onTap: null,
         splashFactory: NoSplash.splashFactory,
         highlightColor: Colors.transparent,
         enableFeedback: false,
         hoverColor: Colors.transparent,
         child: SizedBox(
             height: 200,
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.min, children: [
-              Flexible(
-                  child: Text((model ?? AppLocalizations.of(context)!.noSelectedModel).split(":")[0],
-                      overflow: TextOverflow.fade, style: const TextStyle(fontFamily: "monospace", fontSize: 16))),
-              useModel ? const SizedBox.shrink() : const Icon(Icons.expand_more_rounded)
-            ])));
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [Text("Dr.AI", style: TextStyle(fontFamily: "monospace", fontSize: 16, fontWeight: FontWeight.bold))])));
 
     return WindowBorder(
       color: Theme.of(context).colorScheme.surface,

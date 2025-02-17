@@ -27,6 +27,13 @@ class WidgetBehavior extends StatelessWidget {
 
   /// 保存系統提示詞回調
   final Function() onSystemMessageSaved;
+
+  /// 選擇模型回調
+  final Function() onModelSelected;
+
+  /// 當前選擇的模型
+  final String model;
+
   const WidgetBehavior({
     super.key,
     required this.systemInputController,
@@ -35,6 +42,8 @@ class WidgetBehavior extends StatelessWidget {
     required this.onUseSystemChanged,
     required this.onNoMarkdownChanged,
     required this.onSystemMessageSaved,
+    required this.onModelSelected,
+    required this.model,
   });
   @override
   Widget build(BuildContext context) {
@@ -62,6 +71,19 @@ class WidgetBehavior extends StatelessWidget {
                   child: ListView(
                     children: [
                       const SizedBox(height: 8),
+
+                      /// 新增選擇模型按鈕
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          widgetButton(
+                            model.isNotEmpty ? model : AppLocalizations.of(context)!.dialogSelectModel,
+                            Icons.model_training,
+                            onModelSelected,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
 
                       /// 系統提示詞輸入框
                       _buildSystemMessageInput(context),

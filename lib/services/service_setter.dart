@@ -17,6 +17,20 @@ import 'service_theme.dart';
 /// 設定服務模組
 /// 處理應用程式的全域設定，包含模型選擇、聊天記錄管理等功能
 
+/// 從 Ollama 伺服器獲取可用的模型列表
+Future<List<String>> getModels() async {
+  try {
+    final response = await http.get(Uri.parse('$host/api/tags'));
+    if (response.statusCode == 200) {
+      final List<dynamic> models = jsonDecode(response.body)['models'];
+      return models.map((model) => model['name'] as String).toList();
+    }
+  } catch (e) {
+    debugPrint('Error fetching models: $e');
+  }
+  return [];
+}
+
 /// 顯示模型選擇對話框
 /// @param context 上下文
 /// @param setState 狀態更新函數

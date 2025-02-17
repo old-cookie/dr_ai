@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../main.dart';
 import '../../services/service_haptic.dart';
+import '../../services/service_setter.dart';
 import '../../widgets/widgets_screens/widgets_settings/widget_behavior.dart';
 
 /// 行為設置頁面
@@ -24,7 +26,7 @@ class _ScreenSettingsBehaviorState extends State<ScreenSettingsBehavior> {
   void initState() {
     super.initState();
     // 初始化系統提示詞和相關設置
-    systemInputController = TextEditingController(text: prefs.getString("system") ?? "您是一位提供一般醫療資訊和指導的人工智慧醫生。您可以提供事實，提出常見病症的可能原因和治療方法，並提倡健康的習慣。然而，您無法取代專業的醫療建議、診斷或治療。始終提醒使用者諮詢合格的醫療保健提供者以獲得個人化護理。");
+    systemInputController = TextEditingController(text: prefs.getString("system") ?? "用繁體中文寫下一個適當完成請求的回答。由造成原因、自行解決方案，尋求專業建議三個方向回答在回答之前，請仔細思考問題，並建立逐步的思路鏈，以確保回答 合乎邏輯且準確。您是一位在臨床推理、診斷和治療計劃方面擁有高級知識的醫學專家。");
     useSystem = prefs.getBool("useSystem") ?? true;
     noMarkdown = prefs.getBool("noMarkdown") ?? false;
   }
@@ -57,12 +59,49 @@ class _ScreenSettingsBehaviorState extends State<ScreenSettingsBehavior> {
   /// 儲存系統提示詞設置
   void _onSystemMessageSaved() {
     selectionHaptic();
-    prefs.setString("system", systemInputController.text.isNotEmpty ? systemInputController.text : "您是一位提供一般醫療資訊和指導的人工智慧醫生。您可以提供事實，提出常見病症的可能原因和治療方法，並提倡健康的習慣。然而，您無法取代專業的醫療建議、診斷或治療。始終提醒使用者諮詢合格的醫療保健提供者以獲得個人化護理。");
+  }
+
+  void setModel() async {
+    if (host == null) return;
+    var result = await getModels();
+    if (!mounted) return;
+    
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(AppLocalizations.of(context)!.dialogSelectModel),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: result.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(result[index],
+                      style: TextStyle(
+                          fontWeight: (recommendedModels.contains(result[index]))
+                              ? FontWeight.w900
+                              : null)),
+                  onTap: () {
+                    selectionHaptic();
+                    model = result[index];
+                    prefs.setString("model", model!);
+                    chatAllowed = true;
+                    Navigator.of(context).pop();
+                    setState(() {});
+                  },
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    /// 使用行為設置組件構建界面
     return WidgetBehavior(
       systemInputController: systemInputController,
       useSystem: useSystem,
@@ -70,6 +109,8 @@ class _ScreenSettingsBehaviorState extends State<ScreenSettingsBehavior> {
       onUseSystemChanged: _onUseSystemChanged,
       onNoMarkdownChanged: _onNoMarkdownChanged,
       onSystemMessageSaved: _onSystemMessageSaved,
+      onModelSelected: setModel,
+      model: model ?? fixedModel,
     );
   }
 }

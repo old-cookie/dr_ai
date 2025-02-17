@@ -17,6 +17,7 @@ import 'widgets/widgets_screens/widget_main.dart';
 import 'services/service_desktop.dart';
 import 'services/service_theme.dart';
 import 'services/service_notification.dart';
+
 ///*******************************************
 /// 客戶端配置部分
 /// 包含所有可自定義的應用程式設定
@@ -29,14 +30,14 @@ const bool useHost = true;
 /// Ollama 服務器地址設定
 /// 必須確保客戶端可以訪問此地址
 /// @note 不要包含結尾的斜線
-const String fixedHost = "http://100.64.50.12:11434";
+const String fixedHost = "http://119.236.215.113:11434";
 
 /// 是否使用固定模型
 /// 若為 false，則顯示模型選擇器
 const bool useModel = false;
 
 /// 預設的 AI 模型名稱
-const String fixedModel = "oldcookie/dr_ai:q5_1";
+const String fixedModel = "deepseek-r1:14b";
 
 /// 推薦模型列表
 /// 在模型選擋中會標記星號
@@ -47,6 +48,7 @@ const bool allowSettings = true;
 const bool allowVaccine = true;
 const bool allowCalendar = true;
 const bool allowBMI = true;
+
 /// 是否允許多個聊天對話
 const bool allowMultipleChats = true;
 

@@ -52,6 +52,7 @@
   "deleteDialogCancel": "取消",
   "dialogEnterNewTitle": "輸入新標題",
   "dialogEditMessageTitle": "編輯消息",
+  "dialogSelectModel": "選擇模型",
   "settingsTitleBehavior": "行為",
   "settingsDescriptionBehavior": "根據您的喜好修改AI的行為",
   "settingsTitleInterface": "介面",

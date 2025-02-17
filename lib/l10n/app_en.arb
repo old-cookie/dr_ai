@@ -1142,6 +1142,7 @@
     "@bmiOverweight": {
         "description": "BMI category - overweight"
     },
+    "dialogSelectModel": "Select Model",
     "bmiObese": "Obese",
     "@bmiObese": {
         "description": "BMI category - obese"
