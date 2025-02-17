@@ -70,6 +70,6 @@ flutter:
     - assets/
     - assets/logo512.png
     - assets/logo512error.png
-    - assets/OpenCC-ver.1.1.9/
+    - assets/OpenCC/
     - assets/opencc_assets.txt
-    - assets/OpenCC-ver.1.1.9/data/config/
+    - assets/OpenCC/data/config/
