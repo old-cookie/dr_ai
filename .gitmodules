@@ -1,0 +1,3 @@
+[submodule "assets/OpenCC"]
+	path = assets/OpenCC
+	url = https://github.com/BYVoid/OpenCC
