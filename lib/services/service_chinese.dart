@@ -66,7 +66,7 @@ class ChineseService {
       for (String f in assets) {
         File dest = File('${tmp.path}/$f');
         dest.createSync(recursive: true);
-        ByteData data = await rootBundle.load('assets/OpenCC-ver.1.1.9/data/config/$f');
+        ByteData data = await rootBundle.load('assets/OpenCC/data/config/$f');
         List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
         dest.writeAsBytesSync(bytes);
       }

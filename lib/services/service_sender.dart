@@ -20,7 +20,7 @@ List<String> images = [];
 /// @param addToSystem 可選的系統提示附加訊息
 Future<List<llama.Message>> getHistory([String? addToSystem]) async {
   var system =
-      prefs.getString("system") ?? "用繁體中文寫下一個適當完成請求的回答。由造成原因、自行解決方案，尋求專業建議三個方向回答在回答之前，請仔細思考問題，並建立逐步的思路鏈，以確保回答 合乎邏輯且準確。您是一位在臨床推理、診斷和治療計劃方面擁有高級知識的醫學專家。";
+      prefs.getString("system") ?? "您是一位在臨床推理、診斷和治療計劃方面擁有高級知識的醫學專家。必需使用**繁體中文**回答。由造成原因、自行解決方案，尋求專業建議三個方向回答在回答之前，請仔細思考問題，確保回答 合乎邏輯且準確。";
   if (prefs.getBool("noMarkdown") ?? false) {
     system += "\n您不得以任何方式使用 markdown 或任何其他格式語言！";
   }

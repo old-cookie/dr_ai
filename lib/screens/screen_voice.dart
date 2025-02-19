@@ -188,6 +188,7 @@ class _ScreenVoiceState extends State<ScreenVoice> {
       var tmp = await speech.locales();
       languageOptionIds = tmp.map((e) => e.localeId);
       languageOptions = tmp.map((e) => e.name);
+      // 輸出可用語言列表
       setState(() {});
     }
 

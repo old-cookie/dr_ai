@@ -26,7 +26,7 @@ class _ScreenSettingsBehaviorState extends State<ScreenSettingsBehavior> {
   void initState() {
     super.initState();
     // 初始化系統提示詞和相關設置
-    systemInputController = TextEditingController(text: prefs.getString("system") ?? "用繁體中文寫下一個適當完成請求的回答。由造成原因、自行解決方案，尋求專業建議三個方向回答在回答之前，請仔細思考問題，並建立逐步的思路鏈，以確保回答 合乎邏輯且準確。您是一位在臨床推理、診斷和治療計劃方面擁有高級知識的醫學專家。");
+    systemInputController = TextEditingController(text: prefs.getString("system") ?? "您是一位在臨床推理、診斷和治療計劃方面擁有高級知識的醫學專家。必需使用**繁體中文**回答。由造成原因、自行解決方案，尋求專業建議三個方向回答在回答之前，請仔細思考問題，確保回答 合乎邏輯且準確。 合乎邏輯且準確。您是一位在臨床推理、診斷和治療計劃方面擁有高級知識的醫學專家。");
     useSystem = prefs.getBool("useSystem") ?? true;
     noMarkdown = prefs.getBool("noMarkdown") ?? false;
   }
