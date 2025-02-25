@@ -8,7 +8,7 @@ import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
 import 'package:image/image.dart' as img;
-import 'screen_crop_image.dart';
+import '../../services/screen_crop_image.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ScreenAddVaccineRecord extends StatefulWidget {
@@ -230,14 +230,12 @@ class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
                   ),
                   const SizedBox(height: 16),
                   widgetTitle(l10n?.vaccineDate ?? 'Date Received', top: 0, bottom: 8),
-                  ElevatedButton(
-                    onPressed: () => _openDatePicker(context),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                    ),
-                    child: Text(l10n?.selectDate ?? 'Select Date'),
+                  widgetButton(
+                    l10n?.selectDate ?? 'Select Date',
+                    Icons.calendar_today,
+                    () => _openDatePicker(context),
+                    context: context,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                   if (selectedDate != null)
                     Padding(
@@ -285,20 +283,12 @@ class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
                   ),
                   const SizedBox(height: 16),
                   widgetTitle(l10n?.vaccinePhoto ?? 'Vaccination Record Photo (Optional)', top: 0, bottom: 8),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton.icon(
-                          onPressed: _pickImage,
-                          icon: const Icon(Icons.photo_library),
-                          label: Text(l10n?.pickImage ?? 'Pick Image'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(context).colorScheme.primary,
-                            foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                          ),
-                        ),
-                      ),
-                    ],
+                  widgetButton(
+                    l10n?.pickImage ?? 'Pick Image',
+                    Icons.photo_library,
+                    _pickImage,
+                    context: context,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                   if (_imageBytes != null) ...[
                     const SizedBox(height: 8),

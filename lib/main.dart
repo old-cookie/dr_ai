@@ -48,6 +48,7 @@ const bool allowSettings = true;
 const bool allowVaccine = true;
 const bool allowCalendar = true;
 const bool allowBMI = true;
+const bool allowMedicalCertificate = true;
 
 /// 是否允許多個聊天對話
 const bool allowMultipleChats = true;

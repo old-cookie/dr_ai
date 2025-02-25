@@ -1146,5 +1146,103 @@
     "bmiObese": "Obese",
     "@bmiObese": {
         "description": "BMI category - obese"
+    },
+    "addMedicalCertificate": "Add Medical Certificate",
+    "@addMedicalCertificate": {
+        "context": "Title for adding a new medical certificate"
+    },
+    "certificateNumber": "Certificate Number",
+    "@certificateNumber": {
+        "context": "Label for certificate number field"
+    },
+    "hospital": "Hospital",
+    "@hospital": {
+        "context": "Label for hospital field"
+    },
+    "selectHospital": "Select Hospital",
+    "@selectHospital": {
+        "context": "Prompt for selecting a hospital"
+    },
+    "treatmentDate": "Treatment Date",
+    "@treatmentDate": {
+        "context": "Label for treatment date"
+    },
+    "hospitalizationPeriod": "Hospitalization Period",
+    "@hospitalizationPeriod": {
+        "context": "Label for hospitalization period"
+    },
+    "sickLeavePeriod": "Sick Leave Period",
+    "@sickLeavePeriod": {
+        "context": "Label for sick leave period"
+    },
+    "followUpDate": "Follow-up Date",
+    "@followUpDate": {
+        "context": "Label for follow-up date"
+    },
+    "remarks": "Remarks",
+    "@remarks": {
+        "context": "Label for remarks field"
+    },
+    "certificateImage": "Certificate Image",
+    "@certificateImage": {
+        "context": "Label for certificate image"
+    },
+    "save": "Save",
+    "@save": {
+        "context": "Button text for saving"
+    },
+    "selectDate": "Select Date",
+    "@selectDate": {
+        "context": "Prompt for selecting a date"
+    },
+    "changeImage": "Change Image",
+    "@changeImage": {
+        "context": "Button text for changing an image"
+    },
+    "medicalCertificates": "Medical Certificates",
+    "@medicalCertificates": {
+        "context": "Title for medical certificates list"
+    },
+    "viewCertificate": "View Certificate",
+    "@viewCertificate": {
+        "context": "Button text for viewing certificate details"
+    },
+    "noCertificatesFound": "No certificates found",
+    "@noCertificatesFound": {
+        "context": "Message shown when no certificates are available"
+    },
+    "recordSaved": "Record saved",
+    "@recordSaved": {
+        "description": "Message displayed when a record is saved successfully"
+    },
+    "pleaseEnterCertificateNumber": "Please enter certificate number",
+    "@pleaseEnterCertificateNumber": {
+        "description": "Message displayed when certificate number is not entered"
+    },
+    "pleaseSelectTreatmentDate": "Please select treatment date",
+    "@pleaseSelectTreatmentDate": {
+        "description": "Message displayed when treatment date is not selected"
+    },
+    "hospitalizationStartDate": "Hospitalization Start Date",
+    "@hospitalizationStartDate": {
+        "description": "Label for hospitalization start date"
+    },
+    "hospitalizationEndDate": "Hospitalization End Date",
+    "@hospitalizationEndDate": {
+        "description": "Label for hospitalization end date"
+    },
+    "sickLeaveStartDate": "Sick Leave Start Date",
+    "@sickLeaveStartDate": {
+        "description": "Label for sick leave start date"
+    },
+    "sickLeaveEndDate": "Sick Leave End Date",
+    "@sickLeaveEndDate": {
+        "description": "Label for sick leave end date"
+    },
+    "optionMedicalCertificate": "Medical Certificate",
+    "searchHospital": "Search hospital...",
+    "selectImage": "Select Image",
+    "@selectImage": {
+        "description": "Button text for selecting an image"
     }
 }

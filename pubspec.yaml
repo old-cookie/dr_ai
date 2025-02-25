@@ -1,7 +1,7 @@
 name: dr_ai
 description: "A new Flutter project."
 publish_to: 'none'
-version: 3.7.0+1
+version: 4.0.0+1
 
 environment:
   sdk: ^3.5.3

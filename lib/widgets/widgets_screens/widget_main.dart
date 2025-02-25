@@ -21,6 +21,7 @@ import '../../screens/screen_voice.dart';
 import '../../screens/vaccine/screen_vaccine_record.dart';
 import '../../screens/screen_calendar.dart';
 import '../../screens/screen_bmi.dart';
+import '../../screens/medical_certificate/screen_medical_certificate_record.dart';
 import '../../services/service_setter.dart';
 import '../../services/service_haptic.dart';
 import '../../services/service_sender.dart';
@@ -159,6 +160,37 @@ class _MainAppState extends State<MainApp> {
                         const SizedBox(width: 16),
                       ])))))
           : const SizedBox.shrink(),
+
+      (allowMedicalCertificate)
+                ? (Padding(
+                    padding: padding,
+                    child: InkWell(
+                        enableFeedback: false,
+                        customBorder: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50))),
+                        onTap: () {
+                          selectionHaptic();
+                          if (!shouldUseDesktopLayout(context)) {
+                            Navigator.of(context).pop();
+                          }
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenMedicalCertificateRecord()));
+                        },
+                        child: Padding(
+                            padding: const EdgeInsets.only(top: 16, bottom: 16),
+                            child: Row(children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 16, right: 12), 
+                                // 改用更適合醫療憑證的圖示
+                                child: const Icon(Icons.medical_information)
+                              ),
+                              Expanded(
+                                child: Text(AppLocalizations.of(context)!.optionMedicalCertificate,
+                                    softWrap: false, 
+                                    overflow: TextOverflow.fade, 
+                                    style: const TextStyle(fontWeight: FontWeight.w500)),
+                              ),
+                              const SizedBox(width: 16),
+                            ])))))
+                : const SizedBox.shrink(),
 
       (allowCalendar)
           ? (Padding(
