@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
 import 'dart:typed_data';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 class DateSelector extends StatelessWidget {
@@ -79,7 +79,7 @@ class WidgetAddMedicalCertificate extends StatelessWidget {
   final Function() onSave;
   final Function() onAddVaccine;
 
-const WidgetAddMedicalCertificate({
+  const WidgetAddMedicalCertificate({
     super.key,
     required this.certificateNumberController,
     this.selectedHospital,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../l10n/app_localizations.dart';
 import '../../main.dart';
 import '../../services/service_haptic.dart';
 import '../../services/service_setter.dart';
@@ -26,7 +26,9 @@ class _ScreenSettingsBehaviorState extends State<ScreenSettingsBehavior> {
   void initState() {
     super.initState();
     // 初始化系統提示詞和相關設置
-    systemInputController = TextEditingController(text: prefs.getString("system") ?? "您是一位在臨床推理、診斷和治療計劃方面擁有高級知識的醫學專家。必需使用**繁體中文**回答。由造成原因、自行解決方案，尋求專業建議三個方向回答在回答之前，請仔細思考問題，確保回答 合乎邏輯且準確。 合乎邏輯且準確。您是一位在臨床推理、診斷和治療計劃方面擁有高級知識的醫學專家。");
+    systemInputController = TextEditingController(
+        text: prefs.getString("system") ??
+            "您是一位在臨床推理、診斷和治療計劃方面擁有高級知識的醫學專家。必需使用**繁體中文**回答。由造成原因、自行解決方案，尋求專業建議三個方向回答在回答之前，請仔細思考問題，確保回答 合乎邏輯且準確。 合乎邏輯且準確。您是一位在臨床推理、診斷和治療計劃方面擁有高級知識的醫學專家。");
     useSystem = prefs.getBool("useSystem") ?? true;
     noMarkdown = prefs.getBool("noMarkdown") ?? false;
   }
@@ -65,7 +67,7 @@ class _ScreenSettingsBehaviorState extends State<ScreenSettingsBehavior> {
     if (host == null) return;
     var result = await getModels();
     if (!mounted) return;
-    
+
     showDialog(
       context: context,
       builder: (context) {
@@ -78,11 +80,7 @@ class _ScreenSettingsBehaviorState extends State<ScreenSettingsBehavior> {
               itemCount: result.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(result[index],
-                      style: TextStyle(
-                          fontWeight: (recommendedModels.contains(result[index]))
-                              ? FontWeight.w900
-                              : null)),
+                  title: Text(result[index], style: TextStyle(fontWeight: (recommendedModels.contains(result[index])) ? FontWeight.w900 : null)),
                   onTap: () {
                     selectionHaptic();
                     model = result[index];

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../models/medical_certificate_model.dart';
 import '../../widgets_units/widget_button.dart';
 import '../../../screens/medical_certificate/screen_add_medical_certificate.dart';
@@ -10,7 +10,7 @@ class WidgetMedicalCertificateRecord extends StatelessWidget {
   final Function(MedicalCertificateModel) onDeleteCertificate;
   final Function(MedicalCertificateModel) onViewCertificate;
 
-const WidgetMedicalCertificateRecord({
+  const WidgetMedicalCertificateRecord({
     super.key,
     required this.certificates,
     required this.onViewCertificate,
@@ -20,7 +20,7 @@ const WidgetMedicalCertificateRecord({
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -31,7 +31,6 @@ const WidgetMedicalCertificateRecord({
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
         ),
-        
         certificates.isEmpty
             ? Center(
                 child: Padding(

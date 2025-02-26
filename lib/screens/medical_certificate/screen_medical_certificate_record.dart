@@ -3,15 +3,14 @@ import 'package:encrypt_shared_preferences/provider.dart';
 import 'dart:convert';
 import 'screen_add_medical_certificate.dart';
 import 'screen_medical_certificate_detail.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../l10n/app_localizations.dart';
 import '../../widgets/widgets_units/widget_button.dart';
 
 class ScreenMedicalCertificateRecord extends StatefulWidget {
   const ScreenMedicalCertificateRecord({super.key});
 
   @override
-  ScreenMedicalCertificateRecordState createState() =>
-      ScreenMedicalCertificateRecordState();
+  ScreenMedicalCertificateRecordState createState() => ScreenMedicalCertificateRecordState();
 }
 
 class ScreenMedicalCertificateRecordState extends State<ScreenMedicalCertificateRecord> {
@@ -32,22 +31,19 @@ class ScreenMedicalCertificateRecordState extends State<ScreenMedicalCertificate
     try {
       final prefs = EncryptedSharedPreferences.getInstance();
       final allKeys = prefs.getKeys();
-      final certificateKeys =
-          allKeys.where((key) => key.startsWith('medical_certificate_')).toList();
+      final certificateKeys = allKeys.where((key) => key.startsWith('medical_certificate_')).toList();
 
       List<Map<String, dynamic>> loadedCertificates = [];
       for (String key in certificateKeys) {
         final data = prefs.getString(key);
         if (data != null && data.isNotEmpty) {
-          final Map<String, dynamic> certificate =
-              Map<String, dynamic>.from(jsonDecode(data));
+          final Map<String, dynamic> certificate = Map<String, dynamic>.from(jsonDecode(data));
           certificate['id'] = key;
           loadedCertificates.add(certificate);
         }
       }
 
-      loadedCertificates
-          .sort((a, b) => b['id'].toString().compareTo(a['id'].toString()));
+      loadedCertificates.sort((a, b) => b['id'].toString().compareTo(a['id'].toString()));
 
       setState(() {
         certificates = loadedCertificates;
@@ -63,7 +59,7 @@ class ScreenMedicalCertificateRecordState extends State<ScreenMedicalCertificate
   void _deleteCertificate(String id) async {
     final l10n = AppLocalizations.of(context);
     if (l10n == null) return;
-    
+
     final confirmDelete = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -114,8 +110,7 @@ class ScreenMedicalCertificateRecordState extends State<ScreenMedicalCertificate
             child: isLoading
                 ? Center(
                     child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                        Theme.of(context).primaryColor),
+                    valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
                   ))
                 : certificates.isEmpty
                     ? Center(

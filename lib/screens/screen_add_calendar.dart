@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 import '../widgets/widgets_units/widget_title.dart';
 import '../widgets/widgets_units/widget_button.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/service_calendar_event.dart';
 import 'dart:convert';
@@ -20,8 +20,8 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
   DateTime? _selectedDateTime;
   String? selectedDateTime;
   final TextEditingController eventController = TextEditingController();
-  int? notificationMinutes = 15;  // 改為可為 null
-  bool isPastDate = false;  // 新增判斷是否為過去時間
+  int? notificationMinutes = 15; // 改為可為 null
+  bool isPastDate = false; // 新增判斷是否為過去時間
 
   @override
   void initState() {
@@ -65,7 +65,7 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
         _selectedDateTime = dateTime;
         selectedDateTime = '${dateTime.month}/${dateTime.day}/${dateTime.year} '
             '${dateTime.hour}:${dateTime.minute.toString().padLeft(2, '0')}';
-        
+
         // 檢查是否為過去時間
         isPastDate = dateTime.isBefore(DateTime.now());
         // 如果是過去時間，清除通知設定
@@ -89,7 +89,7 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
       final event = CalendarEvent(
         title: eventController.text,
         dateTime: _selectedDateTime!,
-        notificationMinutes: notificationMinutes ?? 0,  // 如果沒有設置通知，使用 0
+        notificationMinutes: notificationMinutes ?? 0, // 如果沒有設置通知，使用 0
       );
 
       // 儲存事件
@@ -106,7 +106,8 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
             id: events.length,
             title: l10n?.calendarReminderTitle ?? 'Appointment Reminder',
             body: (l10n?.calendarReminderBody ?? 'You have an upcoming appointment "{eventTitle}"')
-                  .toString().replaceFirst('{eventTitle}', event.title),
+                .toString()
+                .replaceFirst('{eventTitle}', event.title),
             scheduledDate: notificationTime,
           );
         } catch (e) {
@@ -131,7 +132,7 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    
+
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n?.calendarEventTitle ?? 'Add Event'),

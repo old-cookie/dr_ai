@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../models/medical_certificate_model.dart';
 
 /// 醫療證明書詳情元件
 class WidgetMedicalCertificateDetail extends StatelessWidget {
   final MedicalCertificateModel certificate;
 
-const WidgetMedicalCertificateDetail({
+  const WidgetMedicalCertificateDetail({
     super.key,
     required this.certificate,
   });
@@ -14,7 +14,7 @@ const WidgetMedicalCertificateDetail({
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -30,33 +30,31 @@ const WidgetMedicalCertificateDetail({
             style: TextStyle(fontSize: 16, color: Colors.grey[700]),
           ),
           const SizedBox(height: 24),
-          
+
           // 各項日期資訊
           _buildInfoItem(localizations.treatmentDate, certificate.treatmentDate),
-          
+
           if (certificate.hospitalizationStartDate != null && certificate.hospitalizationEndDate != null)
             _buildDateRangeItem(
-              localizations.hospitalizationPeriod, 
+              localizations.hospitalizationPeriod,
               certificate.hospitalizationStartDate!,
               certificate.hospitalizationEndDate!,
             ),
-          
+
           if (certificate.sickLeaveStartDate != null && certificate.sickLeaveEndDate != null)
             _buildDateRangeItem(
-              localizations.sickLeavePeriod, 
+              localizations.sickLeavePeriod,
               certificate.sickLeaveStartDate!,
               certificate.sickLeaveEndDate!,
             ),
-          
-          if (certificate.followUpDate != null)
-            _buildInfoItem(localizations.followUpDate, certificate.followUpDate!),
-          
+
+          if (certificate.followUpDate != null) _buildInfoItem(localizations.followUpDate, certificate.followUpDate!),
+
           // 備註
-          if (certificate.remarks != null && certificate.remarks!.isNotEmpty)
-            _buildInfoItem(localizations.remarks, certificate.remarks!),
-          
+          if (certificate.remarks != null && certificate.remarks!.isNotEmpty) _buildInfoItem(localizations.remarks, certificate.remarks!),
+
           const SizedBox(height: 24),
-          
+
           // 證明書圖片
           if (certificate.imageBytes != null) ...[
             Text(

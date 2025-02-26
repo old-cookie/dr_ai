@@ -10,7 +10,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../l10n/app_localizations.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
@@ -162,35 +162,32 @@ class _MainAppState extends State<MainApp> {
           : const SizedBox.shrink(),
 
       (allowMedicalCertificate)
-                ? (Padding(
-                    padding: padding,
-                    child: InkWell(
-                        enableFeedback: false,
-                        customBorder: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50))),
-                        onTap: () {
-                          selectionHaptic();
-                          if (!shouldUseDesktopLayout(context)) {
-                            Navigator.of(context).pop();
-                          }
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenMedicalCertificateRecord()));
-                        },
-                        child: Padding(
-                            padding: const EdgeInsets.only(top: 16, bottom: 16),
-                            child: Row(children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 16, right: 12), 
-                                // 改用更適合醫療憑證的圖示
-                                child: const Icon(Icons.medical_information)
-                              ),
-                              Expanded(
-                                child: Text(AppLocalizations.of(context)!.optionMedicalCertificate,
-                                    softWrap: false, 
-                                    overflow: TextOverflow.fade, 
-                                    style: const TextStyle(fontWeight: FontWeight.w500)),
-                              ),
-                              const SizedBox(width: 16),
-                            ])))))
-                : const SizedBox.shrink(),
+          ? (Padding(
+              padding: padding,
+              child: InkWell(
+                  enableFeedback: false,
+                  customBorder: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50))),
+                  onTap: () {
+                    selectionHaptic();
+                    if (!shouldUseDesktopLayout(context)) {
+                      Navigator.of(context).pop();
+                    }
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenMedicalCertificateRecord()));
+                  },
+                  child: Padding(
+                      padding: const EdgeInsets.only(top: 16, bottom: 16),
+                      child: Row(children: [
+                        Padding(
+                            padding: const EdgeInsets.only(left: 16, right: 12),
+                            // 改用更適合醫療憑證的圖示
+                            child: const Icon(Icons.medical_information)),
+                        Expanded(
+                          child: Text(AppLocalizations.of(context)!.optionMedicalCertificate,
+                              softWrap: false, overflow: TextOverflow.fade, style: const TextStyle(fontWeight: FontWeight.w500)),
+                        ),
+                        const SizedBox(width: 16),
+                      ])))))
+          : const SizedBox.shrink(),
 
       (allowCalendar)
           ? (Padding(

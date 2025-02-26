@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../l10n/app_localizations.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:encrypt_shared_preferences/provider.dart';
@@ -281,19 +281,19 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
           description: "\n${AppLocalizations.of(context)!.settingsDescriptionInterface}",
         ),
         //(!isDesktopPlatform(includeWeb: true))
-            //?
+        //?
         buildSettingsButton(
-                AppLocalizations.of(context)!.settingsTitleVoice,
-                Icons.headphones_rounded,
-                () {
-                  selectionHaptic();
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenSettingsVoice()));
-                },
-                context: context,
-                description: "\n${AppLocalizations.of(context)!.settingsDescriptionVoice}",
-                badge: AppLocalizations.of(context)!.settingsExperimentalBeta,
-              )
-            //: const SizedBox.shrink()
+          AppLocalizations.of(context)!.settingsTitleVoice,
+          Icons.headphones_rounded,
+          () {
+            selectionHaptic();
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenSettingsVoice()));
+          },
+          context: context,
+          description: "\n${AppLocalizations.of(context)!.settingsDescriptionVoice}",
+          badge: AppLocalizations.of(context)!.settingsExperimentalBeta,
+        )
+        //: const SizedBox.shrink()
         ,
         buildSettingsButton(
           AppLocalizations.of(context)!.settingsTitleExport,

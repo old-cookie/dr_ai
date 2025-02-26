@@ -6,10 +6,11 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
 import 'package:image/image.dart' as img;
 import '../../services/screen_crop_image.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import '../../widgets/widgets_units/widget_button.dart';
 import '../../widgets/widgets_units/widget_title.dart';
+
 class ScreenAddMedicalCertificate extends StatefulWidget {
   const ScreenAddMedicalCertificate({super.key});
 
@@ -47,7 +48,7 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
   String? sickLeaveStartDate;
   String? sickLeaveEndDate;
   String? followUpDate;
-  
+
   final ImagePicker _picker = ImagePicker();
   String? _base64Image;
   Uint8List? _imageBytes;
@@ -144,7 +145,7 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
   Future<void> _saveRecord() async {
     final l10n = AppLocalizations.of(context);
     if (l10n == null) return;
-    
+
     // 驗證必填欄位
     if (certificateNumberController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -152,7 +153,7 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
       );
       return;
     }
-    
+
     if (treatmentDate == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(l10n.pleaseSelectTreatmentDate)),
@@ -411,8 +412,7 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
               maxLines: 3,
             ),
             const SizedBox(height: 16.0),
-            if (_imageBytes != null)
-              Image.memory(_imageBytes!),
+            if (_imageBytes != null) Image.memory(_imageBytes!),
             const SizedBox(height: 16.0),
             widgetButton(
               l10n.selectImage,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../l10n/app_localizations.dart';
 
 class WidgetVaccineDetail extends StatelessWidget {
   final Map<String, dynamic> record;

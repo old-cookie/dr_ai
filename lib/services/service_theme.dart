@@ -21,15 +21,15 @@ void resetSystemNavigation(BuildContext context, {Color? color, Color? statusBar
       await Future.delayed(delay);
     }
     color ??= themeCurrent(context).colorScheme.surface;
-    
+
     // 檢查顏色是否相等的輔助函數
     bool colorsEqual(Color a, Color b) {
       return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
     }
-    
+
     Color effectiveStatusColor = (statusBarColor != null) ? statusBarColor : color!;
     bool shouldBeTransparent = !kIsWeb && colorsEqual(effectiveStatusColor, themeCurrent(context).colorScheme.surface);
-    
+
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarIconBrightness: (effectiveStatusColor.computeLuminance() > 0.179) ? Brightness.dark : Brightness.light,
       statusBarColor: shouldBeTransparent ? Colors.transparent : effectiveStatusColor,

@@ -4,7 +4,7 @@ import 'dart:convert';
 import '../../../screens/vaccine/screen_add_vaccine_record.dart';
 import '../../widgets_units/widget_button.dart';
 import '../../../screens/vaccine/screen_vaccine_detail.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../l10n/app_localizations.dart';
 
 class WidgetVaccineRecord extends StatefulWidget {
   const WidgetVaccineRecord({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../l10n/app_localizations.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:dartx/dartx.dart';
 import 'package:duration_picker/duration_picker.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../l10n/app_localizations.dart';
 
 import 'dart:convert';
 
@@ -7,7 +7,7 @@ class ScreenMedicalCertificateDetail extends StatelessWidget {
   final Map<String, dynamic> certificate;
   final VoidCallback onDelete;
 
-const ScreenMedicalCertificateDetail({
+  const ScreenMedicalCertificateDetail({
     super.key,
     required this.certificate,
     required this.onDelete,
@@ -28,7 +28,7 @@ const ScreenMedicalCertificateDetail({
     }
 
     final String base64Image = certificate['image'] as String? ?? '';
-    
+
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.certificateNumber),
@@ -85,38 +85,32 @@ const ScreenMedicalCertificateDetail({
                       label: l10n.treatmentDate,
                       value: certificate['treatmentDate'] ?? '',
                     ),
-                    if (certificate['hospitalizationStartDate'] != null &&
-                        certificate['hospitalizationStartDate'].isNotEmpty)
+                    if (certificate['hospitalizationStartDate'] != null && certificate['hospitalizationStartDate'].isNotEmpty)
                       DetailRow(
                         label: l10n.hospitalizationStartDate,
                         value: certificate['hospitalizationStartDate'],
                       ),
-                    if (certificate['hospitalizationEndDate'] != null &&
-                        certificate['hospitalizationEndDate'].isNotEmpty)
+                    if (certificate['hospitalizationEndDate'] != null && certificate['hospitalizationEndDate'].isNotEmpty)
                       DetailRow(
                         label: l10n.hospitalizationEndDate,
                         value: certificate['hospitalizationEndDate'],
                       ),
-                    if (certificate['sickLeaveStartDate'] != null &&
-                        certificate['sickLeaveStartDate'].isNotEmpty)
+                    if (certificate['sickLeaveStartDate'] != null && certificate['sickLeaveStartDate'].isNotEmpty)
                       DetailRow(
                         label: l10n.sickLeaveStartDate,
                         value: certificate['sickLeaveStartDate'],
                       ),
-                    if (certificate['sickLeaveEndDate'] != null &&
-                        certificate['sickLeaveEndDate'].isNotEmpty)
+                    if (certificate['sickLeaveEndDate'] != null && certificate['sickLeaveEndDate'].isNotEmpty)
                       DetailRow(
                         label: l10n.sickLeaveEndDate,
                         value: certificate['sickLeaveEndDate'],
                       ),
-                    if (certificate['followUpDate'] != null &&
-                        certificate['followUpDate'].isNotEmpty)
+                    if (certificate['followUpDate'] != null && certificate['followUpDate'].isNotEmpty)
                       DetailRow(
                         label: l10n.followUpDate,
                         value: certificate['followUpDate'],
                       ),
-                    if (certificate['remarks'] != null &&
-                        certificate['remarks'].isNotEmpty)
+                    if (certificate['remarks'] != null && certificate['remarks'].isNotEmpty)
                       DetailRow(
                         label: l10n.remarks,
                         value: certificate['remarks'],
@@ -145,7 +139,7 @@ class DetailRow extends StatelessWidget {
   final String label;
   final String value;
 
-const DetailRow({
+  const DetailRow({
     super.key,
     required this.label,
     required this.value,

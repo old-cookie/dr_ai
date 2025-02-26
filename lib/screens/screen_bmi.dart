@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bmi_calculator/bmi_calculator.dart';
 import '../services/service_theme.dart';
 import '../widgets/widgets_units/widget_button.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../l10n/app_localizations.dart';
 
 class ScreenBMI extends StatefulWidget {
   const ScreenBMI({super.key});
@@ -25,7 +25,7 @@ class _ScreenBMIState extends State<ScreenBMI> {
   void _calculateBMI() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      
+
       final bmi = BMI(
         height: height! / 100,
         weight: weight!,
@@ -34,11 +34,11 @@ class _ScreenBMIState extends State<ScreenBMI> {
         gender: gender,
         standard: standard,
       );
-      
+
       final bmiValue = bmi.computeBMI();
       final interpretation = bmi.interpretBMI();
       final l10n = AppLocalizations.of(context)!;
-      
+
       // 轉換英文類別到本地化類別
       String localizedCategory = interpretation;
       switch (interpretation.toLowerCase()) {
@@ -65,7 +65,7 @@ class _ScreenBMIState extends State<ScreenBMI> {
           localizedCategory = l10n.bmiObese;
           break;
       }
-      
+
       setState(() {
         result = bmiValue.toStringAsFixed(1);
         category = localizedCategory;
@@ -76,16 +76,12 @@ class _ScreenBMIState extends State<ScreenBMI> {
 
   Color _getCategoryColor(String category) {
     final l10n = AppLocalizations.of(context)!;
-    
-    if (category == l10n.bmiSeverelyWasted ||
-        category == l10n.bmiUnderweight ||
-        category == l10n.bmiWasted) {
+
+    if (category == l10n.bmiSeverelyWasted || category == l10n.bmiUnderweight || category == l10n.bmiWasted) {
       return Colors.blue;
-    } else if (category == l10n.bmiNormal ||
-               category == l10n.bmiNormalWeight) {
+    } else if (category == l10n.bmiNormal || category == l10n.bmiNormalWeight) {
       return Colors.green;
-    } else if (category == l10n.bmiPossibleRiskOverweight ||
-               category == l10n.bmiOverweight) {
+    } else if (category == l10n.bmiPossibleRiskOverweight || category == l10n.bmiOverweight) {
       return Colors.orange;
     } else if (category == l10n.bmiObese) {
       return Colors.red;
@@ -96,7 +92,7 @@ class _ScreenBMIState extends State<ScreenBMI> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    
+
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.bmiCalculator),
@@ -210,9 +206,9 @@ class _ScreenBMIState extends State<ScreenBMI> {
                 Text(
                   category!,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: categoryColor,
-                    fontWeight: FontWeight.bold,
-                  ),
+                        color: categoryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
@@ -222,9 +218,7 @@ class _ScreenBMIState extends State<ScreenBMI> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(l10n.bmiClassificationTitle, 
-                          style: const TextStyle(fontWeight: FontWeight.bold)
-                        ),
+                        Text(l10n.bmiClassificationTitle, style: const TextStyle(fontWeight: FontWeight.bold)),
                         const SizedBox(height: 8),
                         if (ageYears! >= 5 && ageYears! <= 19) ...[
                           Text(l10n.bmiChildStandard),

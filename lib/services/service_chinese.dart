@@ -7,11 +7,11 @@ import 'dart:developer';
 
 class ChineseService {
   static Converter? _chineseConverter;
-  
+
   /// Initialize Chinese converter with asset files
   static Future<void> initConverter() async {
     if (_chineseConverter != null) return;
-    
+
     try {
       if (kIsWeb) {
         _chineseConverter = createConverter('s2hk');
@@ -23,7 +23,7 @@ class ChineseService {
       if (!File('$path/s2hk.json').existsSync()) {
         throw Exception('OpenCC configuration files not found');
       }
-      
+
       _chineseConverter = createConverter('$path/s2hk.json');
     } catch (e) {
       log("Chinese converter initialization error: $e");
@@ -36,7 +36,7 @@ class ChineseService {
     try {
       Directory dir = await getApplicationSupportDirectory();
       Directory openccDir = Directory('${dir.path}/opencc');
-      
+
       if (openccDir.existsSync()) {
         return openccDir.path;
       }
@@ -45,19 +45,15 @@ class ChineseService {
       if (tmp.existsSync()) {
         tmp.deleteSync(recursive: true);
       }
-      
+
       tmp.createSync(recursive: true);
-      
-      String assetList = await rootBundle.loadString('assets/opencc_assets.txt')
-          .catchError((e) {
+
+      String assetList = await rootBundle.loadString('assets/opencc_assets.txt').catchError((e) {
         log("Error loading assets list: $e");
         return "";
       });
-      
-      List<String> assets = assetList
-          .split('\n')
-          .where((line) => line.isNotEmpty && !line.startsWith('#'))
-          .toList();
+
+      List<String> assets = assetList.split('\n').where((line) => line.isNotEmpty && !line.startsWith('#')).toList();
 
       if (assets.isEmpty) {
         throw Exception("No assets found in assets list");

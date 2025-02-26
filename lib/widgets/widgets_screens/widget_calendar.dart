@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../services/service_calendar_event.dart';
 import 'dart:convert';
 import '../../services/service_notification.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';  // 添加這行
+import '../../l10n/app_localizations.dart';
 
 class WidgetCalendar extends StatefulWidget {
   const WidgetCalendar({super.key});
@@ -41,13 +41,13 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
       // 獲取當前事件列表
       final prefs = await SharedPreferences.getInstance();
       List<String> events = prefs.getStringList('calendar_events') ?? [];
-      
+
       // 刪除指定事件
       events.removeAt(index);
       await prefs.setStringList('calendar_events', events);
 
       // 取消相關通知
-      await NotificationService().cancelNotification(index + 1);  // 因為我們使用 events.length 作為 ID
+      await NotificationService().cancelNotification(index + 1); // 因為我們使用 events.length 作為 ID
 
       // 重新加載事件列表
       await _loadEvents();
@@ -62,22 +62,20 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
                 // 復原刪除
                 events.insert(index, jsonEncode(event.toJson()));
                 await prefs.setStringList('calendar_events', events);
-                
+
                 // 如果事件有通知且在未來，重新設置通知
                 if (event.notificationMinutes > 0) {
-                  final notificationTime = event.dateTime
-                      .subtract(Duration(minutes: event.notificationMinutes));
+                  final notificationTime = event.dateTime.subtract(Duration(minutes: event.notificationMinutes));
                   if (notificationTime.isAfter(DateTime.now())) {
                     await NotificationService().scheduleNotification(
                       id: events.length,
                       title: l10n?.calendarReminderTitle ?? 'Appointment Reminder',
-                      body: l10n?.calendarReminderBody(event.title) ?? 
-                            'You have an upcoming appointment "${event.title}"',
+                      body: l10n?.calendarReminderBody(event.title) ?? 'You have an upcoming appointment "${event.title}"',
                       scheduledDate: notificationTime,
                     );
                   }
                 }
-                
+
                 await _loadEvents();
               },
             ),
@@ -194,7 +192,8 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
               itemCount: selectedDayEvents.length,
               itemBuilder: (context, index) {
                 final event = selectedDayEvents[index];
-                return Dismissible(  // 添加滑動刪除功能
+                return Dismissible(
+                  // 添加滑動刪除功能
                   key: Key(event.dateTime.toIso8601String() + index.toString()),
                   direction: DismissDirection.endToStart,
                   background: Container(
@@ -226,11 +225,11 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
                       subtitle: Text(
                         event.notificationMinutes > 0
                             ? '${l10n?.calendarEventTime ?? 'Time'}: ${event.dateTime.hour.toString().padLeft(2, '0')}:'
-                              '${event.dateTime.minute.toString().padLeft(2, '0')}\n'
-                              '${l10n?.calendarEventNotification ?? 'Reminder'}: ${event.notificationMinutes} '
-                              '${l10n?.calendarEventNotification ?? 'minutes before'}'
+                                '${event.dateTime.minute.toString().padLeft(2, '0')}\n'
+                                '${l10n?.calendarEventNotification ?? 'Reminder'}: ${event.notificationMinutes} '
+                                '${l10n?.calendarEventNotification ?? 'minutes before'}'
                             : '${l10n?.calendarEventTime ?? 'Time'}: ${event.dateTime.hour.toString().padLeft(2, '0')}:'
-                              '${event.dateTime.minute.toString().padLeft(2, '0')}',
+                                '${event.dateTime.minute.toString().padLeft(2, '0')}',
                       ),
                     ),
                   ),

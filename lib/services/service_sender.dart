@@ -2,12 +2,11 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../l10n/app_localizations.dart';
 import 'package:ollama_dart/ollama_dart.dart' as llama;
 import 'package:dartx/dartx.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-//import 'package:flutter_opencc_ffi/flutter_opencc_ffi.dart';
 import 'service_haptic.dart';
 import 'service_setter.dart';
 import 'service_chinese.dart';
@@ -19,8 +18,7 @@ List<String> images = [];
 /// 組裝聊天歷史記錄
 /// @param addToSystem 可選的系統提示附加訊息
 Future<List<llama.Message>> getHistory([String? addToSystem]) async {
-  var system =
-      prefs.getString("system") ?? "您是一位在臨床推理、診斷和治療計劃方面擁有高級知識的醫學專家。必需使用**繁體中文**回答。由造成原因、自行解決方案，尋求專業建議三個方向回答在回答之前，請仔細思考問題，確保回答 合乎邏輯且準確。";
+  var system = prefs.getString("system") ?? "您是一位在臨床推理、診斷和治療計劃方面擁有高級知識的醫學專家。必需使用**繁體中文**回答。由造成原因、自行解決方案，尋求專業建議三個方向回答在回答之前，請仔細思考問題，確保回答 合乎邏輯且準確。";
   if (prefs.getBool("noMarkdown") ?? false) {
     system += "\n您不得以任何方式使用 markdown 或任何其他格式語言！";
   }
@@ -249,11 +247,11 @@ Future<String> send(
           continue;
         }
       }
-      
+
       if (currentResponse.isEmpty) {
         throw Exception("Empty response from server");
       }
-      
+
       // 串流回應完成後檢查
       messages.removeWhere((message) => message.id == newId);
       String finalText = currentResponse;
@@ -305,18 +303,18 @@ Future<String> send(
         chatUuid = null;
       }
     });
-    
+
     // 顯示更具體的錯誤訊息
-    String errorMessage = e.toString().contains("timeout") 
+    String errorMessage = e.toString().contains("timeout")
         ? AppLocalizations.of(context)!.settingsHostInvalid("timeout")
         : AppLocalizations.of(context)!.settingsHostInvalid("connection");
-        
+
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(errorMessage),
       showCloseIcon: true,
       duration: const Duration(seconds: 5),
     ));
-    
+
     if (onStream != null) {
       onStream("", true);
     }
@@ -327,7 +325,7 @@ Future<String> send(
   setState(() {
     chatAllowed = true;
   });
-  
+
   if ((prefs.getString("requestType") ?? "stream") == "stream" && onStream != null) {
     onStream(text, true);
   }

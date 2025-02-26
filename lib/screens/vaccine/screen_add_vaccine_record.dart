@@ -9,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
 import 'package:image/image.dart' as img;
 import '../../services/screen_crop_image.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../l10n/app_localizations.dart';
 
 class ScreenAddVaccineRecord extends StatefulWidget {
   const ScreenAddVaccineRecord({super.key});

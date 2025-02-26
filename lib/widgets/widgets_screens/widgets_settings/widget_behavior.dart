@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:dynamic_color/dynamic_color.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../services/service_haptic.dart';
 import '../../../services/service_desktop.dart';
 import '../../widgets_units/widget_toggle.dart';

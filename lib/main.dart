@@ -1,7 +1,6 @@
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-//import 'package:shared_preferences/shared_preferences.dart';
+import '../../l10n/app_localizations.dart';
 import 'package:encrypt_shared_preferences/provider.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:uuid/uuid.dart';

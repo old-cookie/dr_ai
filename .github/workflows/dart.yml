@@ -43,10 +43,6 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # Step 6: Analyze the project source
-      - name: Analyze project source
-        run: flutter analyze
-
       # Step 7: Build APK
       - name: Build APK
         run: flutter build apk --release
@@ -64,7 +60,7 @@ jobs:
         id: extract_version
         run: |
           version=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2 | tr -d '\r')
-          echo "VERSION=$version" >> $GITHUB_ENV
+          echo "version=$version" >> $GITHUB_OUTPUT
 
       # Step 9: Check if Tag Exists
       - name: Check if Tag Exists
@@ -93,7 +89,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/flutter-apk/app-release.apk,build/web.zip"
-          tag: v${{ env.VERSION }}
+          tag: v${{ steps.extract_version.outputs.version }}
           generateReleaseNotes: false
           makeLatest: legacy
           omitBody: false

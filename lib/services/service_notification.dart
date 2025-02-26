@@ -11,7 +11,7 @@ class NotificationService {
   NotificationService._();
 
   final FlutterLocalNotificationsPlugin _notifications = FlutterLocalNotificationsPlugin();
-  
+
   static const String _channelId = 'calendar_notification_channel';
   static const String _channelName = '預約提醒';
   static const String _channelDesc = '用於預約時間提醒的通知';
@@ -37,8 +37,7 @@ class NotificationService {
       );
 
       // 獲取 Android 特定實現
-      final androidPlugin = _notifications.resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>();
+      final androidPlugin = _notifications.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
 
       // 創建通知頻道
       await androidPlugin?.createNotificationChannel(androidChannel);
@@ -51,7 +50,7 @@ class NotificationService {
         requestSoundPermission: true,
         defaultPresentSound: true,
       );
-      
+
       const initSettings = InitializationSettings(
         android: androidSettings,
         iOS: darwinSettings,
@@ -68,7 +67,6 @@ class NotificationService {
 
       // 請求所需權限
       await requestPermission();
-      
     } catch (e) {
       debugPrint('通知初始化錯誤: $e');
     }
@@ -76,15 +74,13 @@ class NotificationService {
 
   Future<void> requestPermission() async {
     try {
-      final androidPlugin = _notifications.resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>();
-          
+      final androidPlugin = _notifications.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+
       // 請求通知權限
       await androidPlugin?.requestNotificationsPermission();
-      
+
       // 請求精確鬧鐘權限
       await androidPlugin?.requestExactAlarmsPermission();
-      
     } catch (e) {
       debugPrint('請求權限錯誤: $e');
     }
@@ -106,7 +102,7 @@ class NotificationService {
 
       final notificationTime = tz.TZDateTime.from(scheduledDate, tz.local);
       debugPrint('準備設置通知: ${notificationTime.toString()}');
-      
+
       await _notifications.zonedSchedule(
         id,
         title,
@@ -117,8 +113,8 @@ class NotificationService {
             _channelId,
             _channelName,
             channelDescription: _channelDesc,
-            importance: Importance.max,    // 設為最高重要性
-            priority: Priority.max,        // 設為最高優先級
+            importance: Importance.max, // 設為最高重要性
+            priority: Priority.max, // 設為最高優先級
             enableVibration: true,
             playSound: true,
             sound: const RawResourceAndroidNotificationSound('notificationsound'),
@@ -129,25 +125,24 @@ class NotificationService {
             ledOffMs: 500,
             ticker: '新的預約提醒',
             channelShowBadge: true,
-            fullScreenIntent: true,        // 啟用全螢幕意圖
-            visibility: NotificationVisibility.public,  // 在鎖屏上也顯示
-            category: AndroidNotificationCategory.alarm,  // 設為警報類別
-            additionalFlags: Int32List.fromList(<int>[4]),  // 添加堅持標誌
+            fullScreenIntent: true, // 啟用全螢幕意圖
+            visibility: NotificationVisibility.public, // 在鎖屏上也顯示
+            category: AndroidNotificationCategory.alarm, // 設為警報類別
+            additionalFlags: Int32List.fromList(<int>[4]), // 添加堅持標誌
           ),
           iOS: const DarwinNotificationDetails(
             presentAlert: true,
             presentBadge: true,
             presentSound: true,
-            presentBanner: true,           // 確保顯示橫幅
+            presentBanner: true, // 確保顯示橫幅
             presentList: true,
             sound: 'notification_sound.aiff',
             badgeNumber: 1,
-            interruptionLevel: InterruptionLevel.timeSensitive,  // 設為時間敏感
+            interruptionLevel: InterruptionLevel.timeSensitive, // 設為時間敏感
           ),
         ),
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       );
       debugPrint('通知已排程: ID=$id, 時間=${notificationTime.toString()}');
     } catch (e) {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:ollama_dart/ollama_dart.dart' as llama;
 import 'package:datetime_loop/datetime_loop.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../l10n/app_localizations.dart';
 import '../main.dart';
 import '../services/service_sender.dart';
 import '../services/service_haptic.dart';

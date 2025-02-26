@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:simple_icons/simple_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../services/service_haptic.dart';
 import '../../../services/service_desktop.dart';
 import '../../widgets_units/widget_title.dart';

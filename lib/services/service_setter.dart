@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../l10n/app_localizations.dart';
 import 'package:ollama_dart/ollama_dart.dart' as llama;
 import 'package:dartx/dartx.dart';
 import 'package:uuid/uuid.dart';

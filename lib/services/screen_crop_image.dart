@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:crop_your_image/crop_your_image.dart';
 import 'dart:typed_data';
 import '../widgets/widgets_units/widget_button.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../l10n/app_localizations.dart';
 
 /// 圖片裁切畫面
 /// 提供使用者裁切所選圖片的功能界面

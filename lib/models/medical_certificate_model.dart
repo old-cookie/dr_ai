@@ -43,9 +43,7 @@ class MedicalCertificateModel {
       sickLeaveEndDate: json['sickLeaveEndDate'] as String?,
       followUpDate: json['followUpDate'] as String?,
       remarks: json['remarks'] as String?,
-      imageBytes: json['imageBytes'] != null 
-          ? Uint8List.fromList(List<int>.from(json['imageBytes']))
-          : null,
+      imageBytes: json['imageBytes'] != null ? Uint8List.fromList(List<int>.from(json['imageBytes'])) : null,
       createdAt: DateTime.parse(json['createdAt'] as String),
     );
   }
