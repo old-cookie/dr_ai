@@ -1241,6 +1241,11 @@
     },
     "optionMedicalCertificate": "Medical Certificate",
     "searchHospital": "Search hospital...",
+    "serverConnectionError": "Server Connection Error",
+    "error": "Error",
+    "ok": "ok",
+    "serverNotConfigured": "Server Not Configured",
+    "loading": "loading",
     "selectImage": "Select Image",
     "@selectImage": {
         "description": "Button text for selecting an image"

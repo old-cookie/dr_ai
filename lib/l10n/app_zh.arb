@@ -298,5 +298,10 @@
   "certificateNumberRequired": "證明編號為必填項",
   "hospitalRequired": "醫院名稱為必填項",
   "optionMedicalCertificate": "醫療證明",
+  "serverConnectionError": "伺服器連接錯誤",
+  "error": "錯誤",
+  "ok": "確定",
+  "serverNotConfigured": "伺服器未配置",
+  "loading": "加載中",
   "searchHospital": "搜尋醫院"
 }

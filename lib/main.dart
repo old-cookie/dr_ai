@@ -12,6 +12,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:pwa_install/pwa_install.dart' as pwa;
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:http/http.dart' as http;
 import 'widgets/widgets_screens/widget_main.dart';
 import 'services/service_desktop.dart';
 import 'services/service_theme.dart';
@@ -30,6 +31,8 @@ const bool useHost = true;
 /// 必須確保客戶端可以訪問此地址
 /// @note 不要包含結尾的斜線
 const String fixedHost = "http://oldcookie.asuscomm.com:11434";
+/// 備用服務器地址，當主服務器無法訪問時使用
+const String backupHost = "http://100.64.50.12:11434";
 
 /// 是否使用固定模型
 /// 若為 false，則顯示模型選擇器
@@ -119,6 +122,12 @@ void main() async {
     await EncryptedSharedPreferences.initialize(encryptionKey);
     prefs = EncryptedSharedPreferences.getInstance();
 
+    // 設置主機地址，如果主伺服器不可用則使用備用伺服器
+    if (useHost) {
+      host = await checkHostAvailability(fixedHost) ? fixedHost : backupHost;
+      debugPrint('使用的伺服器地址: $host');
+    }
+
     // PWA 設定
     pwa.PWAInstall().setup(installCallback: () {});
 
@@ -140,6 +149,19 @@ void main() async {
   } catch (e) {
     debugPrint('初始化錯誤: $e');
     rethrow;
+  }
+}
+
+/// 檢查主機是否可用
+/// 嘗試連接主機，如果連接失敗則返回 false
+Future<bool> checkHostAvailability(String host) async {
+  try {
+    final response = await http.get(Uri.parse('$host/api/version'))
+        .timeout(const Duration(seconds: 5));
+    return response.statusCode == 200;
+  } catch (e) {
+    debugPrint('無法連接到 $host: $e');
+    return false;
   }
 }
 

@@ -1667,6 +1667,36 @@ abstract class AppLocalizations {
   /// **'Search hospital...'**
   String get searchHospital;
 
+  /// No description provided for @serverConnectionError.
+  ///
+  /// In en, this message translates to:
+  /// **'Server Connection Error'**
+  String get serverConnectionError;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'ok'**
+  String get ok;
+
+  /// No description provided for @serverNotConfigured.
+  ///
+  /// In en, this message translates to:
+  /// **'Server Not Configured'**
+  String get serverNotConfigured;
+
+  /// No description provided for @loading.
+  ///
+  /// In en, this message translates to:
+  /// **'loading'**
+  String get loading;
+
   /// Button text for selecting an image
   ///
   /// In en, this message translates to:

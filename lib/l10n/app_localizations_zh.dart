@@ -841,5 +841,20 @@ class AppLocalizationsZh extends AppLocalizations {
   String get searchHospital => '搜尋醫院';
 
   @override
+  String get serverConnectionError => '伺服器連接錯誤';
+
+  @override
+  String get error => '錯誤';
+
+  @override
+  String get ok => '確定';
+
+  @override
+  String get serverNotConfigured => '伺服器未配置';
+
+  @override
+  String get loading => '加載中';
+
+  @override
   String get selectImage => '選擇圖片';
 }

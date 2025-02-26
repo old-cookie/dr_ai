@@ -842,5 +842,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get searchHospital => 'Search hospital...';
 
   @override
+  String get serverConnectionError => 'Server Connection Error';
+
+  @override
+  String get error => 'Error';
+
+  @override
+  String get ok => 'ok';
+
+  @override
+  String get serverNotConfigured => 'Server Not Configured';
+
+  @override
+  String get loading => 'loading';
+
+  @override
   String get selectImage => 'Select Image';
 }

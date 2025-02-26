@@ -280,21 +280,19 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
           context: context,
           description: "\n${AppLocalizations.of(context)!.settingsDescriptionInterface}",
         ),
-        //(!isDesktopPlatform(includeWeb: true))
-        //?
-        buildSettingsButton(
-          AppLocalizations.of(context)!.settingsTitleVoice,
-          Icons.headphones_rounded,
-          () {
-            selectionHaptic();
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenSettingsVoice()));
-          },
-          context: context,
-          description: "\n${AppLocalizations.of(context)!.settingsDescriptionVoice}",
-          badge: AppLocalizations.of(context)!.settingsExperimentalBeta,
-        )
-        //: const SizedBox.shrink()
-        ,
+        (!isDesktopPlatform(includeWeb: true))
+            ? buildSettingsButton(
+                AppLocalizations.of(context)!.settingsTitleVoice,
+                Icons.headphones_rounded,
+                () {
+                  selectionHaptic();
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenSettingsVoice()));
+                },
+                context: context,
+                description: "\n${AppLocalizations.of(context)!.settingsDescriptionVoice}",
+                badge: AppLocalizations.of(context)!.settingsExperimentalBeta,
+              )
+            : const SizedBox.shrink(),
         buildSettingsButton(
           AppLocalizations.of(context)!.settingsTitleExport,
           Icons.share_rounded,

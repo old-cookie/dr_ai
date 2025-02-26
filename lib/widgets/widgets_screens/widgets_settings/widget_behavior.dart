@@ -34,6 +34,9 @@ class WidgetBehavior extends StatelessWidget {
   /// 當前選擇的模型
   final String model;
 
+  /// 連接錯誤信息
+  final String? connectionError;
+
   const WidgetBehavior({
     super.key,
     required this.systemInputController,
@@ -44,6 +47,7 @@ class WidgetBehavior extends StatelessWidget {
     required this.onSystemMessageSaved,
     required this.onModelSelected,
     required this.model,
+    this.connectionError,
   });
   @override
   Widget build(BuildContext context) {
@@ -76,11 +80,7 @@ class WidgetBehavior extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          widgetButton(
-                            model.isNotEmpty ? model : AppLocalizations.of(context)!.dialogSelectModel,
-                            Icons.model_training,
-                            onModelSelected,
-                          ),
+                          _buildModelButton(context),
                         ],
                       ),
                       const SizedBox(height: 16),
@@ -168,6 +168,33 @@ class WidgetBehavior extends StatelessWidget {
       Icons.info_rounded,
       null,
       color: Colors.grey.harmonizeWith(Theme.of(context).colorScheme.primary),
+    );
+  }
+
+  /// 構建模型選擇按鈕
+  Widget _buildModelButton(BuildContext context) {
+    // 根據連接狀態決定顯示內容
+    String buttonText;
+    Color? buttonColor;
+    IconData buttonIcon = Icons.model_training;
+    
+    if (connectionError != null) {
+      buttonText = AppLocalizations.of(context)?.serverConnectionError ?? "連接錯誤";
+      buttonColor = Colors.red.harmonizeWith(Theme.of(context).colorScheme.primary);
+      buttonIcon = Icons.error_outline;
+    } else if (model.isNotEmpty) {
+      buttonText = model;
+      buttonColor = null;
+    } else {
+      buttonText = AppLocalizations.of(context)!.dialogSelectModel;
+      buttonColor = null;
+    }
+    
+    return widgetButton(
+      buttonText,
+      buttonIcon,
+      onModelSelected,
+      color: buttonColor,
     );
   }
 }
