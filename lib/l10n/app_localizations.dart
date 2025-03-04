@@ -1702,6 +1702,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select Image'**
   String get selectImage;
+
+  /// No description provided for @ocrSuccessful.
+  ///
+  /// In en, this message translates to:
+  /// **'OCR successful, form filled automatically'**
+  String get ocrSuccessful;
+
+  /// No description provided for @ocrNoDataFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No data could be recognized'**
+  String get ocrNoDataFound;
+
+  /// No description provided for @ocrError.
+  ///
+  /// In en, this message translates to:
+  /// **'OCR recognition error'**
+  String get ocrError;
+
+  /// No description provided for @processingOcr.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing text...'**
+  String get processingOcr;
+
+  /// No description provided for @scanAndFill.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan and Fill'**
+  String get scanAndFill;
+
+  /// No description provided for @scanToFill.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan to auto-fill'**
+  String get scanToFill;
+
+  /// No description provided for @scanText.
+  ///
+  /// In en, this message translates to:
+  /// **'Recognize medical certificate text'**
+  String get scanText;
+
+  /// No description provided for @ocrProcessing.
+  ///
+  /// In en, this message translates to:
+  /// **'Text recognition in progress'**
+  String get ocrProcessing;
+
+  /// No description provided for @uploadAndScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload & Scan'**
+  String get uploadAndScan;
+
+  /// No description provided for @selectOrTakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Select or Take Photo'**
+  String get selectOrTakePhoto;
+
+  /// Message shown when scanner encounters an error
+  ///
+  /// In en, this message translates to:
+  /// **'Scanner Error'**
+  String get scannerError;
+
+  /// Message shown when camera permission is denied
+  ///
+  /// In en, this message translates to:
+  /// **'Camera permission is required to scan documents'**
+  String get cameraPermissionDenied;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

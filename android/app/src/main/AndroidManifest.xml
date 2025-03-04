@@ -25,6 +25,21 @@
     <!-- 添加精確鬧鐘權限 -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
     
+    <!-- 相機權限 - 用於文檔掃描和拍照 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- 讀取外部存儲權限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 寫入外部存儲權限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 照片權限 - 適用於較新版本的Android -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <!-- 網絡權限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    
+    <!-- 文件特性配置 -->
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    
     <application
         android:label="dr_ai"
         android:name="${applicationName}"

@@ -857,4 +857,40 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get selectImage => '選擇圖片';
+
+  @override
+  String get ocrSuccessful => 'OCR辨識成功，已自動填入資料';
+
+  @override
+  String get ocrNoDataFound => '未能識別任何資料';
+
+  @override
+  String get ocrError => 'OCR辨識發生錯誤';
+
+  @override
+  String get processingOcr => '正在辨識文字...';
+
+  @override
+  String get scanAndFill => '掃描並填充資料';
+
+  @override
+  String get scanToFill => '掃描以自動填充';
+
+  @override
+  String get scanText => '辨識醫療證明書文字';
+
+  @override
+  String get ocrProcessing => '文字辨識中';
+
+  @override
+  String get uploadAndScan => '上傳並辨識';
+
+  @override
+  String get selectOrTakePhoto => '選擇或拍攝照片';
+
+  @override
+  String get scannerError => 'Scanner Error';
+
+  @override
+  String get cameraPermissionDenied => 'Camera permission is required to scan documents';
 }

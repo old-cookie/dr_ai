@@ -46,8 +46,11 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app requires access to the photo library to read files</string>
+	<string>需要訪問照片以選擇醫療文件圖片</string>
 	<key>NSDocumentsFolderUsageDescription</key>
 	<string>This app requires access to the documents folder to read files</string>
+	<!-- 相機權限使用描述 -->
+	<key>NSCameraUsageDescription</key>
+	<string>需要使用相機來掃描醫療文件</string>
 </dict>
 </plist>

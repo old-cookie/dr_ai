@@ -1,1 +1,6 @@
-{}
+{
+  "zh": [
+    "scannerError",
+    "cameraPermissionDenied"
+  ]
+}

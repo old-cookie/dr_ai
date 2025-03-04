@@ -303,5 +303,15 @@
   "ok": "確定",
   "serverNotConfigured": "伺服器未配置",
   "loading": "加載中",
-  "searchHospital": "搜尋醫院"
+  "searchHospital": "搜尋醫院",
+  "ocrSuccessful": "OCR辨識成功，已自動填入資料",
+  "ocrNoDataFound": "未能識別任何資料",
+  "ocrError": "OCR辨識發生錯誤",
+  "processingOcr": "正在辨識文字...",
+  "scanAndFill": "掃描並填充資料",
+  "scanToFill": "掃描以自動填充",
+  "scanText": "辨識醫療證明書文字",
+  "ocrProcessing": "文字辨識中",
+  "uploadAndScan": "上傳並辨識",
+  "selectOrTakePhoto": "選擇或拍攝照片"
 }

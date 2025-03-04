@@ -1249,5 +1249,23 @@
     "selectImage": "Select Image",
     "@selectImage": {
         "description": "Button text for selecting an image"
+    },
+    "ocrSuccessful": "OCR successful, form filled automatically",
+    "ocrNoDataFound": "No data could be recognized",
+    "ocrError": "OCR recognition error",
+    "processingOcr": "Processing text...",
+    "scanAndFill": "Scan and Fill",
+    "scanToFill": "Scan to auto-fill",
+    "scanText": "Recognize medical certificate text",
+    "ocrProcessing": "Text recognition in progress",
+    "uploadAndScan": "Upload & Scan",
+    "selectOrTakePhoto": "Select or Take Photo",
+    "scannerError": "Scanner Error",
+    "cameraPermissionDenied": "Camera permission is required to scan documents",
+    "@cameraPermissionDenied": {
+        "description": "Message shown when camera permission is denied"
+    },
+    "@scannerError": {
+        "description": "Message shown when scanner encounters an error"
     }
 }

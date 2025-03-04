@@ -66,6 +66,7 @@ class WidgetAddMedicalCertificate extends StatelessWidget {
   final String? followUpDate;
   final TextEditingController remarksController;
   final Uint8List? imageBytes;
+  final bool isProcessingOcr; // 新增OCR處理狀態參數
 
   // 各種事件回調函數
   final Function(String?) onHospitalChanged;
@@ -75,8 +76,8 @@ class WidgetAddMedicalCertificate extends StatelessWidget {
   final Function(String) onSickLeaveStartDateSelect;
   final Function(String) onSickLeaveEndDateSelect;
   final Function(String) onFollowUpDateSelect;
-  final Function() onUploadImage;
-  final Function() onSave;
+  final Function()? onUploadImage;
+  final Function()? onSave;
   final Function() onAddVaccine;
 
   const WidgetAddMedicalCertificate({
@@ -91,6 +92,7 @@ class WidgetAddMedicalCertificate extends StatelessWidget {
     this.followUpDate,
     required this.remarksController,
     this.imageBytes,
+    this.isProcessingOcr = false, // 預設為false
     required this.onHospitalChanged,
     required this.onTreatmentDateSelect,
     required this.onHospitalizationStartDateSelect,
@@ -238,16 +240,19 @@ class WidgetAddMedicalCertificate extends StatelessWidget {
     required String labelText,
     int maxLines = 1,
   }) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: labelText,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: labelText,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+        maxLines: maxLines,
       ),
-      maxLines: maxLines,
     );
   }
 
@@ -314,9 +319,29 @@ class WidgetAddMedicalCertificate extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          localizations.certificateImage,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              localizations.certificateImage,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
+            if (isProcessingOcr)
+              Row(
+                children: [
+                  SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    localizations.ocrProcessing,
+                    style: TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),
+                  ),
+                ],
+              ),
+          ],
         ),
         const SizedBox(height: 8),
         Container(
@@ -328,25 +353,66 @@ class WidgetAddMedicalCertificate extends StatelessWidget {
           child: Column(
             children: [
               if (imageBytes != null) ...[
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.memory(
-                    imageBytes!,
-                    height: 200,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: Image.memory(
+                        imageBytes!,
+                        height: 200,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    if (isProcessingOcr)
+                      Container(
+                        height: 200,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.black54,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              localizations.processingOcr,
+                              style: TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
                 ),
                 const SizedBox(height: 12),
               ],
               ElevatedButton.icon(
                 onPressed: onUploadImage,
                 icon: const Icon(Icons.upload_file),
-                label: Text(imageBytes == null ? localizations.uploadImage : localizations.changeImage),
+                label: Text(
+                  imageBytes == null ? localizations.uploadAndScan : localizations.changeImage,
+                  style: TextStyle(fontSize: 15),
+                ),
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(double.infinity, 45),
                 ),
               ),
+              if (imageBytes == null) ...[
+                const SizedBox(height: 8),
+                Text(
+                  localizations.scanToFill,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey.shade600,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ],
           ),
         ),

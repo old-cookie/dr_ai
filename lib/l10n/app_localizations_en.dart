@@ -858,4 +858,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get selectImage => 'Select Image';
+
+  @override
+  String get ocrSuccessful => 'OCR successful, form filled automatically';
+
+  @override
+  String get ocrNoDataFound => 'No data could be recognized';
+
+  @override
+  String get ocrError => 'OCR recognition error';
+
+  @override
+  String get processingOcr => 'Processing text...';
+
+  @override
+  String get scanAndFill => 'Scan and Fill';
+
+  @override
+  String get scanToFill => 'Scan to auto-fill';
+
+  @override
+  String get scanText => 'Recognize medical certificate text';
+
+  @override
+  String get ocrProcessing => 'Text recognition in progress';
+
+  @override
+  String get uploadAndScan => 'Upload & Scan';
+
+  @override
+  String get selectOrTakePhoto => 'Select or Take Photo';
+
+  @override
+  String get scannerError => 'Scanner Error';
+
+  @override
+  String get cameraPermissionDenied => 'Camera permission is required to scan documents';
 }

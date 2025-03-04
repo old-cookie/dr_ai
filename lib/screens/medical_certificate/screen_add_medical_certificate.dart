@@ -5,11 +5,15 @@ import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
 import 'package:image/image.dart' as img;
-import '../../services/screen_crop_image.dart';
+import 'package:cunning_document_scanner/cunning_document_scanner.dart';
+import 'dart:io';
+import 'package:permission_handler/permission_handler.dart';  // 添加權限處理器
+import '../../services/ocr_service.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import '../../widgets/widgets_units/widget_button.dart';
 import '../../widgets/widgets_units/widget_title.dart';
+import '../../widgets/widgets_screens/medical_certificate/widget_add_medical_certificate.dart';
 
 class ScreenAddMedicalCertificate extends StatefulWidget {
   const ScreenAddMedicalCertificate({super.key});
@@ -54,6 +58,8 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
   Uint8List? _imageBytes;
   bool _isLoading = false;
   bool _isSaving = false;
+  bool _isProcessingOcr = false; // 新增OCR處理狀態
+  String _ocrResultText = ''; // 新增OCR結果文本
 
   @override
   void initState() {
@@ -98,47 +104,265 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
     }
   }
 
-  // 圖片選擇與處理
-  Future<void> _pickImage() async {
+  // 顯示圖片來源選擇選單
+  void _showImageSourceOptions() {
+    final l10n = AppLocalizations.of(context);
+    if (l10n == null) return;
+
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SafeArea(
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.document_scanner),
+                title: Text(l10n.scanAndFill),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  _scanDocument();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: Text(l10n.takeImage),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  _getImageFromCamera();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: Text(l10n.uploadImage),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  _getImageFromGallery();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // 從相機拍攝圖片
+  Future<void> _getImageFromCamera() async {
     final l10n = AppLocalizations.of(context);
     if (l10n == null) return;
 
     setState(() => _isLoading = true);
+    
     try {
-      final XFile? pickedFile = await _picker.pickImage(
+      // 檢查相機權限
+      var cameraStatus = await Permission.camera.status;
+      if (!cameraStatus.isGranted) {
+        cameraStatus = await Permission.camera.request();
+        if (!cameraStatus.isGranted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(l10n.cameraPermissionDenied)),
+          );
+          setState(() => _isLoading = false);
+          return;
+        }
+      }
+
+      final XFile? photo = await _picker.pickImage(
+        source: ImageSource.camera,
+        maxWidth: 1920,
+        maxHeight: 1920,
+        imageQuality: 90,
+      );
+
+      if (photo != null) {
+        await _processImage(await photo.readAsBytes());
+      }
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  // 從相冊選擇圖片
+  Future<void> _getImageFromGallery() async {
+    final l10n = AppLocalizations.of(context);
+    if (l10n == null) return;
+
+    setState(() => _isLoading = true);
+    
+    try {
+      // 檢查相冊權限
+      var galleryStatus = await Permission.photos.status;
+      if (!galleryStatus.isGranted) {
+        galleryStatus = await Permission.photos.request();
+        if (!galleryStatus.isGranted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Photo library permission denied')),
+          );
+          setState(() => _isLoading = false);
+          return;
+        }
+      }
+
+      final XFile? image = await _picker.pickImage(
         source: ImageSource.gallery,
         maxWidth: 1920,
         maxHeight: 1920,
         imageQuality: 90,
       );
 
-      if (pickedFile != null) {
-        final bytes = await pickedFile.readAsBytes();
-        final decodedImage = img.decodeImage(bytes);
-        if (decodedImage == null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(l10n.imageFormat)),
-          );
-          return;
-        }
-
-        final croppedBytes = await Navigator.push<Uint8List>(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ScreenCropImage(imageBytes: bytes),
-          ),
-        );
-
-        if (croppedBytes != null) {
-          setState(() {
-            _imageBytes = croppedBytes;
-            _base64Image = base64Encode(croppedBytes);
-          });
-        }
+      if (image != null) {
+        await _processImage(await image.readAsBytes());
       }
     } finally {
       setState(() => _isLoading = false);
     }
+  }
+
+  // 使用文檔掃描器
+  Future<void> _scanDocument() async {
+    final l10n = AppLocalizations.of(context);
+    if (l10n == null) return;
+
+    setState(() => _isLoading = true);
+    try {
+      // 請求相機權限
+      var cameraStatus = await Permission.camera.status;
+      if (!cameraStatus.isGranted) {
+        cameraStatus = await Permission.camera.request();
+        if (!cameraStatus.isGranted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(l10n.cameraPermissionDenied)),
+          );
+          setState(() => _isLoading = false);
+          return;
+        }
+      }
+
+      // 使用cunning_document_scanner掃描文檔
+      List<String> pictures = [];
+      try {
+        pictures = await CunningDocumentScanner.getPictures() ?? [];
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('${l10n.scannerError}: $e')),
+        );
+        setState(() => _isLoading = false);
+        return;
+      }
+
+      if (pictures.isNotEmpty) {
+        // 讀取第一張掃描的圖片
+        final File imageFile = File(pictures[0]);
+        await _processImage(await imageFile.readAsBytes());
+      }
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  // 處理圖片並進行OCR
+  Future<void> _processImage(Uint8List bytes) async {
+    final l10n = AppLocalizations.of(context);
+    if (l10n == null) return;
+    
+    // 將圖片轉換為黑白
+    final img.Image? originalImage = img.decodeImage(bytes);
+    if (originalImage == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.imageFormat)),
+      );
+      return;
+    }
+    
+    // 轉換為黑白圖片
+    final img.Image bwImage = img.grayscale(originalImage);
+    final Uint8List bwBytes = Uint8List.fromList(img.encodeJpg(bwImage, quality: 90));
+
+    setState(() {
+      _imageBytes = bwBytes;
+      _base64Image = base64Encode(bwBytes);
+      _isProcessingOcr = true; // 開始OCR處理
+      _ocrResultText = '';
+    });
+
+    // 執行OCR處理
+    try {
+      final recognizedText = await OcrService.recognizeText(bwBytes);
+      final extractedData = OcrService.parseMedicalCertificate(recognizedText);
+
+      setState(() {
+        _ocrResultText = recognizedText;
+
+        // 填入OCR識別結果
+        if (certificateNumberController.text.isEmpty && 
+            extractedData.containsKey('certificateNumber')) {
+          certificateNumberController.text = extractedData['certificateNumber'];
+        }
+
+        if (extractedData.containsKey('hospital')) {
+          final hospital = extractedData['hospital'];
+          final hospitalIndex = hospitalsList
+              .indexWhere((h) => h.toLowerCase().contains(hospital.toLowerCase()));
+          
+          if (hospitalIndex != -1 && selectedHospital == hospitalsList.first) {
+            selectedHospital = hospitalsList[hospitalIndex];
+          }
+        }
+
+        if (treatmentDate == null && extractedData.containsKey('treatmentDate')) {
+          treatmentDate = extractedData['treatmentDate'];
+        }
+
+        if (hospitalizationStartDate == null && 
+            extractedData.containsKey('hospitalizationStartDate')) {
+          hospitalizationStartDate = extractedData['hospitalizationStartDate'];
+        }
+
+        if (hospitalizationEndDate == null && 
+            extractedData.containsKey('hospitalizationEndDate')) {
+          hospitalizationEndDate = extractedData['hospitalizationEndDate'];
+        }
+
+        if (sickLeaveStartDate == null && 
+            extractedData.containsKey('sickLeaveStartDate')) {
+          sickLeaveStartDate = extractedData['sickLeaveStartDate'];
+        }
+
+        if (sickLeaveEndDate == null && 
+            extractedData.containsKey('sickLeaveEndDate')) {
+          sickLeaveEndDate = extractedData['sickLeaveEndDate'];
+        }
+
+        if (followUpDate == null && extractedData.containsKey('followUpDate')) {
+          followUpDate = extractedData['followUpDate'];
+        }
+
+        if (remarksController.text.isEmpty && extractedData.containsKey('remarks')) {
+          remarksController.text = extractedData['remarks'];
+        }
+      });
+      
+      // 顯示OCR處理結果
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(extractedData.isNotEmpty 
+              ? l10n.ocrSuccessful 
+              : l10n.ocrNoDataFound),
+          duration: Duration(seconds: 3),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${l10n.ocrError}: $e')),
+      );
+    } finally {
+      setState(() => _isProcessingOcr = false);
+    }
+  }
+
+  // 替換原先的_pickImage方法，改為顯示選擇選單
+  Future<void> _pickImage() async {
+    _showImageSourceOptions();
   }
 
   // 儲存記錄
@@ -205,233 +429,64 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
       );
     }
 
+    // 使用新的醫療證明表單小部件
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.addMedicalCertificate),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextField(
-              controller: certificateNumberController,
-              decoration: InputDecoration(
-                labelText: l10n.certificateNumber,
-                border: const OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            DropdownButtonFormField<String>(
-              value: selectedHospital,
-              items: hospitalsList.map((hospital) {
-                return DropdownMenuItem<String>(
-                  value: hospital,
-                  child: Text(hospital),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  selectedHospital = value;
-                });
-              },
-              decoration: InputDecoration(
-                labelText: l10n.hospital,
-                border: const OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            widgetTitle(l10n.treatmentDate, top: 0, bottom: 8),
-            widgetButton(
-              l10n.selectDate,
-              Icons.calendar_today,
-              () => _selectDate(context, (date) {
-                setState(() {
-                  treatmentDate = date;
-                });
-              }),
-              context: context,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            if (treatmentDate != null)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Text(
-                  'Selected Date: $treatmentDate',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
-                ),
-              ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      widgetTitle(l10n.hospitalizationStartDate, top: 0, bottom: 8),
-                      widgetButton(
-                        l10n.selectDate,
-                        Icons.calendar_today,
-                        () => _selectDate(context, (date) {
-                          setState(() {
-                            hospitalizationStartDate = date;
-                          });
-                        }),
-                        context: context,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                      if (hospitalizationStartDate != null)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Text(
-                            'Selected Date: $hospitalizationStartDate',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Theme.of(context).colorScheme.onSurface,
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      widgetTitle(l10n.hospitalizationEndDate, top: 0, bottom: 8),
-                      widgetButton(
-                        l10n.selectDate,
-                        Icons.calendar_today,
-                        () => _selectDate(context, (date) {
-                          setState(() {
-                            hospitalizationEndDate = date;
-                          });
-                        }),
-                        context: context,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                      if (hospitalizationEndDate != null)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Text(
-                            'Selected Date: $hospitalizationEndDate',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Theme.of(context).colorScheme.onSurface,
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            widgetTitle(l10n.sickLeaveStartDate, top: 0, bottom: 8),
-            widgetButton(
-              l10n.selectDate,
-              Icons.calendar_today,
-              () => _selectDate(context, (date) {
-                setState(() {
-                  sickLeaveStartDate = date;
-                });
-              }),
-              context: context,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            if (sickLeaveStartDate != null)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Text(
-                  'Selected Date: $sickLeaveStartDate',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
-                ),
-              ),
-            const SizedBox(height: 16),
-            widgetTitle(l10n.sickLeaveEndDate, top: 0, bottom: 8),
-            widgetButton(
-              l10n.selectDate,
-              Icons.calendar_today,
-              () => _selectDate(context, (date) {
-                setState(() {
-                  sickLeaveEndDate = date;
-                });
-              }),
-              context: context,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            if (sickLeaveEndDate != null)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Text(
-                  'Selected Date: $sickLeaveEndDate',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
-                ),
-              ),
-            const SizedBox(height: 16),
-            widgetTitle(l10n.followUpDate, top: 0, bottom: 8),
-            widgetButton(
-              l10n.selectDate,
-              Icons.calendar_today,
-              () => _selectDate(context, (date) {
-                setState(() {
-                  followUpDate = date;
-                });
-              }),
-              context: context,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            if (followUpDate != null)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Text(
-                  'Selected Date: $followUpDate',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
-                ),
-              ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: remarksController,
-              decoration: InputDecoration(
-                labelText: l10n.remarks,
-                border: const OutlineInputBorder(),
-              ),
-              maxLines: 3,
-            ),
-            const SizedBox(height: 16.0),
-            if (_imageBytes != null) Image.memory(_imageBytes!),
-            const SizedBox(height: 16.0),
-            widgetButton(
-              l10n.selectImage,
-              Icons.image,
-              _isLoading ? null : _pickImage,
-              context: context,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            const SizedBox(height: 16.0),
-            const SizedBox(height: 16),
-            widgetButton(
-              l10n.saveRecord,
-              Icons.save,
-              _isSaving ? null : _saveRecord,
-              context: context,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          ],
-        ),
+      body: WidgetAddMedicalCertificate(
+        certificateNumberController: certificateNumberController,
+        selectedHospital: selectedHospital,
+        treatmentDate: treatmentDate,
+        hospitalizationStartDate: hospitalizationStartDate,
+        hospitalizationEndDate: hospitalizationEndDate,
+        sickLeaveStartDate: sickLeaveStartDate,
+        sickLeaveEndDate: sickLeaveEndDate,
+        followUpDate: followUpDate,
+        remarksController: remarksController,
+        imageBytes: _imageBytes,
+        isProcessingOcr: _isProcessingOcr, // 傳遞OCR處理狀態
+        onHospitalChanged: (value) {
+          setState(() {
+            selectedHospital = value;
+          });
+        },
+        onTreatmentDateSelect: (date) {
+          setState(() {
+            treatmentDate = date;
+          });
+        },
+        onHospitalizationStartDateSelect: (date) {
+          setState(() {
+            hospitalizationStartDate = date;
+          });
+        },
+        onHospitalizationEndDateSelect: (date) {
+          setState(() {
+            hospitalizationEndDate = date;
+          });
+        },
+        onSickLeaveStartDateSelect: (date) {
+          setState(() {
+            sickLeaveStartDate = date;
+          });
+        },
+        onSickLeaveEndDateSelect: (date) {
+          setState(() {
+            sickLeaveEndDate = date;
+          });
+        },
+        onFollowUpDateSelect: (date) {
+          setState(() {
+            followUpDate = date;
+          });
+        },
+        onUploadImage: _isLoading || _isProcessingOcr ? null : _pickImage,
+        onSave: _isSaving ? null : _saveRecord,
+        onAddVaccine: () {
+          // 導覽到疫苗記錄頁面
+          Navigator.pushNamed(context, '/vaccine/add');
+        },
       ),
     );
   }
