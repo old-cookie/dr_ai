@@ -1,11 +1,20 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter_tesseract_ocr/flutter_tesseract_ocr.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:intl/intl.dart';
 
+/// OCR服務類，用於處理醫療證明文件的文字識別與解析
+/// 
+/// 該類提供兩個主要功能：
+/// 1. 使用Tesseract OCR引擎進行文字識別 [recognizeText]
+/// 2. 解析醫療證明中的關鍵信息 [parseMedicalCertificate]
 class OcrService {
-  // 將Uint8List轉換為臨時文件
+  /// 將圖像字節數組保存為臨時文件，以便Tesseract OCR處理
+  /// 
+  /// [imageBytes] 圖像的二進制數據
+  /// 返回臨時文件的路徑
   static Future<String> _saveImageToTempFile(Uint8List imageBytes) async {
     final tempDir = await getTemporaryDirectory();
     final tempFilePath = '${tempDir.path}/temp_certificate.jpg';
@@ -13,7 +22,12 @@ class OcrService {
     return tempFilePath;
   }
 
-  // 執行OCR文本識別
+  /// 對醫療證明圖像進行OCR識別，提取文字內容
+  /// 
+  /// [imageBytes] 醫療證明圖像的二進制數據
+  /// 返回識別出的文字內容
+  /// 
+  /// 優先嘗試使用英文+繁體中文識別，如果失敗則退回到僅使用英文
   static Future<String> recognizeText(Uint8List imageBytes) async {
     final tempFilePath = await _saveImageToTempFile(imageBytes);
     
@@ -22,27 +36,27 @@ class OcrService {
       // 崩潰日誌顯示僅使用英文時出現空指針錯誤
       final recognizedText = await FlutterTesseractOcr.extractText(
         tempFilePath,
-        language: 'eng+chi_tra',  // 回退到使用英文+繁體中文，避免崩潰
+        language: 'eng+chi_tra',
         args: {
           "preserve_interword_spaces": "1",
-          "debug_file": "/dev/null",  // 禁用調試文件寫入
-          "load_system_dawg": "0",    // 關閉某些導致崩潰的功能
+          "debug_file": "/dev/null",
+          "load_system_dawg": "0",
         },
       );
 
       // 添加日誌以輸出原始 OCR 文本
-      print('原始 OCR 文本:');
-      print('==========');
-      print(recognizedText);
-      print('==========');
+      log('原始 OCR 文本:');
+      log('==========');
+      log(recognizedText);
+      log('==========');
 
       return recognizedText;
     } catch (e) {
-      print('OCR錯誤: $e');
+      log('OCR錯誤: $e');
       
       // 如果發生錯誤，嘗試使用基本設置
       try {
-        print('嘗試使用基本設置進行OCR...');
+        log('嘗試使用基本設置進行OCR...');
         final simpleRecognizedText = await FlutterTesseractOcr.extractText(
           tempFilePath,
           language: 'eng',
@@ -52,13 +66,29 @@ class OcrService {
         );
         return simpleRecognizedText;
       } catch (fallbackError) {
-        print('OCR後備方案錯誤: $fallbackError');
+        log('OCR後備方案錯誤: $fallbackError');
         return '';
       }
     }
   }
 
-  // 解析醫療證明書文本
+  /// 從OCR識別的文本中提取醫療證明書的關鍵信息
+  /// 
+  /// [text] 待解析的OCR文本
+  /// 返回包含解析結果的Map，鍵為字段名，值為相應的信息
+  /// 
+  /// 該方法嘗試提取以下信息：
+  /// - 證明編號 (certificateNumber)
+  /// - 醫院名稱 (hospital)
+  /// - 就診日期 (treatmentDate)
+  /// - 住院開始日期 (hospitalizationStartDate)
+  /// - 住院結束日期 (hospitalizationEndDate)
+  /// - 疾病診斷 (diagnosis)
+  /// - 病假開始日期 (sickLeaveStartDate)
+  /// - 病假結束日期 (sickLeaveEndDate)
+  /// - 複診日期 (followUpDate)
+  /// - 備註 (remarks)
+  /// - 原始文本 (rawText)
   static Map<String, dynamic> parseMedicalCertificate(String text) {
     final result = <String, dynamic>{};
     
@@ -69,10 +99,10 @@ class OcrService {
     result['rawText'] = text;
     
     // 記錄預處理後的原始文本
-    print('預處理後的原始文本:');
-    print('==========');
-    print(text);
-    print('==========');
+    log('預處理後的原始文本:');
+    log('==========');
+    log(text);
+    log('==========');
 
     // 尋找證明編號 - 更寬鬆的正則表達式
     final certificateNumberRegex = RegExp(r'[Cc]ase\s*[Nn]o[.:]?\s*([A-Za-z0-9\-\(\)\/]+)');
@@ -161,34 +191,37 @@ class OcrService {
     }
 
     // 添加詳細日誌以輸出解析後的結果
-    print('解析後的結構化數據:');
-    print('==========');
+    log('解析後的結構化數據:');
+    log('==========');
     if (result.isEmpty) {
-      print('警告: 未能從文本中提取任何有效數據');
+      log('警告: 未能從文本中提取任何有效數據');
     } else {
       result.forEach((key, value) {
-        print('$key: $value');
+        log('$key: $value');
       });
     }
-    print('==========');
+    log('==========');
     
     // 添加分析結果摘要
-    print('分析結果摘要:');
-    print('==========');
-    print('成功提取的欄位: ${result.keys.length - 1}'); // -1 是因為rawText欄位
-    print('提取率: ${((result.keys.length - 1) / 9 * 100).toStringAsFixed(1)}%'); // 假設共有9個可能欄位
+    log('分析結果摘要:');
+    log('==========');
+    log('成功提取的欄位: ${result.keys.length - 1}');
+    log('提取率: ${((result.keys.length - 1) / 9 * 100).toStringAsFixed(1)}%');
     if (result.containsKey('certificateNumber')) {
-      print('證明編號: ${result['certificateNumber']}');
+      log('證明編號: ${result['certificateNumber']}');
     }
     if (result.containsKey('treatmentDate')) {
-      print('就診日期: ${result['treatmentDate']}');
+      log('就診日期: ${result['treatmentDate']}');
     }
-    print('==========');
+    log('==========');
 
     return result;
   }
 
-  // 清理OCR文本
+  /// 清理OCR識別中的常見錯誤字符
+  /// 
+  /// [text] 原始OCR文本
+  /// 返回清理後的文本
   static String _cleanOcrText(String text) {
     // 替換常見的錯誤字符
     return text
@@ -203,7 +236,10 @@ class OcrService {
         .replaceAll('﹙', '(');
   }
 
-  // 清理日期字符串
+  /// 清理OCR識別的日期字符串中的常見錯誤
+  /// 
+  /// [dateStr] 原始日期字符串
+  /// 返回清理後的日期字符串
   static String _cleanDateString(String dateStr) {
     // 修復月份錯誤識別
     return dateStr
@@ -213,13 +249,19 @@ class OcrService {
         .replaceAll(RegExp(r'[﹣﹒]'), '-');
   }
 
-  // 檢查是否為N/A
+  /// 檢查文本是否表示"不適用"(N/A)
+  /// 
+  /// [text] 待檢查的文本
+  /// 如果文本表示"不適用"則返回true，否則返回false
   static bool _isNotApplicable(String text) {
     final naPattern = RegExp(r'[Nn]\/[Aa]|尸\/[Aa]|無|没有|不適用');
     return naPattern.hasMatch(text) || text.trim().isEmpty;
   }
 
-  // 嘗試解析各種日期格式
+  /// 嘗試使用多種格式解析日期字符串
+  /// 
+  /// [dateStr] 待解析的日期字符串
+  /// 返回標準格式(yyyy-MM-dd)的日期字符串，如果解析失敗則返回原始字符串
   static String _parseDate(String dateStr) {
     if (dateStr == 'N/A') return '';
 
@@ -245,7 +287,7 @@ class OcrService {
       // 如果所有格式都失敗，返回原始字符串
       return dateStr;
     } catch (e) {
-      print('日期解析錯誤: $e');
+      log('日期解析錯誤: $e');
       return dateStr;
     }
   }

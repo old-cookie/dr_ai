@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 import 'package:encrypt_shared_preferences/provider.dart';
 import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
@@ -10,11 +9,15 @@ import 'dart:io';
 import 'package:permission_handler/permission_handler.dart';  // 添加權限處理器
 import '../../services/ocr_service.dart';
 import '../../l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
-import '../../widgets/widgets_units/widget_button.dart';
-import '../../widgets/widgets_units/widget_title.dart';
 import '../../widgets/widgets_screens/medical_certificate/widget_add_medical_certificate.dart';
 
+/// 醫療證明添加螢幕
+/// 
+/// 此螢幕允許用戶添加新的醫療證明記錄，包含以下功能：
+/// - 表單輸入醫療證明詳細資訊
+/// - 通過相機、相冊或文檔掃描器獲取證明照片
+/// - 使用OCR自動識別並填充表單數據
+/// - 保存醫療證明記錄到加密的本地存儲
 class ScreenAddMedicalCertificate extends StatefulWidget {
   const ScreenAddMedicalCertificate({super.key});
 
@@ -42,69 +45,38 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
     'Other',
   ];
 
-  // 控制器和狀態變數
-  final TextEditingController certificateNumberController = TextEditingController();
-  final TextEditingController remarksController = TextEditingController();
-  String? selectedHospital;
-  String? treatmentDate;
-  String? hospitalizationStartDate;
-  String? hospitalizationEndDate;
-  String? sickLeaveStartDate;
-  String? sickLeaveEndDate;
-  String? followUpDate;
+  // 表單控制器和狀態變數
+  final TextEditingController certificateNumberController = TextEditingController(); // 證明編號控制器
+  final TextEditingController remarksController = TextEditingController(); // 備註控制器
+  String? selectedHospital; // 選擇的醫院
+  String? treatmentDate; // 治療日期
+  String? hospitalizationStartDate; // 住院開始日期
+  String? hospitalizationEndDate; // 住院結束日期
+  String? sickLeaveStartDate; // 病假開始日期
+  String? sickLeaveEndDate; // 病假結束日期
+  String? followUpDate; // 複診日期
 
-  final ImagePicker _picker = ImagePicker();
-  String? _base64Image;
-  Uint8List? _imageBytes;
-  bool _isLoading = false;
-  bool _isSaving = false;
-  bool _isProcessingOcr = false; // 新增OCR處理狀態
-  String _ocrResultText = ''; // 新增OCR結果文本
+  // 圖片處理相關變數
+  final ImagePicker _picker = ImagePicker(); // 圖片選擇器
+  String? _base64Image; // Base64編碼的圖片
+  Uint8List? _imageBytes; // 圖片位元組資料
+  bool _isLoading = false; // 加載狀態標誌
+  bool _isSaving = false; // 保存狀態標誌
+  bool _isProcessingOcr = false; // OCR處理狀態標誌
 
   @override
   void initState() {
     super.initState();
-    selectedHospital = hospitalsList.first;
+    selectedHospital = hospitalsList.first; // 初始化默認選擇第一個醫院
   }
 
-  // 日期選擇器
-  Future<void> _selectDate(BuildContext context, Function(String) onDateSelected) async {
-    final DateTime? pickedDate = await showOmniDateTimePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now().add(const Duration(days: 365 * 10)),
-      is24HourMode: true,
-      isShowSeconds: false,
-      minutesInterval: 1,
-      secondsInterval: 1,
-      borderRadius: const BorderRadius.all(Radius.circular(16)),
-      constraints: const BoxConstraints(
-        maxWidth: 350,
-        maxHeight: 650,
-      ),
-      transitionBuilder: (context, anim1, anim2, child) {
-        return FadeTransition(
-          opacity: anim1.drive(
-            Tween(
-              begin: 0,
-              end: 1,
-            ),
-          ),
-          child: child,
-        );
-      },
-      transitionDuration: const Duration(milliseconds: 200),
-      barrierDismissible: true,
-    );
 
-    if (pickedDate != null) {
-      final formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-      onDateSelected(formattedDate);
-    }
-  }
-
-  // 顯示圖片來源選擇選單
+  /// 顯示圖片來源選擇選單
+  /// 
+  /// 呈現三個選項：
+  /// - 掃描文檔
+  /// - 使用相機拍照
+  /// - 從相冊選擇圖片
   void _showImageSourceOptions() {
     final l10n = AppLocalizations.of(context);
     if (l10n == null) return;
@@ -146,7 +118,9 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
     );
   }
 
-  // 從相機拍攝圖片
+  /// 從相機拍攝圖片
+  /// 
+  /// 請求相機權限並啟動相機進行拍照，然後處理拍攝的照片
   Future<void> _getImageFromCamera() async {
     final l10n = AppLocalizations.of(context);
     if (l10n == null) return;
@@ -182,7 +156,9 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
     }
   }
 
-  // 從相冊選擇圖片
+  /// 從相冊選擇圖片
+  /// 
+  /// 請求相冊權限並開啟相冊選擇器，然後處理選擇的照片
   Future<void> _getImageFromGallery() async {
     final l10n = AppLocalizations.of(context);
     if (l10n == null) return;
@@ -218,7 +194,9 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
     }
   }
 
-  // 使用文檔掃描器
+  /// 使用文檔掃描器
+  /// 
+  /// 啟動文檔掃描器掃描文件，提供更高精度的文本識別
   Future<void> _scanDocument() async {
     final l10n = AppLocalizations.of(context);
     if (l10n == null) return;
@@ -260,7 +238,13 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
     }
   }
 
-  // 處理圖片並進行OCR
+  /// 處理圖片並進行OCR識別
+  /// 
+  /// 1. 將圖片轉換為黑白以提高OCR識別率
+  /// 2. 執行OCR文字識別
+  /// 3. 解析識別結果並填充表單欄位
+  /// 
+  /// @param bytes 圖片的二進位資料
   Future<void> _processImage(Uint8List bytes) async {
     final l10n = AppLocalizations.of(context);
     if (l10n == null) return;
@@ -281,8 +265,7 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
     setState(() {
       _imageBytes = bwBytes;
       _base64Image = base64Encode(bwBytes);
-      _isProcessingOcr = true; // 開始OCR處理
-      _ocrResultText = '';
+      _isProcessingOcr = true;
     });
 
     // 執行OCR處理
@@ -291,7 +274,6 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
       final extractedData = OcrService.parseMedicalCertificate(recognizedText);
 
       setState(() {
-        _ocrResultText = recognizedText;
 
         // 填入OCR識別結果
         if (certificateNumberController.text.isEmpty && 
@@ -360,12 +342,16 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
     }
   }
 
-  // 替換原先的_pickImage方法，改為顯示選擇選單
+  /// 顯示圖片選擇選項
+  /// 
+  /// 觸發底部彈出選單，顯示可用的圖片獲取方式
   Future<void> _pickImage() async {
     _showImageSourceOptions();
   }
 
-  // 儲存記錄
+  /// 儲存醫療證明記錄
+  /// 
+  /// 將表單數據保存到加密的本地存儲並返回上一個頁面
   Future<void> _saveRecord() async {
     final l10n = AppLocalizations.of(context);
     if (l10n == null) return;
@@ -429,7 +415,7 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
       );
     }
 
-    // 使用新的醫療證明表單小部件
+    // 使用醫療證明表單小部件構建UI
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.addMedicalCertificate),
