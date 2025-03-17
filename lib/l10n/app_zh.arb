@@ -313,5 +313,13 @@
   "scanText": "辨識醫療證明書文字",
   "ocrProcessing": "文字辨識中",
   "uploadAndScan": "上傳並辨識",
-  "selectOrTakePhoto": "選擇或拍攝照片"
+  "selectOrTakePhoto": "選擇或拍攝照片",
+  "calendarEventList": "事件列表",
+  "calendarSortEvents": "排序事件",
+  "calendarSortDateAsc": "日期 (升序)",
+  "calendarSortDateDesc": "日期 (降序)",
+  "calendarSortTitleAsc": "標題 (A-Z)",
+  "calendarSortTitleDesc": "標題 (Z-A)",
+  "calendarNoEvents": "無預約事件",
+  "calendarEventMinutesBefore": "提前 {minutes} 分鐘"
 }

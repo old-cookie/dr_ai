@@ -893,4 +893,30 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get cameraPermissionDenied => 'Camera permission is required to scan documents';
+
+  @override
+  String get calendarEventList => '事件列表';
+
+  @override
+  String get calendarSortEvents => '排序事件';
+
+  @override
+  String get calendarSortDateAsc => '日期 (升序)';
+
+  @override
+  String get calendarSortDateDesc => '日期 (降序)';
+
+  @override
+  String get calendarSortTitleAsc => '標題 (A-Z)';
+
+  @override
+  String get calendarSortTitleDesc => '標題 (Z-A)';
+
+  @override
+  String get calendarNoEvents => '無預約事件';
+
+  @override
+  String calendarEventMinutesBefore(Object minutes) {
+    return '提前 $minutes 分鐘';
+  }
 }

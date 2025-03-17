@@ -1774,6 +1774,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Camera permission is required to scan documents'**
   String get cameraPermissionDenied;
+
+  /// No description provided for @calendarEventList.
+  ///
+  /// In en, this message translates to:
+  /// **'Event List'**
+  String get calendarEventList;
+
+  /// No description provided for @calendarSortEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort Events'**
+  String get calendarSortEvents;
+
+  /// No description provided for @calendarSortDateAsc.
+  ///
+  /// In en, this message translates to:
+  /// **'Date (Ascending)'**
+  String get calendarSortDateAsc;
+
+  /// No description provided for @calendarSortDateDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Date (Descending)'**
+  String get calendarSortDateDesc;
+
+  /// No description provided for @calendarSortTitleAsc.
+  ///
+  /// In en, this message translates to:
+  /// **'Title (A-Z)'**
+  String get calendarSortTitleAsc;
+
+  /// No description provided for @calendarSortTitleDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Title (Z-A)'**
+  String get calendarSortTitleDesc;
+
+  /// No description provided for @calendarNoEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'No Appointments'**
+  String get calendarNoEvents;
+
+  /// No description provided for @calendarEventMinutesBefore.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} minutes before'**
+  String calendarEventMinutesBefore(Object minutes);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

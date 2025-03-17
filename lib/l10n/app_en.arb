@@ -1267,5 +1267,13 @@
     },
     "@scannerError": {
         "description": "Message shown when scanner encounters an error"
-    }
+    },
+    "calendarEventList": "Event List",
+    "calendarSortEvents": "Sort Events",
+    "calendarSortDateAsc": "Date (Ascending)",
+    "calendarSortDateDesc": "Date (Descending)",
+    "calendarSortTitleAsc": "Title (A-Z)",
+    "calendarSortTitleDesc": "Title (Z-A)",
+    "calendarNoEvents": "No Appointments",
+    "calendarEventMinutesBefore": "{minutes} minutes before"
 }

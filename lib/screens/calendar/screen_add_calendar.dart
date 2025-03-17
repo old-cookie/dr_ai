@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
-import '../widgets/widgets_units/widget_title.dart';
-import '../widgets/widgets_units/widget_button.dart';
-import '../../l10n/app_localizations.dart';
+import '../../widgets/widgets_units/widget_title.dart';
+import '../../widgets/widgets_units/widget_button.dart';
+import '../../../l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../services/service_calendar_event.dart';
+import '../../services/service_calendar_event.dart';
 import 'dart:convert';
-import '../services/service_notification.dart';
+import '../../services/service_notification.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 class ScreenAddCalendar extends StatefulWidget {

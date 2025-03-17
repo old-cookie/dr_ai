@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import '../../services/service_theme.dart';
-import '../../screens/screen_add_calendar.dart';
+import '../../../services/service_theme.dart';
+import '../../../screens/calendar/screen_add_calendar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../services/service_calendar_event.dart';
+import '../../../services/service_calendar_event.dart';
 import 'dart:convert';
-import '../../services/service_notification.dart';
-import '../../l10n/app_localizations.dart';
+import '../../../services/service_notification.dart';
+import '../../../l10n/app_localizations.dart';
 
 class WidgetCalendar extends StatefulWidget {
   const WidgetCalendar({super.key});

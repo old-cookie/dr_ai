@@ -3,7 +3,7 @@ description: "A new Flutter project."
 repository: https://github.com/old-cookie/dr_ai
 issue_tracker: https://github.com/old-cookie/dr_ai/issues
 publish_to: 'none'
-version: 4.3.2+1
+version: 4.5.0+1
 
 environment:
   sdk: ^3.5.3

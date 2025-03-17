@@ -894,4 +894,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cameraPermissionDenied => 'Camera permission is required to scan documents';
+
+  @override
+  String get calendarEventList => 'Event List';
+
+  @override
+  String get calendarSortEvents => 'Sort Events';
+
+  @override
+  String get calendarSortDateAsc => 'Date (Ascending)';
+
+  @override
+  String get calendarSortDateDesc => 'Date (Descending)';
+
+  @override
+  String get calendarSortTitleAsc => 'Title (A-Z)';
+
+  @override
+  String get calendarSortTitleDesc => 'Title (Z-A)';
+
+  @override
+  String get calendarNoEvents => 'No Appointments';
+
+  @override
+  String calendarEventMinutesBefore(Object minutes) {
+    return '$minutes minutes before';
+  }
 }
