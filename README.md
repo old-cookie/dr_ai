@@ -15,7 +15,6 @@ Dr.AI is a proof-of-concept Flutter application that simulates an AI-driven "sma
   - [Dependencies](#dependencies)
   - [Roadmap](#roadmap)
   - [Disclaimer](#disclaimer)
-  - [License](#license)
 
 ---
 
@@ -27,7 +26,7 @@ Dr.AI is a proof-of-concept Flutter application that simulates an AI-driven "sma
 
 2. Speech Recognition and TTS (Optional)  
    - Use speech-to-text (STT) via the microphone to transcribe user input.  
-   - Use text-to-speech (TTS) to read out the AI’s responses.
+   - Use text-to-speech (TTS) to read out the AI's responses.
 
 3. Multiple Chat Sessions  
    - Create new chat sessions and store previous chats locally for reference or re-use.  
@@ -45,6 +44,18 @@ Dr.AI is a proof-of-concept Flutter application that simulates an AI-driven "sma
 6. Voice Mode (Experimental)  
    - Voice-based continuous conversation loop where the AI automatically responds with TTS and awaits further STT commands.
 
+7. Vaccines Record  
+   - Store and manage your vaccination history.  
+   - Track upcoming vaccination schedules and past records.
+
+8. Medicine Calendar  
+   - Set reminders for medication schedules.  
+   - Manage and track your daily medicine intake.
+
+9. Medical Certificate  
+   - Store and organize your medical certificates digitally.  
+   - Easily access and share your medical documentation when needed.
+
 ---
 
 ## Screens Overview
@@ -54,6 +65,9 @@ Dr.AI is a proof-of-concept Flutter application that simulates an AI-driven "sma
 - Voice Screen – A dark-themed, experimental window for continuous speech-based conversations.  
 - Export & Import Screen – Allows saving or retrieving JSON chat logs.  
 - About Screen – Provides disclaimers, license info, and links for further information.
+- Vaccines Record Screen – View and manage vaccination history, add new records, and track upcoming vaccines.
+- Medicine Calendar Screen – Set medication reminders, track medicine intake schedules, and manage prescriptions.
+- Medical Certificate Screen – Store, view, and manage digital medical certificates with document organization features.
 
 ---
 
@@ -64,42 +78,75 @@ Below is a condensed overview of the main files and folders. Refer to the code f
 ```
 lib
 ├── l10n
+│   ├── app_en.arb
+│   ├── app_localizations.dart
+│   ├── app_localizations_en.dart
+│   ├── app_localizations_zh.dart
+│   └── app_zh.arb
+├── main.dart
+├── models
+│   └── medical_certificate_model.dart
 ├── screens
-│   ├── settings
+│   ├── calendar
 │   │   ├── screen_add_calendar.dart
-│   │   ├── screen_add_vaccine_record.dart
 │   │   ├── screen_calendar.dart
-│   │   ├── screen_map.dart
-│   │   ├── screen_settings.dart
-│   │   ├── screen_vaccine_record.dart
-│   │   └── screen_voice.dart
+│   │   └── screen_calendar_list.dart
+│   ├── medical_certificate
+│   │   ├── screen_add_medical_certificate.dart
+│   │   ├── screen_medical_certificate_detail.dart
+│   │   └── screen_medical_certificate_record.dart
+│   ├── screen_bmi.dart
+│   ├── screen_settings.dart
+│   ├── screen_voice.dart
+│   ├── settings
+│   │   ├── settings_about.dart
+│   │   ├── settings_behavior.dart
+│   │   ├── settings_export.dart
+│   │   ├── settings_interface.dart
+│   │   └── settings_voice.dart
+│   └── vaccine
+│       ├── screen_add_vaccine_record.dart
+│       ├── screen_vaccine_detail.dart
+│       └── screen_vaccine_record.dart
 ├── services
+│   ├── ocr_service.dart
+│   ├── screen_crop_image.dart
+│   ├── service_calendar_event.dart
+│   ├── service_chinese.dart
 │   ├── service_desktop.dart
 │   ├── service_haptic.dart
+│   ├── service_notification.dart
 │   ├── service_sender.dart
 │   ├── service_setter.dart
 │   └── service_theme.dart
-├── widgets
-│   ├── widgets_screens
-│   │   ├── widgets_settings
-│   │   │   ├── widget_about.dart
-│   │   │   ├── widget_behavior.dart
-│   │   │   ├── widget_export.dart
-│   │   │   └── widget_interface.dart
-│   │   ├── widget_add_calendar.dart
-│   │   ├── widget_add_vaccine_record.dart
-│   │   ├── widget_calendar.dart
-│   │   ├── widget_main.dart
-│   │   ├── widget_map.dart
-│   │   ├── widget_screen_settings.dart
-│   │   └── widget_vaccine_record.dart
-│   ├── widgets_units
-│   │   ├── widget_button.dart
-│   │   ├── widget_title.dart
-│   │   └── widget_toggle.dart
-│   └── widgets_workers
-│       └── widget_desktop.dart
-└── main.dart
+├── utils
+│   └── form_validators.dart
+└── widgets
+    ├── widgets_screens
+    │   ├── calendar
+    │   │   └── widget_calendar.dart
+    │   ├── medical_certificate
+    │   │   ├── widget_add_medical_certificate.dart
+    │   │   ├── widget_medical_certificate_detail.dart
+    │   │   └── widget_medical_certificate_record.dart
+    │   ├── vaccine
+    │   │   ├── widget_add_vaccine_record.dart
+    │   │   ├── widget_vaccine_detail.dart
+    │   │   └── widget_vaccine_record.dart
+    │   ├── widget_main.dart
+    │   ├── widget_screen_settings.dart
+    │   ├── widget_vaccine_detail.dart
+    │   └── widgets_settings
+    │       ├── widget_about.dart
+    │       ├── widget_behavior.dart
+    │       ├── widget_export.dart
+    │       └── widget_interface.dart
+    ├── widgets_units
+    │   ├── widget_button.dart
+    │   ├── widget_title.dart
+    │   └── widget_toggle.dart
+    └── widgets_workers
+        └── widget_desktop.dart
 ```
 
 ---
@@ -140,24 +187,24 @@ lib
 
 3. Manage Chats  
    - Hover or long-press (on mobile) on chats in the sidebar to rename or delete them.  
-   - Create a new chat with the “New Chat” option.  
+   - Create a new chat with the "New Chat" option.  
 
 4. Adjust Settings  
    - Access the Settings Screen to configure host, theme, AI behavior, and other advanced options.  
-   - In the “Voice” tab, enable the experimental voice mode if you want to speak or have the AI read aloud its responses.
+   - In the "Voice" tab, enable the experimental voice mode if you want to speak or have the AI read aloud its responses.
 
 ---
 
 ## Configuration
 
 - Host  
-  The app can connect to a local or remote AI service (e.g., an Ollama server). By default, the code references "<http://localhost:11434>". Modify under “Settings” or set the const variables in main.dart for a fixed setup.
+  The app can connect to a local or remote AI service (e.g., an Ollama server). By default, the code references "<http://localhost:11434>". Modify under "Settings" or set the const variables in main.dart for a fixed setup.
 
 - Model  
   The AI model can be selected through the model selection dialog (if enabled). Alternatively, a default model can be set in main.dart.
 
 - Voice Mode  
-  Voice functionality depends on microphone permission and TTS availability. Under “Settings > Voice,” you can enable or disable it, change languages, and control punctuation rules.
+  Voice functionality depends on microphone permission and TTS availability. Under "Settings > Voice," you can enable or disable it, change languages, and control punctuation rules.
 
 ---
 
@@ -177,18 +224,12 @@ Key packages used in this project:
 ## Roadmap
 
 - [x] AI Chat
-- [ ] Map and Search
-- [ ] Vaccines Record
-- [ ] Medicine calendar
+- [x] Vaccines Record
+- [x] Medicine calendar
+- [ ] Medical Certificate
 
 ---
 
 ## Disclaimer
 
 This project is a final-year academic demonstration and should not be used as a medical tool or to provide real-world health advice. Data privacy and security are not guaranteed. Always consult a qualified healthcare professional for any medical concerns.
-
----
-
-## License
-
-Dr.AI is released under an open license for demonstration and educational purposes. See the LICENSE file for details, or refer to the “Licenses” section within the app’s “About” tab.
