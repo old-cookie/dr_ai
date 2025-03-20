@@ -75,7 +75,7 @@ Dr.AI is a proof-of-concept Flutter application that simulates an AI-driven "sma
 
 Below is a condensed overview of the main files and folders. Refer to the code for detailed implementation:
 
-```
+```readme
 lib
 ├── l10n
 │   ├── app_en.arb

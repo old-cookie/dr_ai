@@ -3,7 +3,7 @@ description: "A new Flutter project."
 repository: https://github.com/old-cookie/dr_ai
 issue_tracker: https://github.com/old-cookie/dr_ai/issues
 publish_to: 'none'
-version: 4.5.0+1
+version: 4.5.0+2
 
 environment:
   sdk: ^3.5.3
@@ -16,7 +16,7 @@ dependencies:
   ollama_dart: ^0.2.1
   intl: ^0.19.0
   markdown: ^7.3.0
-  shared_preferences: ^2.5.1
+  #shared_preferences: ^2.5.1
   encrypt_shared_preferences: ^0.9.8
   flutter_chat_ui: ^1.6.13
   scroll_to_index: ^3.0.1
