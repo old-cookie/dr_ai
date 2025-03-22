@@ -157,6 +157,45 @@ class _WidgetInterfaceState extends State<WidgetInterface> {
                       titleDivider(),
                       _buildTemporaryFixesButton(context),
                       const SizedBox(height: 16),
+                      titleDivider(context: context),
+                      
+                      // 演示模式設置
+                      _buildToggle(
+                        context,
+                        "啟用演示模式（繞過 AI）", // 可以後續加入到本地化字串中
+                        widget.prefs.getBool("demoModeEnabled") ?? false,
+                        (value) => widget.prefs.setBool("demoModeEnabled", value),
+                      ),
+                      
+                      widgetButton(
+                        "演示模式說明",
+                        Icons.info_outline,
+                        () {
+                          selectionHaptic();
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text("關於演示模式"),
+                              content: const Text(
+                                "演示模式會繞過 AI 模型，直接提供預定義的回答。\n\n"
+                                "這對於以下情況很有用：\n"
+                                "• 離線演示應用\n"
+                                "• 測試聊天界面\n"
+                                "• 在無法連接服務器時進行功能展示\n\n"
+                                "目前支持的關鍵詞：頭痛、發燒、咳嗽、感冒/流感\n"
+                                "其他輸入將收到默認回覆。"
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: const Text("了解了"),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        //icon: Icons.help_outline,
+                      ),
                     ],
                   ),
                 ),

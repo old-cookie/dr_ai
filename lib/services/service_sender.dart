@@ -10,6 +10,7 @@ import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'service_haptic.dart';
 import 'service_setter.dart';
 import 'service_chinese.dart';
+import 'service_demo.dart';
 import '../main.dart';
 
 /// 當前對話中的圖片列表
@@ -145,6 +146,47 @@ Future<String> send(
   setState(() {
     sendable = false;
   });
+
+  // 檢查是否啟用演示模式
+  final bool demoModeEnabled = prefs.getBool("demoModeEnabled") ?? false;
+
+  if (demoModeEnabled) {
+    // 演示模式處理邏輯
+    String newId = const Uuid().v8();
+    messages.insert(0, types.TextMessage(author: user, id: const Uuid().v8(), text: value.trim()));
+    setState(() {});
+
+    // 顯示"思考中"消息
+    messages.insert(0, types.TextMessage(author: assistant, id: newId, text: "🤔 處理中..."));
+    setState(() {});
+
+    // 延遲一小段時間模擬處理過程
+    await Future.delayed(const Duration(milliseconds: 800));
+
+    // 獲取演示回應
+    String response = await DemoService.processDemoMessage(value);
+
+    // 更新回應消息
+    messages.removeWhere((message) => message.id == newId);
+    messages.insert(0, types.TextMessage(author: assistant, id: const Uuid().v8(), text: response));
+
+    if (onStream != null) {
+      onStream(response, true);
+    }
+
+    setState(() {
+      chatAllowed = true;
+      sendable = true;
+    });
+
+    if (chatUuid != null) {
+      saveChat(chatUuid!, setState);
+    }
+
+    heavyHaptic();
+    return response;
+  }
+
   if (host == null) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(AppLocalizations.of(context)!.noHostSelected),
