@@ -171,6 +171,7 @@
         "context": "Visible in the model dialog"
     },
     "modelDialogAddAllowanceTitle": "Allow Proxy",
+    "@modelDialogAddAllowanceTitle": {},
     "modelDialogAddAllowanceDescription": "Dr.AI must check if the entered model is valid. For that, we normally send a web request to the Ollama model list and check the status code, but because you're using the web client, we can't do that directly. Instead, the app will send the request to a different api, hosted by JHubi1, to check for us.\nThis is a one-time request and will only be sent when you add a new model.\nYour IP address will be sent with the request and might be stored for up to ten minutes to prevent spamming with potential harmful intentions.\nIf you accept, your selection will be remembered in the future; if not, nothing will be sent and the model won't be added.",
     "@modelDialogAddAllowanceDescription": {
         "description": "Description of the allow proxy dialog",
@@ -598,6 +599,7 @@
         "context": "Visible in the settings view"
     },
     "settingsVoiceTtsNotSupportedDescription": "Text-to-speech services are not supported for the selected language. Select a different language in the language drawer to reenable them.\nOther services like voice recognition and AI thinking will still work as usual, but interaction might not be as fluent.",
+    "@settingsVoiceTtsNotSupportedDescription": {},
     "settingsVoicePermissionNot": "Permissions not granted",
     "@settingsVoicePermissionNot": {
         "description": "Text displayed when voice permissions are not granted",
@@ -854,10 +856,6 @@
     "@delete": {
         "description": "Button text for delete"
     },
-    "selectDate": "Select Date",
-    "@selectDate": {
-        "description": "Button text for date picker"
-    },
     "imageFormat": "Only PNG or JPG images supported",
     "@imageFormat": {
         "description": "Error message for invalid image format"
@@ -873,7 +871,9 @@
         "context": "Visible in the crop image view"
     },
     "errorLoadingRecords": "Error loading records.",
+    "@errorLoadingRecords": {},
     "noRecordsFound": "No records found.",
+    "@noRecordsFound": {},
     "notSelected": "Not selected",
     "@notSelected": {
         "description": "Text shown when no date is selected",
@@ -920,17 +920,27 @@
         }
     },
     "calendarEventTitle": "Add Appointment",
+    "@calendarEventTitle": {},
     "calendarEventDate": "Appointment Date",
+    "@calendarEventDate": {},
     "calendarEventTime": "Appointment Time",
+    "@calendarEventTime": {},
     "calendarEventNotification": "Notify Before",
+    "@calendarEventNotification": {},
     "calendarEventSave": "Save Appointment",
+    "@calendarEventSave": {},
     "calendarEventDelete": "Delete Appointment",
+    "@calendarEventDelete": {},
     "calendarEventNoEvents": "No appointments for this day",
+    "@calendarEventNoEvents": {},
     "calendarEventAdd": "Add Appointment",
+    "@calendarEventAdd": {},
     "calendarReminderTitle": "Appointment Reminder",
+    "@calendarReminderTitle": {},
     "calendarReminderBody": "You have an upcoming appointment '{eventTitle}'",
     "calendarDeleteEvent": "Deleted event: {eventTitle}",
     "calendarDeleteEventUndo": "Undo",
+    "@calendarDeleteEventUndo": {},
     "@calendarReminderBody": {
         "description": "Message shown in appointment reminder notification",
         "placeholders": {
@@ -957,7 +967,7 @@
     "@bmiHeight": {
         "description": "Label for height input field"
     },
-    "bmiWeight": "Weight (kg)", 
+    "bmiWeight": "Weight (kg)",
     "@bmiWeight": {
         "description": "Label for weight input field"
     },
@@ -1046,71 +1056,71 @@
     "@bmiClassificationTitle": {
         "description": "Title for BMI classification section"
     },
-    "bmiChildStandard": "兒童/青少年 BMI 標準:",
+    "bmiChildStandard": "BMI standards for children/teens:",
     "@bmiChildStandard": {
         "description": "Title for child/teen BMI standards"
     },
-    "bmiChildSeverelyWasted": "• 嚴重消瘦 (Severely wasted)",
+    "bmiChildSeverelyWasted": "• Severely wasted",
     "@bmiChildSeverelyWasted": {
         "description": "Child BMI category - severely wasted"
     },
-    "bmiChildWasted": "• 消瘦 (Wasted)",
+    "bmiChildWasted": "• Wasted",
     "@bmiChildWasted": {
         "description": "Child BMI category - wasted"
     },
-    "bmiChildNormal": "• 正常體重 (Normal weight)",
+    "bmiChildNormal": "• Normal weight",
     "@bmiChildNormal": {
         "description": "Child BMI category - normal"
     },
-    "bmiChildRiskOverweight": "• 可能過重風險 (Risk of overweight)",
+    "bmiChildRiskOverweight": "• Risk of overweight",
     "@bmiChildRiskOverweight": {
         "description": "Child BMI category - risk of overweight"
     },
-    "bmiChildOverweight": "• 過重 (Overweight)",
+    "bmiChildOverweight": "• Overweight",
     "@bmiChildOverweight": {
         "description": "Child BMI category - overweight"
     },
-    "bmiChildObese": "• 肥胖 (Obese)",
+    "bmiChildObese": "• Obese",
     "@bmiChildObese": {
         "description": "Child BMI category - obese"
     },
-    "bmiAsianAdultStandard": "亞洲成人 BMI 標準:",
+    "bmiAsianAdultStandard": "BMI standards for Asian adults:",
     "@bmiAsianAdultStandard": {
         "description": "Title for Asian adult BMI standards"
     },
-    "bmiAsianUnderweight": "• 體重過輕：BMI < 18.5",
+    "bmiAsianUnderweight": "• Underweight: BMI < 18.5",
     "@bmiAsianUnderweight": {
         "description": "Asian adult BMI category - underweight"
     },
-    "bmiAsianNormal": "• 體重正常：18.5 ≤ BMI < 23",
+    "bmiAsianNormal": "• Normal weight: 18.5 ≤ BMI < 23",
     "@bmiAsianNormal": {
         "description": "Asian adult BMI category - normal"
     },
-    "bmiAsianOverweight": "• 體重過重：23 ≤ BMI < 25",
+    "bmiAsianOverweight": "• Overweight: 23 ≤ BMI < 25",
     "@bmiAsianOverweight": {
         "description": "Asian adult BMI category - overweight"
     },
-    "bmiAsianObese": "• 肥胖：BMI ≥ 25",
+    "bmiAsianObese": "• Obesity: BMI ≥ 25",
     "@bmiAsianObese": {
         "description": "Asian adult BMI category - obese"
     },
-    "bmiWHOAdultStandard": "WHO成人 BMI 標準:",
+    "bmiWHOAdultStandard": "WHO adult BMI standard:",
     "@bmiWHOAdultStandard": {
         "description": "Title for WHO adult BMI standards"
     },
-    "bmiWHOUnderweight": "• 體重過輕：BMI < 18.5",
+    "bmiWHOUnderweight": "• Underweight: BMI < 18.5",
     "@bmiWHOUnderweight": {
         "description": "WHO adult BMI category - underweight"
     },
-    "bmiWHONormal": "• 體重正常：18.5 ≤ BMI < 25",
+    "bmiWHONormal": "• Normal weight: 18.5 ≤ BMI < 25",
     "@bmiWHONormal": {
         "description": "WHO adult BMI category - normal"
     },
-    "bmiWHOOverweight": "• 體重過重：25 ≤ BMI < 30",
+    "bmiWHOOverweight": "• Overweight: 25 ≤ BMI < 30",
     "@bmiWHOOverweight": {
-        "description": "WHO adult BMI category - overweight" 
+        "description": "WHO adult BMI category - overweight"
     },
-    "bmiWHOObese": "• 肥胖：BMI ≥ 30",
+    "bmiWHOObese": "• Obesity: BMI ≥ 30",
     "@bmiWHOObese": {
         "description": "WHO adult BMI category - obese"
     },
@@ -1143,6 +1153,7 @@
         "description": "BMI category - overweight"
     },
     "dialogSelectModel": "Select Model",
+    "@dialogSelectModel": {},
     "bmiObese": "Obese",
     "@bmiObese": {
         "description": "BMI category - obese"
@@ -1240,26 +1251,43 @@
         "description": "Label for sick leave end date"
     },
     "optionMedicalCertificate": "Medical Certificate",
+    "@optionMedicalCertificate": {},
     "searchHospital": "Search hospital...",
+    "@searchHospital": {},
     "serverConnectionError": "Server Connection Error",
+    "@serverConnectionError": {},
     "error": "Error",
+    "@error": {},
     "ok": "ok",
+    "@ok": {},
     "serverNotConfigured": "Server Not Configured",
+    "@serverNotConfigured": {},
     "loading": "loading",
+    "@loading": {},
     "selectImage": "Select Image",
     "@selectImage": {
         "description": "Button text for selecting an image"
     },
     "ocrSuccessful": "OCR successful, form filled automatically",
+    "@ocrSuccessful": {},
     "ocrNoDataFound": "No data could be recognized",
+    "@ocrNoDataFound": {},
     "ocrError": "OCR recognition error",
+    "@ocrError": {},
     "processingOcr": "Processing text...",
+    "@processingOcr": {},
     "scanAndFill": "Scan and Fill",
+    "@scanAndFill": {},
     "scanToFill": "Scan to auto-fill",
+    "@scanToFill": {},
     "scanText": "Recognize medical certificate text",
+    "@scanText": {},
     "ocrProcessing": "Text recognition in progress",
+    "@ocrProcessing": {},
     "uploadAndScan": "Upload & Scan",
+    "@uploadAndScan": {},
     "selectOrTakePhoto": "Select or Take Photo",
+    "@selectOrTakePhoto": {},
     "scannerError": "Scanner Error",
     "cameraPermissionDenied": "Camera permission is required to scan documents",
     "@cameraPermissionDenied": {
@@ -1269,11 +1297,31 @@
         "description": "Message shown when scanner encounters an error"
     },
     "calendarEventList": "Event List",
+    "@calendarEventList": {},
     "calendarSortEvents": "Sort Events",
+    "@calendarSortEvents": {},
     "calendarSortDateAsc": "Date (Ascending)",
+    "@calendarSortDateAsc": {},
     "calendarSortDateDesc": "Date (Descending)",
+    "@calendarSortDateDesc": {},
     "calendarSortTitleAsc": "Title (A-Z)",
+    "@calendarSortTitleAsc": {},
     "calendarSortTitleDesc": "Title (Z-A)",
+    "@calendarSortTitleDesc": {},
     "calendarNoEvents": "No Appointments",
-    "calendarEventMinutesBefore": "{minutes} minutes before"
+    "@calendarNoEvents": {},
+    "calendarEventMinutesBefore": "{minutes} minutes before",
+    "settingsDemoModeEnable": "Enable Demo Mode (bypass AI)",
+    "settingsDemoModeInfo": "Demo Mode Information",
+    "settingsDemoModeTitle": "About Demo Mode",
+    "settingsDemoModeDescription": "Demo mode bypasses the AI model and provides predefined answers.\n\nThis is useful for:\n• Offline app demonstrations\n• Testing chat interface\n• Feature showcasing without server connection\n\nCurrently supported keywords: headache, fever, cough, cold/flu\nOther inputs will receive a default response.",
+    "buttonGotIt": "Got it",
+    "@calendarEventMinutesBefore": {
+        "placeholders": {
+            "minutes": {
+                "type": "String",
+                "description": "Number of minutes before the event"
+            }
+        }
+    }
 }

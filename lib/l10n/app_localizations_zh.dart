@@ -539,9 +539,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get delete => '刪除';
 
   @override
-  String get selectDate => '選擇日期';
-
-  @override
   String get imageFormat => '僅支援 PNG 或 JPG 圖片格式';
 
   @override
@@ -802,6 +799,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get save => '儲存';
 
   @override
+  String get selectDate => '選擇日期';
+
+  @override
   String get changeImage => '更換圖片';
 
   @override
@@ -889,10 +889,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get selectOrTakePhoto => '選擇或拍攝照片';
 
   @override
-  String get scannerError => 'Scanner Error';
+  String get scannerError => '掃描器錯誤';
 
   @override
-  String get cameraPermissionDenied => 'Camera permission is required to scan documents';
+  String get cameraPermissionDenied => '相機權限被拒絕';
 
   @override
   String get calendarEventList => '事件列表';
@@ -916,7 +916,22 @@ class AppLocalizationsZh extends AppLocalizations {
   String get calendarNoEvents => '無預約事件';
 
   @override
-  String calendarEventMinutesBefore(Object minutes) {
+  String calendarEventMinutesBefore(String minutes) {
     return '提前 $minutes 分鐘';
   }
+
+  @override
+  String get settingsDemoModeEnable => '啟用演示模式（繞過 AI）';
+
+  @override
+  String get settingsDemoModeInfo => '演示模式說明';
+
+  @override
+  String get settingsDemoModeTitle => '關於演示模式';
+
+  @override
+  String get settingsDemoModeDescription => '演示模式會繞過 AI 模型，直接提供預定義的回答。\n\n這對於以下情況很有用：\n• 離線演示應用\n• 測試聊天界面\n• 在無法連接服務器時進行功能展示\n\n目前支持的關鍵詞：頭痛、發燒、咳嗽、感冒/流感\n其他輸入將收到默認回覆。';
+
+  @override
+  String get buttonGotIt => '了解了';
 }

@@ -1091,12 +1091,6 @@ abstract class AppLocalizations {
   /// **'Delete'**
   String get delete;
 
-  /// No description provided for @selectDate.
-  ///
-  /// In en, this message translates to:
-  /// **'Select Date'**
-  String get selectDate;
-
   /// Error message for invalid image format
   ///
   /// In en, this message translates to:
@@ -1370,103 +1364,103 @@ abstract class AppLocalizations {
   /// Title for child/teen BMI standards
   ///
   /// In en, this message translates to:
-  /// **'兒童/青少年 BMI 標準:'**
+  /// **'BMI standards for children/teens:'**
   String get bmiChildStandard;
 
   /// Child BMI category - severely wasted
   ///
   /// In en, this message translates to:
-  /// **'• 嚴重消瘦 (Severely wasted)'**
+  /// **'• Severely wasted'**
   String get bmiChildSeverelyWasted;
 
   /// Child BMI category - wasted
   ///
   /// In en, this message translates to:
-  /// **'• 消瘦 (Wasted)'**
+  /// **'• Wasted'**
   String get bmiChildWasted;
 
   /// Child BMI category - normal
   ///
   /// In en, this message translates to:
-  /// **'• 正常體重 (Normal weight)'**
+  /// **'• Normal weight'**
   String get bmiChildNormal;
 
   /// Child BMI category - risk of overweight
   ///
   /// In en, this message translates to:
-  /// **'• 可能過重風險 (Risk of overweight)'**
+  /// **'• Risk of overweight'**
   String get bmiChildRiskOverweight;
 
   /// Child BMI category - overweight
   ///
   /// In en, this message translates to:
-  /// **'• 過重 (Overweight)'**
+  /// **'• Overweight'**
   String get bmiChildOverweight;
 
   /// Child BMI category - obese
   ///
   /// In en, this message translates to:
-  /// **'• 肥胖 (Obese)'**
+  /// **'• Obese'**
   String get bmiChildObese;
 
   /// Title for Asian adult BMI standards
   ///
   /// In en, this message translates to:
-  /// **'亞洲成人 BMI 標準:'**
+  /// **'BMI standards for Asian adults:'**
   String get bmiAsianAdultStandard;
 
   /// Asian adult BMI category - underweight
   ///
   /// In en, this message translates to:
-  /// **'• 體重過輕：BMI < 18.5'**
+  /// **'• Underweight: BMI < 18.5'**
   String get bmiAsianUnderweight;
 
   /// Asian adult BMI category - normal
   ///
   /// In en, this message translates to:
-  /// **'• 體重正常：18.5 ≤ BMI < 23'**
+  /// **'• Normal weight: 18.5 ≤ BMI < 23'**
   String get bmiAsianNormal;
 
   /// Asian adult BMI category - overweight
   ///
   /// In en, this message translates to:
-  /// **'• 體重過重：23 ≤ BMI < 25'**
+  /// **'• Overweight: 23 ≤ BMI < 25'**
   String get bmiAsianOverweight;
 
   /// Asian adult BMI category - obese
   ///
   /// In en, this message translates to:
-  /// **'• 肥胖：BMI ≥ 25'**
+  /// **'• Obesity: BMI ≥ 25'**
   String get bmiAsianObese;
 
   /// Title for WHO adult BMI standards
   ///
   /// In en, this message translates to:
-  /// **'WHO成人 BMI 標準:'**
+  /// **'WHO adult BMI standard:'**
   String get bmiWHOAdultStandard;
 
   /// WHO adult BMI category - underweight
   ///
   /// In en, this message translates to:
-  /// **'• 體重過輕：BMI < 18.5'**
+  /// **'• Underweight: BMI < 18.5'**
   String get bmiWHOUnderweight;
 
   /// WHO adult BMI category - normal
   ///
   /// In en, this message translates to:
-  /// **'• 體重正常：18.5 ≤ BMI < 25'**
+  /// **'• Normal weight: 18.5 ≤ BMI < 25'**
   String get bmiWHONormal;
 
   /// WHO adult BMI category - overweight
   ///
   /// In en, this message translates to:
-  /// **'• 體重過重：25 ≤ BMI < 30'**
+  /// **'• Overweight: 25 ≤ BMI < 30'**
   String get bmiWHOOverweight;
 
   /// WHO adult BMI category - obese
   ///
   /// In en, this message translates to:
-  /// **'• 肥胖：BMI ≥ 30'**
+  /// **'• Obesity: BMI ≥ 30'**
   String get bmiWHOObese;
 
   /// BMI category - severely wasted
@@ -1588,6 +1582,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save'**
   String get save;
+
+  /// No description provided for @selectDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Date'**
+  String get selectDate;
 
   /// No description provided for @changeImage.
   ///
@@ -1821,7 +1821,37 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{minutes} minutes before'**
-  String calendarEventMinutesBefore(Object minutes);
+  String calendarEventMinutesBefore(String minutes);
+
+  /// No description provided for @settingsDemoModeEnable.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Demo Mode (bypass AI)'**
+  String get settingsDemoModeEnable;
+
+  /// No description provided for @settingsDemoModeInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo Mode Information'**
+  String get settingsDemoModeInfo;
+
+  /// No description provided for @settingsDemoModeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'About Demo Mode'**
+  String get settingsDemoModeTitle;
+
+  /// No description provided for @settingsDemoModeDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo mode bypasses the AI model and provides predefined answers.\n\nThis is useful for:\n• Offline app demonstrations\n• Testing chat interface\n• Feature showcasing without server connection\n\nCurrently supported keywords: headache, fever, cough, cold/flu\nOther inputs will receive a default response.'**
+  String get settingsDemoModeDescription;
+
+  /// No description provided for @buttonGotIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get buttonGotIt;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

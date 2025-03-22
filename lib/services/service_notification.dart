@@ -134,7 +134,7 @@ class NotificationService {
             presentAlert: true,
             presentBadge: true,
             presentSound: true,
-            presentBanner: true, // 確保顯示橫幅
+            presentBanner: true,
             presentList: true,
             sound: 'notification_sound.aiff',
             badgeNumber: 1,

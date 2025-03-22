@@ -540,9 +540,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get delete => 'Delete';
 
   @override
-  String get selectDate => 'Select Date';
-
-  @override
   String get imageFormat => 'Only PNG or JPG images supported';
 
   @override
@@ -692,55 +689,55 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bmiClassificationTitle => 'BMI 分類標準：';
 
   @override
-  String get bmiChildStandard => '兒童/青少年 BMI 標準:';
+  String get bmiChildStandard => 'BMI standards for children/teens:';
 
   @override
-  String get bmiChildSeverelyWasted => '• 嚴重消瘦 (Severely wasted)';
+  String get bmiChildSeverelyWasted => '• Severely wasted';
 
   @override
-  String get bmiChildWasted => '• 消瘦 (Wasted)';
+  String get bmiChildWasted => '• Wasted';
 
   @override
-  String get bmiChildNormal => '• 正常體重 (Normal weight)';
+  String get bmiChildNormal => '• Normal weight';
 
   @override
-  String get bmiChildRiskOverweight => '• 可能過重風險 (Risk of overweight)';
+  String get bmiChildRiskOverweight => '• Risk of overweight';
 
   @override
-  String get bmiChildOverweight => '• 過重 (Overweight)';
+  String get bmiChildOverweight => '• Overweight';
 
   @override
-  String get bmiChildObese => '• 肥胖 (Obese)';
+  String get bmiChildObese => '• Obese';
 
   @override
-  String get bmiAsianAdultStandard => '亞洲成人 BMI 標準:';
+  String get bmiAsianAdultStandard => 'BMI standards for Asian adults:';
 
   @override
-  String get bmiAsianUnderweight => '• 體重過輕：BMI < 18.5';
+  String get bmiAsianUnderweight => '• Underweight: BMI < 18.5';
 
   @override
-  String get bmiAsianNormal => '• 體重正常：18.5 ≤ BMI < 23';
+  String get bmiAsianNormal => '• Normal weight: 18.5 ≤ BMI < 23';
 
   @override
-  String get bmiAsianOverweight => '• 體重過重：23 ≤ BMI < 25';
+  String get bmiAsianOverweight => '• Overweight: 23 ≤ BMI < 25';
 
   @override
-  String get bmiAsianObese => '• 肥胖：BMI ≥ 25';
+  String get bmiAsianObese => '• Obesity: BMI ≥ 25';
 
   @override
-  String get bmiWHOAdultStandard => 'WHO成人 BMI 標準:';
+  String get bmiWHOAdultStandard => 'WHO adult BMI standard:';
 
   @override
-  String get bmiWHOUnderweight => '• 體重過輕：BMI < 18.5';
+  String get bmiWHOUnderweight => '• Underweight: BMI < 18.5';
 
   @override
-  String get bmiWHONormal => '• 體重正常：18.5 ≤ BMI < 25';
+  String get bmiWHONormal => '• Normal weight: 18.5 ≤ BMI < 25';
 
   @override
-  String get bmiWHOOverweight => '• 體重過重：25 ≤ BMI < 30';
+  String get bmiWHOOverweight => '• Overweight: 25 ≤ BMI < 30';
 
   @override
-  String get bmiWHOObese => '• 肥胖：BMI ≥ 30';
+  String get bmiWHOObese => '• Obesity: BMI ≥ 30';
 
   @override
   String get bmiSeverelyWasted => 'Severely Wasted';
@@ -801,6 +798,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get save => 'Save';
+
+  @override
+  String get selectDate => 'Select Date';
 
   @override
   String get changeImage => 'Change Image';
@@ -917,7 +917,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calendarNoEvents => 'No Appointments';
 
   @override
-  String calendarEventMinutesBefore(Object minutes) {
+  String calendarEventMinutesBefore(String minutes) {
     return '$minutes minutes before';
   }
+
+  @override
+  String get settingsDemoModeEnable => 'Enable Demo Mode (bypass AI)';
+
+  @override
+  String get settingsDemoModeInfo => 'Demo Mode Information';
+
+  @override
+  String get settingsDemoModeTitle => 'About Demo Mode';
+
+  @override
+  String get settingsDemoModeDescription => 'Demo mode bypasses the AI model and provides predefined answers.\n\nThis is useful for:\n• Offline app demonstrations\n• Testing chat interface\n• Feature showcasing without server connection\n\nCurrently supported keywords: headache, fever, cough, cold/flu\nOther inputs will receive a default response.';
+
+  @override
+  String get buttonGotIt => 'Got it';
 }
