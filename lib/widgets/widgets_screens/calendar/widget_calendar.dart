@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../../services/service_theme.dart';
 import '../../../screens/calendar/screen_add_calendar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:encrypt_shared_preferences/provider.dart';
 import '../../../services/service_calendar_event.dart';
 import 'dart:convert';
 import '../../../services/service_notification.dart';
@@ -28,7 +28,7 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
   }
 
   Future<void> _loadEvents() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = EncryptedSharedPreferences.getInstance();
     final eventStrings = prefs.getStringList('calendar_events') ?? [];
     setState(() {
       events = eventStrings.map((e) => CalendarEvent.fromJson(jsonDecode(e))).toList();
@@ -39,7 +39,7 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
     try {
       final l10n = AppLocalizations.of(context);
       // 獲取當前事件列表
-      final prefs = await SharedPreferences.getInstance();
+      final prefs = EncryptedSharedPreferences.getInstance();
       List<String> events = prefs.getStringList('calendar_events') ?? [];
 
       // 刪除指定事件

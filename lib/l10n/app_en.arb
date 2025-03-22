@@ -1312,10 +1312,15 @@
     "@calendarNoEvents": {},
     "calendarEventMinutesBefore": "{minutes} minutes before",
     "settingsDemoModeEnable": "Enable Demo Mode (bypass AI)",
+    "@settingsDemoModeEnable": {},
     "settingsDemoModeInfo": "Demo Mode Information",
+    "@settingsDemoModeInfo": {},
     "settingsDemoModeTitle": "About Demo Mode",
+    "@settingsDemoModeTitle": {},
     "settingsDemoModeDescription": "Demo mode bypasses the AI model and provides predefined answers.\n\nThis is useful for:\n• Offline app demonstrations\n• Testing chat interface\n• Feature showcasing without server connection\n\nCurrently supported keywords: headache, fever, cough, cold/flu\nOther inputs will receive a default response.",
+    "@settingsDemoModeDescription": {},
     "buttonGotIt": "Got it",
+    "@buttonGotIt": {},
     "@calendarEventMinutesBefore": {
         "placeholders": {
             "minutes": {

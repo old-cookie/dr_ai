@@ -3,10 +3,10 @@ import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 import '../../widgets/widgets_units/widget_title.dart';
 import '../../widgets/widgets_units/widget_button.dart';
 import '../../../l10n/app_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../services/service_calendar_event.dart';
 import 'dart:convert';
 import '../../services/service_notification.dart';
+import 'package:encrypt_shared_preferences/provider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 class ScreenAddCalendar extends StatefulWidget {
@@ -93,7 +93,7 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
       );
 
       // 儲存事件
-      final prefs = await SharedPreferences.getInstance();
+      final prefs = EncryptedSharedPreferences.getInstance();
       List<String> events = prefs.getStringList('calendar_events') ?? [];
       events.add(jsonEncode(event.toJson()));
       await prefs.setStringList('calendar_events', events);

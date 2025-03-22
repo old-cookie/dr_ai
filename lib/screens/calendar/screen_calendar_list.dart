@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'dart:convert';
 import '../../services/service_calendar_event.dart';
 import '../../l10n/app_localizations.dart';
 import '../../services/service_notification.dart';
 import '../../services/service_theme.dart';
+import 'package:encrypt_shared_preferences/provider.dart';
 
 class ScreenCalendarList extends StatefulWidget {
   const ScreenCalendarList({super.key});
@@ -24,7 +25,7 @@ class _ScreenCalendarListState extends State<ScreenCalendarList> {
   }
 
   Future<void> _loadEvents() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = EncryptedSharedPreferences.getInstance();
     final eventStrings = prefs.getStringList('calendar_events') ?? [];
     setState(() {
       events = eventStrings.map((e) => CalendarEvent.fromJson(jsonDecode(e))).toList();
@@ -53,7 +54,7 @@ class _ScreenCalendarListState extends State<ScreenCalendarList> {
     try {
       final l10n = AppLocalizations.of(context);
       // 獲取當前事件列表
-      final prefs = await SharedPreferences.getInstance();
+      final prefs = EncryptedSharedPreferences.getInstance();
       List<String> eventStrings = prefs.getStringList('calendar_events') ?? [];
       
       // 找到對應事件的索引
