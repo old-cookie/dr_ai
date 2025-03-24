@@ -270,9 +270,11 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
 
     // 執行OCR處理
     try {
-      final recognizedText = await OcrService.recognizeText(bwBytes);
-      final extractedData = OcrService.parseMedicalCertificate(recognizedText);
-
+      // 舊有的OCR服務
+  //    final recognizedText = await OcrService.recognizeText(bwBytes);
+  //    final extractedData = OcrService.parseMedicalCertificate(recognizedText);
+      // 直接執行Demo的OCR服務
+      final extractedData = await OcrService.processImage(bwBytes);
       setState(() {
 
         // 填入OCR識別結果

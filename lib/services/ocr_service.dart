@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 /// 1. 使用Tesseract OCR引擎進行文字識別 [recognizeText]
 /// 2. 解析醫療證明中的關鍵信息 [parseMedicalCertificate]
 class OcrService {
+  static bool isDemoMode = false;
   /// 將圖像字節數組保存為臨時文件，以便Tesseract OCR處理
   /// 
   /// [imageBytes] 圖像的二進制數據
@@ -22,6 +23,8 @@ class OcrService {
     return tempFilePath;
   }
 
+  
+
   /// 對醫療證明圖像進行OCR識別，提取文字內容
   /// 
   /// [imageBytes] 醫療證明圖像的二進制數據
@@ -29,6 +32,13 @@ class OcrService {
   /// 
   /// 優先嘗試使用英文+繁體中文識別，如果失敗則退回到僅使用英文
   static Future<String> recognizeText(Uint8List imageBytes) async {
+
+    // 如果處於演示模式，則返回演示文本
+    if ( isDemoMode ) {
+      log('Demo mode actvie');
+      return _getDemoOcrText();
+    }
+
     final tempFilePath = await _saveImageToTempFile(imageBytes);
     
     try {
@@ -90,6 +100,11 @@ class OcrService {
   /// - 備註 (remarks)
   /// - 原始文本 (rawText)
   static Map<String, dynamic> parseMedicalCertificate(String text) {
+
+    if ( isDemoMode && text.isEmpty) {
+      return _getDemoCertificateDate();
+    }
+
     final result = <String, dynamic>{};
     
     // 處理OCR文本，移除常見的錯誤字符
@@ -218,6 +233,72 @@ class OcrService {
     return result;
   }
 
+   // 新添加方法開始
+  static Future<Map<String, dynamic>> processImage(Uint8List imageBytes) async {
+    if (isDemoMode) {
+      log('Demo mode active');
+      return _getDemoCertificateDate();
+    }
+
+    final recognizedText = await recognizeText(imageBytes);
+    return parseMedicalCertificate(recognizedText);
+  }
+
+  // Demo data
+  static String _getDemoOcrText() {
+    return '''
+    HOSPITAL AUTHORITY
+    HONG KONG WEST CLUSTER
+    Tuen Mun Hospital
+    MEDICAL CERTIFICATE
+
+    Name: CHAN TAI MAN
+    Case No.: MED-21-10101(1)
+
+    This is to certify that the above-named patient:
+    - attended here on 07-Mar-2023
+    - has beem an in-patient from 07-Mar-2023 to 14-Mar-2023
+    - is suffering from Fever
+    - is recommended for sick leave from 07-Mar-2023 to 14-Mar-2023
+    - is required to follow up on 21-Mar-2023
+    - is advised to avoid heavy physical duty for N/A
+
+    Remarks: N/A
+
+    Dr. CHAN Siu Ming
+    Medical Officer
+    Department of Medicine
+    ''';
+  }
+
+  static Map<String, dynamic> _getDemoCertificateDate() {
+    return {
+      'certificateNumber': 'MED-21-10101(1)',
+      'hospital': 'Tuen Mun Hospital',
+      'treatmentDate': '2023-03-07',
+      'hospitalizationStartDate': '2023-03-07',
+      'hospitalizationEndDate': '2023-03-14',
+      'diagnosis': 'Fever',
+      'sickLeaveStartDate': '2023-03-07',
+      'sickLeaveEndDate': '2023-03-14',
+      'followUpDate': '2023-03-21',
+      'remarks': 'N/A',
+      'rawText': _getDemoOcrText(),
+      'isDemoData': true,
+    };
+  }
+
+  static void toggleDemoMode({bool? enable}) {
+    if (enable != null) {
+      isDemoMode = enable;
+    } else {
+      isDemoMode = !isDemoMode;
+    }
+    log('Demo mode is now ${isDemoMode ? 'enabled' : 'disabled'}');
+  }
+   // 新添加方法結束
+
+
   /// 清理OCR識別中的常見錯誤字符
   /// 
   /// [text] 原始OCR文本
@@ -292,3 +373,5 @@ class OcrService {
     }
   }
 }
+
+

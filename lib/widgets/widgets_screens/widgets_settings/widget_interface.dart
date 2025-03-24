@@ -8,6 +8,7 @@ import 'package:encrypt_shared_preferences/provider.dart';
 import '../../../services/service_haptic.dart';
 import '../../../services/service_desktop.dart';
 import '../../../services/service_theme.dart';
+import '../../../services/ocr_service.dart';
 import '../../widgets_units/widget_toggle.dart';
 import '../../widgets_units/widget_title.dart';
 import '../../widgets_units/widget_button.dart';
@@ -41,6 +42,15 @@ String _formatDuration(double seconds) {
 }
 
 class _WidgetInterfaceState extends State<WidgetInterface> {
+
+  @override
+  void initState() {
+    super.initState();
+    
+    final isDemoModeEnabled = widget.prefs.getBool("demoModeEnabled") ?? false;
+    OcrService.toggleDemoMode(enable: isDemoModeEnabled);
+  }
+
   @override
   Widget build(BuildContext context) {
     return WindowBorder(
@@ -85,7 +95,10 @@ class _WidgetInterfaceState extends State<WidgetInterface> {
                         context,
                         AppLocalizations.of(context)!.settingsResetOnModelChange,
                         widget.prefs.getBool("resetOnModelSelect") ?? true,
-                        (value) => widget.prefs.setBool("resetOnModelSelect", value),
+                        (value) { 
+                          widget.prefs.setBool("resetOnModelSelect", value);
+                          OcrService.toggleDemoMode(enable: value);
+                        },
                       ),
                       titleDivider(bottom: isDesktopLayoutNotRequired(context) ? 38 : 20, context: context),
 
