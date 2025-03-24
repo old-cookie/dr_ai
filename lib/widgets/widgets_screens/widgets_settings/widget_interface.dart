@@ -95,10 +95,7 @@ class _WidgetInterfaceState extends State<WidgetInterface> {
                         context,
                         AppLocalizations.of(context)!.settingsResetOnModelChange,
                         widget.prefs.getBool("resetOnModelSelect") ?? true,
-                        (value) { 
-                          widget.prefs.setBool("resetOnModelSelect", value);
-                          OcrService.toggleDemoMode(enable: value);
-                        },
+                        (value) => widget.prefs.setBool("resetOnModelSelect", value),
                       ),
                       titleDivider(bottom: isDesktopLayoutNotRequired(context) ? 38 : 20, context: context),
 
@@ -176,7 +173,10 @@ class _WidgetInterfaceState extends State<WidgetInterface> {
                         context,
                         AppLocalizations.of(context)!.settingsDemoModeEnable,
                         widget.prefs.getBool("demoModeEnabled") ?? false,
-                        (value) => widget.prefs.setBool("demoModeEnabled", value),
+                        (value) {
+                           widget.prefs.setBool("demoModeEnabled", value);
+                           OcrService.toggleDemoMode(enable: value);
+                        },
                       ),
 
                       widgetButton(
