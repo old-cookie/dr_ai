@@ -101,20 +101,25 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
       // 只有當有設置通知時間且不是過去的時間才設置通知
       if (notificationMinutes != null && !isPastDate) {
         final notificationTime = event.dateTime.subtract(Duration(minutes: event.notificationMinutes));
+
+        // 準備通知文本
+        final String notificationTitle = l10n?.calendarReminderTitle ?? 'Appointment Reminder';
+        // 直接替換事件標題，不使用複雜的模板格式
+        final String notificationBody = '您有一個即將到來的預約：${event.title}';
+
         try {
           await NotificationService().scheduleNotification(
             id: events.length,
-            title: l10n?.calendarReminderTitle ?? 'Appointment Reminder',
-            body: (l10n?.calendarReminderBody ?? 'You have an upcoming appointment "{eventTitle}"')
-                .toString()
-                .replaceFirst('{eventTitle}', event.title),
+            title: notificationTitle,
+            body: notificationBody,
             scheduledDate: notificationTime,
           );
+          debugPrint('設置了通知: $notificationTitle - $notificationBody');
         } catch (e) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(l10n?.calendarEventSave ?? 'Notification setup failed, but event was saved')),
-          );
           debugPrint('通知設置錯誤: $e');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(l10n?.calendarEventSave ?? 'Event saved, but notification setup failed')),
+          );
         }
       }
 

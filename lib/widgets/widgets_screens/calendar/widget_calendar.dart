@@ -46,8 +46,12 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
       events.removeAt(index);
       await prefs.setStringList('calendar_events', events);
 
-      // 取消相關通知
-      await NotificationService().cancelNotification(index + 1); // 因為我們使用 events.length 作為 ID
+      // 安全地取消相關通知
+      try {
+        await NotificationService().cancelNotification(index + 1);
+      } catch (e) {
+        debugPrint('取消通知時發生錯誤: $e');
+      }
 
       // 重新加載事件列表
       await _loadEvents();
@@ -67,12 +71,20 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
                 if (event.notificationMinutes > 0) {
                   final notificationTime = event.dateTime.subtract(Duration(minutes: event.notificationMinutes));
                   if (notificationTime.isAfter(DateTime.now())) {
-                    await NotificationService().scheduleNotification(
-                      id: events.length,
-                      title: l10n?.calendarReminderTitle ?? 'Appointment Reminder',
-                      body: l10n?.calendarReminderBody(event.title) ?? 'You have an upcoming appointment "${event.title}"',
-                      scheduledDate: notificationTime,
-                    );
+                    try {
+                      // 簡化通知內容設置
+                      final String notificationTitle = l10n?.calendarReminderTitle ?? 'Appointment Reminder';
+                      final String notificationBody = '您有一個即將到來的預約：${event.title}';
+
+                      await NotificationService().scheduleNotification(
+                        id: events.length,
+                        title: notificationTitle,
+                        body: notificationBody,
+                        scheduledDate: notificationTime,
+                      );
+                    } catch (e) {
+                      debugPrint('重新設置通知時發生錯誤: $e');
+                    }
                   }
                 }
 

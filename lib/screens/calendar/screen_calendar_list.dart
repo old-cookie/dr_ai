@@ -56,20 +56,23 @@ class _ScreenCalendarListState extends State<ScreenCalendarList> {
       // 獲取當前事件列表
       final prefs = EncryptedSharedPreferences.getInstance();
       List<String> eventStrings = prefs.getStringList('calendar_events') ?? [];
-      
+
       // 找到對應事件的索引
       final eventJson = jsonEncode(event.toJson());
-      final originalIndex = eventStrings.indexWhere((e) => 
-        CalendarEvent.fromJson(jsonDecode(e)).dateTime == event.dateTime && 
-        CalendarEvent.fromJson(jsonDecode(e)).title == event.title);
-      
+      final originalIndex = eventStrings.indexWhere(
+          (e) => CalendarEvent.fromJson(jsonDecode(e)).dateTime == event.dateTime && CalendarEvent.fromJson(jsonDecode(e)).title == event.title);
+
       if (originalIndex != -1) {
         // 刪除指定事件
         eventStrings.removeAt(originalIndex);
         await prefs.setStringList('calendar_events', eventStrings);
 
-        // 取消相關通知
-        await NotificationService().cancelNotification(originalIndex + 1);
+        // 安全地取消相關通知
+        try {
+          await NotificationService().cancelNotification(originalIndex + 1);
+        } catch (e) {
+          debugPrint('取消通知時發生錯誤: $e');
+        }
 
         // 重新加載事件列表
         await _loadEvents();
@@ -90,12 +93,20 @@ class _ScreenCalendarListState extends State<ScreenCalendarList> {
                   if (event.notificationMinutes > 0) {
                     final notificationTime = event.dateTime.subtract(Duration(minutes: event.notificationMinutes));
                     if (notificationTime.isAfter(DateTime.now())) {
-                      await NotificationService().scheduleNotification(
-                        id: eventStrings.length,
-                        title: l10n?.calendarReminderTitle ?? 'Appointment Reminder',
-                        body: l10n?.calendarReminderBody(event.title) ?? 'You have an upcoming appointment "${event.title}"',
-                        scheduledDate: notificationTime,
-                      );
+                      try {
+                        // 使用更簡單、確定的通知內容格式
+                        final String notificationTitle = l10n?.calendarReminderTitle ?? 'Appointment Reminder';
+                        final String notificationBody = '您有一個即將到來的預約：${event.title}';
+
+                        await NotificationService().scheduleNotification(
+                          id: eventStrings.length,
+                          title: notificationTitle,
+                          body: notificationBody,
+                          scheduledDate: notificationTime,
+                        );
+                      } catch (e) {
+                        debugPrint('重新設置通知時發生錯誤: $e');
+                      }
                     }
                   }
 
@@ -165,7 +176,7 @@ class _ScreenCalendarListState extends State<ScreenCalendarList> {
               itemBuilder: (context, index) {
                 final event = events[index];
                 final bool isPastEvent = event.dateTime.isBefore(DateTime.now());
-                
+
                 return Dismissible(
                   key: Key(event.dateTime.toIso8601String() + index.toString()),
                   direction: DismissDirection.endToStart,

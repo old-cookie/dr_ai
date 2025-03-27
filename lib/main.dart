@@ -31,6 +31,7 @@ const bool useHost = true;
 /// 必須確保客戶端可以訪問此地址
 /// @note 不要包含結尾的斜線
 const String fixedHost = "http://oldcookie2706.asuscomm.com:11434";
+
 /// 備用服務器地址，當主服務器無法訪問時使用
 const String backupHost = "http://100.64.50.3:11434";
 
@@ -108,15 +109,13 @@ void Function(void Function())? setMainAppState;
 
 /// 主應用程式入口
 /// 初始化必要的服務和配置
-void main() async {
-  // 確保 Flutter 綁定已初始化
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   try {
     // 初始化通知服務
     final notificationService = NotificationService();
     await notificationService.initialize();
-    await NotificationService().requestPermission();
 
     // 初始化加密存儲
     await EncryptedSharedPreferences.initialize(encryptionKey);
@@ -156,8 +155,7 @@ void main() async {
 /// 嘗試連接主機，如果連接失敗則返回 false
 Future<bool> checkHostAvailability(String host) async {
   try {
-    final response = await http.get(Uri.parse('$host/api/version'))
-        .timeout(const Duration(seconds: 5));
+    final response = await http.get(Uri.parse('$host/api/version')).timeout(const Duration(seconds: 5));
     return response.statusCode == 200;
   } catch (e) {
     debugPrint('無法連接到 $host: $e');
