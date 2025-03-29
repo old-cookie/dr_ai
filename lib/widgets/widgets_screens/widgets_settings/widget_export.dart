@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import '../../../l10n/app_localizations.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:dynamic_color/dynamic_color.dart';
-import '../../../main.dart';
 import '../../../services/service_desktop.dart';
 import '../../widgets_units/widget_button.dart';
 
 /// 匯出設置組件
-/// 用於提供聊天記錄的匯出和匯入功能界面
+/// 用於提供所有偏好設置的匯出和匯入功能界面
 class WidgetExport extends StatelessWidget {
-  /// 匯出聊天記錄的回調函數
+  /// 匯出偏好設置的回調函數
   final Future<void> Function(BuildContext) exportChats;
 
-  /// 匯入聊天記錄的回調函數
+  /// 匯入偏好設置的回調函數
   final Future<void> Function(BuildContext) importChats;
   const WidgetExport({
     super.key,
@@ -44,20 +43,19 @@ class WidgetExport extends StatelessWidget {
                 Expanded(
                   child: ListView(
                     children: [
-                      /// 匯出聊天記錄按鈕
+                      /// 匯出偏好設置按鈕
                       widgetButton(
-                        AppLocalizations.of(context)!.settingsExportChats,
+                        '導出所有設置',
                         Icons.upload_rounded,
                         () => exportChats(context),
                       ),
 
-                      /// 匯入聊天記錄按鈕(僅在允許多個聊天時顯示)
-                      if (allowMultipleChats)
-                        widgetButton(
-                          AppLocalizations.of(context)!.settingsImportChats,
-                          Icons.download_rounded,
-                          () => importChats(context),
-                        ),
+                      /// 匯入偏好設置按鈕
+                      widgetButton(
+                        '導入所有設置',
+                        Icons.download_rounded,
+                        () => importChats(context),
+                      ),
                     ],
                   ),
                 ),
@@ -65,7 +63,7 @@ class WidgetExport extends StatelessWidget {
 
                 /// 匯出功能信息提示
                 widgetButton(
-                  AppLocalizations.of(context)!.settingsExportInfo,
+                  '導出將保存所有應用設置和聊天記錄（JSON格式）',
                   Icons.info_rounded,
                   null,
                   color: Colors.grey.harmonizeWith(Theme.of(context).colorScheme.primary),
@@ -73,7 +71,7 @@ class WidgetExport extends StatelessWidget {
 
                 /// 匯出警告提示
                 widgetButton(
-                  AppLocalizations.of(context)!.settingsExportWarning,
+                  '導入設置將覆蓋現有所有設置，請謹慎操作',
                   Icons.warning_rounded,
                   null,
                   color: Colors.orange.harmonizeWith(Theme.of(context).colorScheme.primary),
