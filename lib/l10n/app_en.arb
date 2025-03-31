@@ -1321,6 +1321,46 @@
     "@settingsDemoModeDescription": {},
     "buttonGotIt": "Got it",
     "@buttonGotIt": {},
+    "authPrompt": "Please authenticate to unlock the app",
+    "@authPrompt": {
+        "description": "Prompt shown when biometric authentication is required"
+    },
+    "authFailed": "Authentication failed, please try again",
+    "@authFailed": {
+        "description": "Message shown when biometric authentication fails"
+    },
+    "authRetry": "Retry",
+    "@authRetry": {
+        "description": "Button text for retrying authentication"
+    },
+    "authExit": "Exit",
+    "@authExit": {
+        "description": "Button text for exiting authentication"
+    },
+    "authInProgress": "Please complete the biometric authentication",
+    "@authInProgress": {
+        "description": "Message shown when biometric authentication is in progress"
+    },
+    "pinEmpty": "Please enter a PIN",
+    "@pinEmpty": {
+        "description": "Message shown when PIN is empty"
+    },
+    "pinIncorrect": "Incorrect PIN",
+    "@pinIncorrect": {
+        "description": "Message shown when PIN is incorrect"
+    },
+    "pinCode": "PIN Code",
+    "@pinCode": {
+        "description": "Label for PIN code input field"
+    },
+    "login": "Login",
+    "@login": {
+        "description": "Button text for login"
+    },
+    "usePin": "Use PIN",
+    "@usePin": {
+        "description": "Button text for using PIN"
+    },
     "@calendarEventMinutesBefore": {
         "placeholders": {
             "minutes": {

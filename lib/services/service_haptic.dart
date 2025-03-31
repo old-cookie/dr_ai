@@ -38,3 +38,15 @@ void heavyHaptic() {
 void selectionHaptic() {
   _performHapticFeedback(HapticFeedback.lightImpact);
 }
+
+/// 觸發成功操作的觸覺反饋
+/// 使用中度觸覺反饋來指示操作成功
+void successHaptic() {
+  _performHapticFeedback(HapticFeedback.mediumImpact);
+}
+
+/// 觸發錯誤或失敗操作的觸覺反饋
+/// 使用重度觸覺反饋來指示操作失敗或發生錯誤
+void errorHaptic() {
+  _performHapticFeedback(HapticFeedback.heavyImpact);
+}

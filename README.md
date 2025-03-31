@@ -95,6 +95,7 @@ lib
 │   │   ├── screen_add_medical_certificate.dart
 │   │   ├── screen_medical_certificate_detail.dart
 │   │   └── screen_medical_certificate_record.dart
+│   ├── screen_auth.dart
 │   ├── screen_bmi.dart
 │   ├── screen_settings.dart
 │   ├── screen_voice.dart
@@ -110,9 +111,11 @@ lib
 │       └── screen_vaccine_record.dart
 ├── services
 │   ├── ocr_service.dart
-│   ├── screen_crop_image.dart
+│   ├── service_auth.dart
 │   ├── service_calendar_event.dart
 │   ├── service_chinese.dart
+│   ├── service_crop_image.dart
+│   ├── service_demo.dart
 │   ├── service_desktop.dart
 │   ├── service_haptic.dart
 │   ├── service_notification.dart

@@ -1,5 +1,5 @@
+// ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -935,4 +935,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get buttonGotIt => 'Got it';
+
+  @override
+  String get authPrompt => 'Please authenticate to unlock the app';
+
+  @override
+  String get authFailed => 'Authentication failed, please try again';
+
+  @override
+  String get authRetry => 'Retry';
+
+  @override
+  String get authExit => 'Exit';
+
+  @override
+  String get authInProgress => 'Please complete the biometric authentication';
+
+  @override
+  String get pinEmpty => 'Please enter a PIN';
+
+  @override
+  String get pinIncorrect => 'Incorrect PIN';
+
+  @override
+  String get pinCode => 'PIN Code';
+
+  @override
+  String get login => 'Login';
+
+  @override
+  String get usePin => 'Use PIN';
 }

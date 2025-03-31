@@ -29,9 +29,7 @@ class _ScreenCropImageState extends State<ScreenCropImage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n?.cropImage ?? 'Crop Image'),
-      ),
+      appBar: AppBar(title: Text(l10n?.cropImage ?? 'Crop Image')),
       body: Stack(
         children: [
           Crop(
@@ -42,22 +40,14 @@ class _ScreenCropImageState extends State<ScreenCropImage> {
                 case CropSuccess(:final croppedImage):
                   Navigator.pop(context, croppedImage);
                 case CropFailure(:final cause):
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Failed to crop: $cause')),
-                  );
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to crop: $cause')));
               }
             },
             withCircleUi: false,
             maskColor: Colors.black.withAlpha(153),
             baseColor: Colors.black,
           ),
-          if (_isCropping)
-            Container(
-              color: Colors.black45,
-              child: const Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
+          if (_isCropping) Container(color: Colors.black45, child: const Center(child: CircularProgressIndicator())),
         ],
       ),
       bottomNavigationBar: Padding(

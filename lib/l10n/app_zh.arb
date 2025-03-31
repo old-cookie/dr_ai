@@ -339,5 +339,15 @@
   "@settingsDemoModeDescription": {},
   "buttonGotIt": "了解了",
   "@buttonGotIt": {},
-  "cameraPermissionDenied": "相機權限被拒絕"
+  "cameraPermissionDenied": "相機權限被拒絕",
+  "authPrompt": "請進行生物識別驗證以解鎖應用",
+  "authFailed": "驗證失敗，請重試",
+  "authRetry": "重試",
+  "authExit": "退出",
+  "pinEmpty": "請輸入PIN碼",
+  "pinIncorrect": "PIN碼不正確",
+  "pinCode": "PIN碼",
+  "login": "登錄",
+  "usePin": "使用PIN碼",
+  "authInProgress": "請完成生物識別驗證"
 }

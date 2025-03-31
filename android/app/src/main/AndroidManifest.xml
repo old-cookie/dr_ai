@@ -1,44 +1,37 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- 添加聲音和震動權限 -->
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <!-- 網路權限 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    
+    <!-- 藍牙權限 -->
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-
-    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
-    <!-- 通知相關權限 -->
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
-    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
     
-    <!-- Add these permissions -->
+    <!-- 存儲權限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!-- For Android 13+ -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
     
-    <!-- 添加精確鬧鐘權限 -->
+    <!-- 相機與音訊權限 -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    
+    <!-- 通知與鬧鐘權限 -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
     
-    <!-- 相機權限 - 用於文檔掃描和拍照 -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <!-- 讀取外部存儲權限 -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!-- 寫入外部存儲權限 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- 照片權限 - 適用於較新版本的Android -->
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <!-- 網絡權限 -->
-    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 系統權限 -->
+    <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
     
-    <!-- 文件特性配置 -->
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <!-- 硬體功能要求 -->
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
     
     <application
         android:label="dr_ai"

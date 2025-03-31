@@ -1,5 +1,5 @@
+// ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -934,4 +934,34 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get buttonGotIt => '了解了';
+
+  @override
+  String get authPrompt => '請進行生物識別驗證以解鎖應用';
+
+  @override
+  String get authFailed => '驗證失敗，請重試';
+
+  @override
+  String get authRetry => '重試';
+
+  @override
+  String get authExit => '退出';
+
+  @override
+  String get authInProgress => '請完成生物識別驗證';
+
+  @override
+  String get pinEmpty => '請輸入PIN碼';
+
+  @override
+  String get pinIncorrect => 'PIN碼不正確';
+
+  @override
+  String get pinCode => 'PIN碼';
+
+  @override
+  String get login => '登錄';
+
+  @override
+  String get usePin => '使用PIN碼';
 }

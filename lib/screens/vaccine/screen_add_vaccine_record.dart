@@ -8,7 +8,7 @@ import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
 import 'package:image/image.dart' as img;
-import '../../services/screen_crop_image.dart';
+import '../../services/service_crop_image.dart';
 import '../../l10n/app_localizations.dart';
 
 class ScreenAddVaccineRecord extends StatefulWidget {

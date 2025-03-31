@@ -1852,6 +1852,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Got it'**
   String get buttonGotIt;
+
+  /// Prompt shown when biometric authentication is required
+  ///
+  /// In en, this message translates to:
+  /// **'Please authenticate to unlock the app'**
+  String get authPrompt;
+
+  /// Message shown when biometric authentication fails
+  ///
+  /// In en, this message translates to:
+  /// **'Authentication failed, please try again'**
+  String get authFailed;
+
+  /// Button text for retrying authentication
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get authRetry;
+
+  /// Button text for exiting authentication
+  ///
+  /// In en, this message translates to:
+  /// **'Exit'**
+  String get authExit;
+
+  /// Message shown when biometric authentication is in progress
+  ///
+  /// In en, this message translates to:
+  /// **'Please complete the biometric authentication'**
+  String get authInProgress;
+
+  /// Message shown when PIN is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a PIN'**
+  String get pinEmpty;
+
+  /// Message shown when PIN is incorrect
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect PIN'**
+  String get pinIncorrect;
+
+  /// Label for PIN code input field
+  ///
+  /// In en, this message translates to:
+  /// **'PIN Code'**
+  String get pinCode;
+
+  /// Button text for login
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get login;
+
+  /// Button text for using PIN
+  ///
+  /// In en, this message translates to:
+  /// **'Use PIN'**
+  String get usePin;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

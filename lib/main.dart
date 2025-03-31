@@ -17,6 +17,8 @@ import 'widgets/widgets_screens/widget_main.dart';
 import 'services/service_desktop.dart';
 import 'services/service_theme.dart';
 import 'services/service_notification.dart';
+import 'services/service_auth.dart'; // 添加認證服務引用
+import 'screens/screen_auth.dart'; // 添加認證畫面引用
 
 ///*******************************************
 /// 客戶端配置部分
@@ -175,6 +177,9 @@ class App extends StatefulWidget {
 /// 應用程式狀態實現
 /// 包含初始化邏輯和UI構建
 class _AppState extends State<App> {
+  // 添加生物識別狀態
+  bool _biometricEnabled = false;
+
   @override
   void initState() {
     super.initState();
@@ -196,6 +201,9 @@ class _AppState extends State<App> {
         voiceSupported = false;
       }
 
+      // 檢查是否啟用了生物識別
+      _biometricEnabled = await ServiceAuth.isBiometricEnabled();
+
       setState(() {});
     }
 
@@ -204,35 +212,40 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return DynamicColorBuilder(builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-      colorSchemeLight = lightDynamic;
-      colorSchemeDark = darkDynamic;
+    return DynamicColorBuilder(
+      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+        colorSchemeLight = lightDynamic;
+        colorSchemeDark = darkDynamic;
 
-      return StatefulBuilder(builder: (context, setState) {
-        setMainAppState = setState;
+        return StatefulBuilder(
+          builder: (context, setState) {
+            setMainAppState = setState;
 
-        return MaterialApp(
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
-            localeListResolutionCallback: (deviceLocales, supportedLocales) {
-              if (deviceLocales != null) {
-                for (final locale in deviceLocales) {
-                  var newLocale = Locale(locale.languageCode);
-                  if (supportedLocales.contains(newLocale)) {
-                    return locale;
+            return MaterialApp(
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              localeListResolutionCallback: (deviceLocales, supportedLocales) {
+                if (deviceLocales != null) {
+                  for (final locale in deviceLocales) {
+                    var newLocale = Locale(locale.languageCode);
+                    if (supportedLocales.contains(newLocale)) {
+                      return locale;
+                    }
                   }
                 }
-              }
-              return const Locale("en");
-            },
-            onGenerateTitle: (context) {
-              return AppLocalizations.of(context)!.appTitle;
-            },
-            theme: themeLight(),
-            darkTheme: themeDark(),
-            themeMode: themeMode(),
-            home: const MainApp());
-      });
-    });
+                return const Locale("en");
+              },
+              onGenerateTitle: (context) {
+                return AppLocalizations.of(context)!.appTitle;
+              },
+              theme: themeLight(),
+              darkTheme: themeDark(),
+              themeMode: themeMode(),
+              home: _biometricEnabled ? const AuthScreen() : const MainApp(),
+            );
+          },
+        );
+      },
+    );
   }
 }
