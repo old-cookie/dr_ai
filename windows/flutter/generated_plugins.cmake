@@ -4,8 +4,11 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   bitsdojo_window_windows
+  desktop_webview_auth
   dynamic_color
   file_selector_windows
+  firebase_auth
+  firebase_core
   flutter_opencc_ffi_windows
   flutter_timezone
   flutter_tts
