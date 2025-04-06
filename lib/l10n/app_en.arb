@@ -1368,5 +1368,80 @@
                 "description": "Number of minutes before the event"
             }
         }
+    },
+    "useOpenAI": "Use OpenAI API",
+    "@useOpenAI": {
+        "description": "Text displayed as description for use OpenAI API toggle",
+        "context": "Visible in the behavior settings view"
+    },
+    "openaiApiKeyMissing": "OpenAI API key not set. Please set OPENAI_API_KEY in .env file.",
+    "@openaiApiKeyMissing": {
+        "description": "Text displayed when OpenAI API key is missing",
+        "context": "Visible in the behavior settings view"
+    },
+    "advancedSettings": "Advanced Settings",
+    "@advancedSettings": {
+        "description": "Text displayed for advanced settings button",
+        "context": "Visible in settings dialogs"
+    },
+    "openaiAdvancedSettings": "OpenAI Advanced Settings",
+    "@openaiAdvancedSettings": {
+        "description": "Title for OpenAI advanced settings dialog",
+        "context": "Visible in the OpenAI settings dialog"
+    },
+    "temperature": "Temperature (0.0-2.0)",
+    "@temperature": {
+        "description": "Label for temperature setting in OpenAI dialog",
+        "context": "Visible in OpenAI advanced settings dialog"
+    },
+    "temperatureDescription": "Higher values make output more random, lower values make it more focused and deterministic",
+    "@temperatureDescription": {
+        "description": "Description of temperature setting",
+        "context": "Visible in OpenAI advanced settings dialog"
+    },
+    "maxTokens": "Max Tokens",
+    "@maxTokens": {
+        "description": "Label for max tokens setting in OpenAI dialog",
+        "context": "Visible in OpenAI advanced settings dialog"
+    },
+    "maxTokensDescription": "Maximum number of tokens to generate",
+    "@maxTokensDescription": {
+        "description": "Description of max tokens setting",
+        "context": "Visible in OpenAI advanced settings dialog"
+    },
+    "invalidInput": "Invalid input",
+    "@invalidInput": {
+        "description": "Error message for invalid input",
+        "context": "Visible in various input forms"
+    },
+    "openaiModeDescription": "Use OpenAI API for conversations. Make sure you have configured OPENAI_API_KEY and OPENAI_BASE_URL in the .env file.",
+    "@openaiModeDescription": {
+        "description": "Description of OpenAI mode",
+        "context": "Visible in behavior settings view"
+    },
+    "ollamaModeDescription": "Use local Ollama server for conversations. Make sure you have configured the correct server address.",
+    "@ollamaModeDescription": {
+        "description": "Description of Ollama mode",
+        "context": "Visible in behavior settings view"
+    },
+    "loadingModels": "Loading models...",
+    "@loadingModels": {
+        "description": "Text displayed while loading models",
+        "context": "Visible in model selection dialog"
+    },
+    "noModelsFound": "No models found",
+    "@noModelsFound": {
+        "description": "Text displayed when no models are found",
+        "context": "Visible in model selection dialog"
+    },
+    "apiProviderDescription": "Select the API provider for the app",
+    "@apiProviderDescription": {
+        "description": "Description of API provider setting",
+        "context": "Visible in behavior settings view"
+    },
+    "editInOpenAIPage": "Edit in OpenAI Page",
+    "@editInOpenAIPage": {
+        "description": "Button text for editing in OpenAI page",
+        "context": "Visible in OpenAI advanced settings dialog"
     }
 }

@@ -19,11 +19,17 @@ class WidgetBehavior extends StatelessWidget {
   /// 是否禁用 Markdown
   final bool noMarkdown;
 
+  /// 是否使用 OpenAI API
+  final bool useOpenAI;
+
   /// 系統提示詞開關變更回調
   final Function(bool) onUseSystemChanged;
 
   /// Markdown 開關變更回調
   final Function(bool) onNoMarkdownChanged;
+
+  /// API 提供者切換回調
+  final Function(bool) onUseOpenAIChanged;
 
   /// 保存系統提示詞回調
   final Function() onSystemMessageSaved;
@@ -42,8 +48,10 @@ class WidgetBehavior extends StatelessWidget {
     required this.systemInputController,
     required this.useSystem,
     required this.noMarkdown,
+    required this.useOpenAI,
     required this.onUseSystemChanged,
     required this.onNoMarkdownChanged,
+    required this.onUseOpenAIChanged,
     required this.onSystemMessageSaved,
     required this.onModelSelected,
     required this.model,
@@ -75,8 +83,12 @@ class WidgetBehavior extends StatelessWidget {
                   child: ListView(
                     children: [
                       const SizedBox(height: 8),
+                      
+                      /// API 提供者切換
+                      _buildAPIProviderToggle(context),
+                      const SizedBox(height: 16),
 
-                      /// 新增選擇模型按鈕
+                      /// 選擇模型按鈕
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -106,6 +118,28 @@ class WidgetBehavior extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  /// 構建 API 提供者切換開關
+  Widget _buildAPIProviderToggle(BuildContext context) {
+    return widgetToggle(
+      context,
+      AppLocalizations.of(context)?.useOpenAI ?? "使用 OpenAI API",
+      useOpenAI,
+      onUseOpenAIChanged,
+      icon: const Icon(Icons.swap_horiz, color: Colors.grey),
+      iconAfterwards: true,
+      onLongTap: () {
+        selectionHaptic();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(AppLocalizations.of(context)?.apiProviderDescription ?? 
+              "開啟：使用 OpenAI API (需要 API 金鑰)\n關閉：使用本地 Ollama 伺服器"),
+            showCloseIcon: true,
+          ),
+        );
+      },
     );
   }
 

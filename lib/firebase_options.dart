@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -40,8 +41,8 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAT5nukHS5-GVzZJLNr4V2D6t-VH-y3EkA',
+  static FirebaseOptions get web => FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_WEB_API_KEY'] ?? '',
     appId: '1:75998063417:web:5e06efdc8a23197a2ed6e8',
     messagingSenderId: '75998063417',
     projectId: 'ite4116m-final-year-proj-3d5c1',
@@ -50,16 +51,16 @@ class DefaultFirebaseOptions {
     measurementId: 'G-S40YPT5L6K',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDOGsjmsCx6olQEcPgu2ojqTXSjLYHWBw8',
+  static FirebaseOptions get android => FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_ANDROID_API_KEY'] ?? '',
     appId: '1:75998063417:android:3c474711c53a6c922ed6e8',
     messagingSenderId: '75998063417',
     projectId: 'ite4116m-final-year-proj-3d5c1',
     storageBucket: 'ite4116m-final-year-proj-3d5c1.firebasestorage.app',
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDGImJsk9s6fAWIZ36KDqJWDwiIRiRcf2s',
+  static FirebaseOptions get ios => FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_IOS_API_KEY'] ?? '',
     appId: '1:75998063417:ios:c7bb3af0fffbe1662ed6e8',
     messagingSenderId: '75998063417',
     projectId: 'ite4116m-final-year-proj-3d5c1',
@@ -67,8 +68,8 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.drAi',
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDGImJsk9s6fAWIZ36KDqJWDwiIRiRcf2s',
+  static FirebaseOptions get macos => FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_IOS_API_KEY'] ?? '',
     appId: '1:75998063417:ios:c7bb3af0fffbe1662ed6e8',
     messagingSenderId: '75998063417',
     projectId: 'ite4116m-final-year-proj-3d5c1',
@@ -76,8 +77,8 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.drAi',
   );
 
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAT5nukHS5-GVzZJLNr4V2D6t-VH-y3EkA',
+  static FirebaseOptions get windows => FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_WINDOWS_API_KEY'] ?? '',
     appId: '1:75998063417:web:d9ae4a5f71e39ca72ed6e8',
     messagingSenderId: '75998063417',
     projectId: 'ite4116m-final-year-proj-3d5c1',

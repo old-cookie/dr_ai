@@ -9,7 +9,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
   file_selector_windows
   firebase_auth
   firebase_core
-  flutter_opencc_ffi_windows
   flutter_timezone
   flutter_tts
   local_auth_windows

@@ -965,4 +965,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get usePin => 'Use PIN';
+
+  @override
+  String get useOpenAI => 'Use OpenAI API';
+
+  @override
+  String get openaiApiKeyMissing => 'OpenAI API key not set. Please set OPENAI_API_KEY in .env file.';
+
+  @override
+  String get advancedSettings => 'Advanced Settings';
+
+  @override
+  String get openaiAdvancedSettings => 'OpenAI Advanced Settings';
+
+  @override
+  String get temperature => 'Temperature (0.0-2.0)';
+
+  @override
+  String get temperatureDescription => 'Higher values make output more random, lower values make it more focused and deterministic';
+
+  @override
+  String get maxTokens => 'Max Tokens';
+
+  @override
+  String get maxTokensDescription => 'Maximum number of tokens to generate';
+
+  @override
+  String get invalidInput => 'Invalid input';
+
+  @override
+  String get openaiModeDescription => 'Use OpenAI API for conversations. Make sure you have configured OPENAI_API_KEY and OPENAI_BASE_URL in the .env file.';
+
+  @override
+  String get ollamaModeDescription => 'Use local Ollama server for conversations. Make sure you have configured the correct server address.';
+
+  @override
+  String get loadingModels => 'Loading models...';
+
+  @override
+  String get noModelsFound => 'No models found';
+
+  @override
+  String get apiProviderDescription => 'Select the API provider for the app';
+
+  @override
+  String get editInOpenAIPage => 'Edit in OpenAI Page';
 }

@@ -13,6 +13,7 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:pwa_install/pwa_install.dart' as pwa;
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'widgets/widgets_screens/widget_main.dart';
 import 'services/service_desktop.dart';
 import 'services/service_theme.dart';
@@ -42,11 +43,11 @@ const String backupHost = "http://100.64.50.3:11434";
 const bool useModel = false;
 
 /// 預設的 AI 模型名稱
-const String fixedModel = "deepseek-r1:14b";
+const String fixedModel = "gemma3:12b";
 
 /// 推薦模型列表
 /// 在模型選擋中會標記星號
-const List<String> recommendedModels = ["oldcookie/dr_ai:q5_1", "oldcookie/dr_ai:q8_0"];
+const List<String> recommendedModels = ["gemma3:12b", "oldcookie/dr_ai:q8_0"];
 
 /// 是否允許打開設置頁面
 const bool allowSettings = true;
@@ -115,6 +116,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   try {
+    // 載入環境變數
+    await dotenv.load(fileName: ".env");
+    debugPrint('環境變數已載入');
+    
     // 初始化通知服務
     final notificationService = NotificationService();
     await notificationService.initialize();
@@ -123,10 +128,21 @@ Future<void> main() async {
     await EncryptedSharedPreferences.initialize(encryptionKey);
     prefs = EncryptedSharedPreferences.getInstance();
 
-    // 設置主機地址，如果主伺服器不可用則使用備用伺服器
-    if (useHost) {
+    // 如果在.env中設置了OLLAMA_URL，則優先使用
+    String? ollamaUrl = dotenv.env['OLLAMA_URL'];
+    if (ollamaUrl != null && ollamaUrl.isNotEmpty) {
+      host = ollamaUrl;
+      debugPrint('從.env文件讀取Ollama URL: $host');
+    } else if (useHost) {
       host = await checkHostAvailability(fixedHost) ? fixedHost : backupHost;
       debugPrint('使用的伺服器地址: $host');
+    }
+    
+    // 如果在.env文件中設置了model，則優先使用
+    String? envModel = dotenv.env['model'];
+    if (envModel != null && envModel.isNotEmpty) {
+      model = envModel;
+      debugPrint('從.env文件讀取模型: $model');
     }
 
     // PWA 設定

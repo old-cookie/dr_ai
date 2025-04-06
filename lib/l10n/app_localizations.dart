@@ -1912,6 +1912,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Use PIN'**
   String get usePin;
+
+  /// Text displayed as description for use OpenAI API toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Use OpenAI API'**
+  String get useOpenAI;
+
+  /// Text displayed when OpenAI API key is missing
+  ///
+  /// In en, this message translates to:
+  /// **'OpenAI API key not set. Please set OPENAI_API_KEY in .env file.'**
+  String get openaiApiKeyMissing;
+
+  /// Text displayed for advanced settings button
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Settings'**
+  String get advancedSettings;
+
+  /// Title for OpenAI advanced settings dialog
+  ///
+  /// In en, this message translates to:
+  /// **'OpenAI Advanced Settings'**
+  String get openaiAdvancedSettings;
+
+  /// Label for temperature setting in OpenAI dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature (0.0-2.0)'**
+  String get temperature;
+
+  /// Description of temperature setting
+  ///
+  /// In en, this message translates to:
+  /// **'Higher values make output more random, lower values make it more focused and deterministic'**
+  String get temperatureDescription;
+
+  /// Label for max tokens setting in OpenAI dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Max Tokens'**
+  String get maxTokens;
+
+  /// Description of max tokens setting
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum number of tokens to generate'**
+  String get maxTokensDescription;
+
+  /// Error message for invalid input
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid input'**
+  String get invalidInput;
+
+  /// Description of OpenAI mode
+  ///
+  /// In en, this message translates to:
+  /// **'Use OpenAI API for conversations. Make sure you have configured OPENAI_API_KEY and OPENAI_BASE_URL in the .env file.'**
+  String get openaiModeDescription;
+
+  /// Description of Ollama mode
+  ///
+  /// In en, this message translates to:
+  /// **'Use local Ollama server for conversations. Make sure you have configured the correct server address.'**
+  String get ollamaModeDescription;
+
+  /// Text displayed while loading models
+  ///
+  /// In en, this message translates to:
+  /// **'Loading models...'**
+  String get loadingModels;
+
+  /// Text displayed when no models are found
+  ///
+  /// In en, this message translates to:
+  /// **'No models found'**
+  String get noModelsFound;
+
+  /// Description of API provider setting
+  ///
+  /// In en, this message translates to:
+  /// **'Select the API provider for the app'**
+  String get apiProviderDescription;
+
+  /// Button text for editing in OpenAI page
+  ///
+  /// In en, this message translates to:
+  /// **'Edit in OpenAI Page'**
+  String get editInOpenAIPage;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

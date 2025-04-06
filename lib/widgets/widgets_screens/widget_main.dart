@@ -607,6 +607,8 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     resetSystemNavigation(context);
 
+    // 獲取當前使用的模型來源（OpenAI或Ollama）
+    
     Widget selector = InkWell(
         onTap: null,
         splashFactory: NoSplash.splashFactory,
@@ -618,7 +620,15 @@ class _MainAppState extends State<MainApp> {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
-                children: [Text("Dr.AI", style: TextStyle(fontFamily: "monospace", fontSize: 16, fontWeight: FontWeight.bold))])));
+                children: [
+                  Text("Dr.AI", style: TextStyle(fontFamily: "monospace", fontSize: 16, fontWeight: FontWeight.bold)),
+                  const SizedBox(width: 8),
+                  // 顯示當前的模型來源
+                  
+                ]
+            )
+        )
+    );
 
     return WindowBorder(
       color: Theme.of(context).colorScheme.surface,
@@ -855,7 +865,16 @@ class _MainAppState extends State<MainApp> {
                                           duration: const Duration(milliseconds: 500),
                                           child: const ImageIcon(AssetImage("assets/logo512.png"), size: 44)))),
                               onSendPressed: (p0) {
-                                send(p0.text, context, setState);
+                                // 檢查使用的是哪種模式 (Ollama 或 OpenAI)
+                                final bool useOpenAI = prefs.getBool("use_openai") ?? false;
+                                
+                                if (useOpenAI) {
+                                  // 使用 OpenAI 模式發送訊息
+                                  sendOpenAI(p0.text, context, setState);
+                                } else {
+                                  // 使用 Ollama 模式發送訊息
+                                  send(p0.text, context, setState);
+                                }
                               },
                               onMessageDoubleTap: (context, p1) {
                                 selectionHaptic();

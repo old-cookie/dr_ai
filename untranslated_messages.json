@@ -1,1 +1,19 @@
-{}
+{
+  "zh": [
+    "useOpenAI",
+    "openaiApiKeyMissing",
+    "advancedSettings",
+    "openaiAdvancedSettings",
+    "temperature",
+    "temperatureDescription",
+    "maxTokens",
+    "maxTokensDescription",
+    "invalidInput",
+    "openaiModeDescription",
+    "ollamaModeDescription",
+    "loadingModels",
+    "noModelsFound",
+    "apiProviderDescription",
+    "editInOpenAIPage"
+  ]
+}

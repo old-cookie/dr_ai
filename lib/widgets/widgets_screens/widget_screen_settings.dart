@@ -13,6 +13,7 @@ import '../../screens/settings/settings_interface.dart';
 import '../../screens/settings/settings_voice.dart';
 import '../../screens/settings/settings_export.dart';
 import '../../screens/settings/settings_about.dart';
+import '../../screens/settings/settings_openai.dart';
 import '../../services/service_desktop.dart';
 
 /// 設置頁面組件
@@ -302,6 +303,17 @@ class _WidgetScreenSettingsState extends State<WidgetScreenSettings> {
           },
           context: context,
           description: "\n${AppLocalizations.of(context)!.settingsDescriptionExport}",
+        ),
+        buildSettingsButton(
+          "OpenAI 設置",
+          Icons.bolt_rounded,
+          () {
+            selectionHaptic();
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenSettingsOpenAI()));
+          },
+          context: context,
+          description: "\n配置 OpenAI API 設置以使用 GPT 模型",
+          badge: "新功能",
         ),
         Builder(
           builder: (context) {
