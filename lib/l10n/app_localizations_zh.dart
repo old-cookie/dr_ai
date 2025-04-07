@@ -964,4 +964,19 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get usePin => '使用PIN碼';
+
+  @override
+  String get editVaccineTitle => '編輯疫苗記錄';
+
+  @override
+  String get edit => '編輯';
+
+  @override
+  String get recordUpdated => '記錄已更新';
+
+  @override
+  String get editMedicalCertificate => '編輯醫療證明';
+
+  @override
+  String get view => '查看';
 }

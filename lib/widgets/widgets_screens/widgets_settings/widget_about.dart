@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:simple_icons/simple_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -31,6 +32,14 @@ class _WidgetAboutState extends State<WidgetAbout> {
 
   /// 檢查設備是否支持生物識別
   Future<void> _checkBiometricSupport() async {
+    // 如果是網頁平台，直接設置為不支持
+    if (kIsWeb) {
+      setState(() {
+        _biometricSupported = false;
+      });
+      return;
+    }
+    
     final bool deviceSupported = await ServiceAuth.isDeviceSupported();
     final bool canCheckBio = await ServiceAuth.canCheckBiometrics();
 
@@ -43,6 +52,14 @@ class _WidgetAboutState extends State<WidgetAbout> {
 
   /// 加載生物識別設置
   Future<void> _loadBiometricSetting() async {
+    // 如果是網頁平台，直接設置為禁用
+    if (kIsWeb) {
+      setState(() {
+        _useBiometricAuth = false;
+      });
+      return;
+    }
+    
     final bool enabled = await ServiceAuth.isBiometricEnabled();
 
     if (mounted) {
@@ -54,6 +71,11 @@ class _WidgetAboutState extends State<WidgetAbout> {
 
   /// 切換生物識別設置
   Future<void> _toggleBiometricAuth(bool value) async {
+    // 如果是網頁平台，禁止啟用生物識別
+    if (kIsWeb && value) {
+      return;
+    }
+    
     if (!_biometricSupported && value) {
       return;
     }
@@ -98,16 +120,18 @@ class _WidgetAboutState extends State<WidgetAbout> {
                       titleDivider(context: context),
 
                       /// 生物識別解鎖開關
-                      widgetToggle(
-                        context,
-                        "使用生物識別解鎖", // 這裡應使用本地化字符串
-                        _useBiometricAuth,
-                        _toggleBiometricAuth,
-                        disabled: !_biometricSupported,
-                        icon: Icon(Icons.fingerprint, color: _biometricSupported ? null : Colors.grey),
-                      ),
+                      if (!kIsWeb) // 只在非Web平台顯示生物識別選項
+                        widgetToggle(
+                          context,
+                          "使用生物識別解鎖", // 這裡應使用本地化字符串
+                          _useBiometricAuth,
+                          _toggleBiometricAuth,
+                          disabled: !_biometricSupported,
+                          icon: Icon(Icons.fingerprint, color: _biometricSupported ? null : Colors.grey),
+                        ),
 
-                      const SizedBox(height: 16),
+                      if (!kIsWeb) // 非Web平台在生物識別選項下方添加間距
+                        const SizedBox(height: 16),
 
                       /// GitHub 倉庫鏈接
                       buildButton(context, AppLocalizations.of(context)!.settingsGithub, SimpleIcons.github, "https://github.com/old-cookie/dr_ai"),

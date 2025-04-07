@@ -1912,6 +1912,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Use PIN'**
   String get usePin;
+
+  /// Title of the edit vaccine record page
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Vaccination Record'**
+  String get editVaccineTitle;
+
+  /// Button text for edit
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// Message displayed when a record is updated successfully
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Record'**
+  String get recordUpdated;
+
+  /// Title for editing a medical certificate
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Medical Certificate'**
+  String get editMedicalCertificate;
+
+  /// Button text for view
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get view;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

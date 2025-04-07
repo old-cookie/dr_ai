@@ -1368,5 +1368,25 @@
                 "description": "Number of minutes before the event"
             }
         }
+    },
+    "editVaccineTitle": "Edit Vaccination Record",
+    "@editVaccineTitle": {
+        "description": "Title of the edit vaccine record page"
+    },
+    "edit": "Edit",
+    "@edit": {
+        "description": "Button text for edit"
+    },
+    "recordUpdated": "Edit Record",
+    "@recordUpdated": {
+        "description": "Message displayed when a record is updated successfully"
+    },
+    "editMedicalCertificate": "Edit Medical Certificate",
+    "@editMedicalCertificate": {
+        "description": "Title for editing a medical certificate"
+    },
+    "view": "View",
+    "@view": {
+        "description": "Button text for view"
     }
 }

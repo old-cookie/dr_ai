@@ -26,6 +26,20 @@ class _WidgetVaccineRecordState extends State<WidgetVaccineRecord> {
     return prefs.getStringList('submissions') ?? [];
   }
 
+  void _editRecord(int index, Map<String, dynamic> recordMap) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ScreenAddVaccineRecord(
+          recordToEdit: recordMap,
+          recordIndex: index,
+        ),
+      ),
+    ).then((_) {
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -93,46 +107,61 @@ class _WidgetVaccineRecordState extends State<WidgetVaccineRecord> {
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(12),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              child: Column(
                                 children: [
-                                  Expanded(
-                                    flex: 3,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '${recordMap['vaccine']}',
-                                          style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 8),
-                                        Text(l10n?.vaccineFieldDate(recordMap['date']) ?? 'Date: ${recordMap['date']}'),
-                                        Text(l10n?.vaccineFieldDose(recordMap['dose']) ?? 'Dose: ${recordMap['dose']}'),
-                                        Text(l10n?.vaccineFieldPlace(recordMap['place']) ?? 'Place: ${recordMap['place']}'),
-                                        if (recordMap['remarks']?.isNotEmpty == true) ...[
-                                          const SizedBox(height: 4),
-                                          Text(l10n?.vaccineFieldRemarks(recordMap['remarks']) ?? 'Remarks: ${recordMap['remarks']}'),
-                                        ],
-                                      ],
-                                    ),
-                                  ),
-                                  if (recordMap['image'] != null) ...[
-                                    const SizedBox(width: 12),
-                                    SizedBox(
-                                      width: 100,
-                                      height: 100,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(8),
-                                        child: Image.memory(
-                                          base64Decode(recordMap['image']!),
-                                          fit: BoxFit.cover,
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        flex: 3,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              '${recordMap['vaccine']}',
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 8),
+                                            Text(l10n?.vaccineFieldDate(recordMap['date']) ?? 'Date: ${recordMap['date']}'),
+                                            Text(l10n?.vaccineFieldDose(recordMap['dose']) ?? 'Dose: ${recordMap['dose']}'),
+                                            Text(l10n?.vaccineFieldPlace(recordMap['place']) ?? 'Place: ${recordMap['place']}'),
+                                            if (recordMap['remarks']?.isNotEmpty == true) ...[
+                                              const SizedBox(height: 4),
+                                              Text(l10n?.vaccineFieldRemarks(recordMap['remarks']) ?? 'Remarks: ${recordMap['remarks']}'),
+                                            ],
+                                          ],
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      if (recordMap['image'] != null) ...[
+                                        const SizedBox(width: 12),
+                                        SizedBox(
+                                          width: 100,
+                                          height: 100,
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(8),
+                                            child: Image.memory(
+                                              base64Decode(recordMap['image']!),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ],
+                                  ),
+                                  Divider(height: 20),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      OutlinedButton.icon(
+                                        icon: Icon(Icons.edit, size: 18),
+                                        label: Text(l10n?.edit ?? 'Edit'),
+                                        onPressed: () => _editRecord(index, recordMap),
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),

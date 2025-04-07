@@ -349,5 +349,10 @@
   "pinCode": "PIN碼",
   "login": "登錄",
   "usePin": "使用PIN碼",
-  "authInProgress": "請完成生物識別驗證"
+  "authInProgress": "請完成生物識別驗證",
+  "editVaccineTitle": "編輯疫苗記錄",
+  "edit": "編輯",
+  "recordUpdated": "記錄已更新",
+  "editMedicalCertificate": "編輯醫療證明",
+  "view": "查看"
 }

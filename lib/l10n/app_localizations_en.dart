@@ -965,4 +965,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get usePin => 'Use PIN';
+
+  @override
+  String get editVaccineTitle => 'Edit Vaccination Record';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get recordUpdated => 'Edit Record';
+
+  @override
+  String get editMedicalCertificate => 'Edit Medical Certificate';
+
+  @override
+  String get view => 'View';
 }

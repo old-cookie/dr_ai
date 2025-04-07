@@ -6,20 +6,23 @@ import 'dart:typed_data';
 import 'package:image/image.dart' as img;
 import 'package:cunning_document_scanner/cunning_document_scanner.dart';
 import 'dart:io';
-import 'package:permission_handler/permission_handler.dart';  // 添加權限處理器
+import 'package:permission_handler/permission_handler.dart';
 import '../../services/ocr_service.dart';
 import '../../l10n/app_localizations.dart';
 import '../../widgets/widgets_screens/medical_certificate/widget_add_medical_certificate.dart';
 
 /// 醫療證明添加螢幕
 /// 
-/// 此螢幕允許用戶添加新的醫療證明記錄，包含以下功能：
-/// - 表單輸入醫療證明詳細資訊
-/// - 通過相機、相冊或文檔掃描器獲取證明照片
-/// - 使用OCR自動識別並填充表單數據
-/// - 保存醫療證明記錄到加密的本地存儲
+/// 此螢幕允許用戶添加新的醫療證明記錄或編輯現有記錄
 class ScreenAddMedicalCertificate extends StatefulWidget {
-  const ScreenAddMedicalCertificate({super.key});
+  final Map<String, dynamic>? recordToEdit;
+  final String? recordKey;
+
+  const ScreenAddMedicalCertificate({
+    super.key, 
+    this.recordToEdit, 
+    this.recordKey
+  });
 
   @override
   State<ScreenAddMedicalCertificate> createState() => _ScreenAddMedicalCertificateState();
@@ -63,13 +66,37 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
   bool _isLoading = false; // 加載狀態標誌
   bool _isSaving = false; // 保存狀態標誌
   bool _isProcessingOcr = false; // OCR處理狀態標誌
+  bool _isEditMode = false; // 編輯模式標誌
 
   @override
   void initState() {
     super.initState();
-    selectedHospital = hospitalsList.first; // 初始化默認選擇第一個醫院
-  }
 
+    // 檢查是否為編輯模式
+    _isEditMode = widget.recordToEdit != null;
+
+    if (_isEditMode && widget.recordToEdit != null) {
+      // 設置現有記錄的值
+      final record = widget.recordToEdit!;
+      certificateNumberController.text = record['certificateNumber'] ?? '';
+      selectedHospital = record['hospital'] ?? hospitalsList.first;
+      treatmentDate = record['treatmentDate'];
+      hospitalizationStartDate = record['hospitalizationStartDate'];
+      hospitalizationEndDate = record['hospitalizationEndDate'];
+      sickLeaveStartDate = record['sickLeaveStartDate'];
+      sickLeaveEndDate = record['sickLeaveEndDate'];
+      followUpDate = record['followUpDate'];
+      remarksController.text = record['remarks'] ?? '';
+
+      if (record['image'] != null) {
+        _base64Image = record['image'];
+        _imageBytes = base64Decode(_base64Image!);
+      }
+    } else {
+      // 設置默認值（新增模式）
+      selectedHospital = hospitalsList.first; // 初始化默認選擇第一個醫院
+    }
+  }
 
   /// 顯示圖片來源選擇選單
   /// 
@@ -390,10 +417,21 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
         'image': _base64Image,
       };
 
-      await prefs.setString('medical_certificate_${DateTime.now().millisecondsSinceEpoch}', jsonEncode(recordMap));
+      if (_isEditMode && widget.recordKey != null) {
+        // 更新現有記錄
+        await prefs.setString(widget.recordKey!, jsonEncode(recordMap));
+      } else {
+        // 添加新記錄
+        await prefs.setString(
+          'medical_certificate_${DateTime.now().millisecondsSinceEpoch}', 
+          jsonEncode(recordMap)
+        );
+      }
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.recordSaved)),
+        SnackBar(
+          content: Text(_isEditMode ? l10n.recordUpdated : l10n.recordSaved)
+        ),
       );
 
       Navigator.pop(context);
@@ -420,7 +458,9 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
     // 使用醫療證明表單小部件構建UI
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.addMedicalCertificate),
+        title: Text(_isEditMode 
+          ? l10n.editMedicalCertificate 
+          : l10n.addMedicalCertificate),
       ),
       body: WidgetAddMedicalCertificate(
         certificateNumberController: certificateNumberController,

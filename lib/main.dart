@@ -13,12 +13,15 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:pwa_install/pwa_install.dart' as pwa;
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:http/http.dart' as http;
+import 'package:universal_html/html.dart' as html;
+import 'package:flutter/foundation.dart';
 import 'widgets/widgets_screens/widget_main.dart';
 import 'services/service_desktop.dart';
 import 'services/service_theme.dart';
 import 'services/service_notification.dart';
 import 'services/service_auth.dart'; // 添加認證服務引用
 import 'screens/screen_auth.dart'; // 添加認證畫面引用
+import 'screens/vaccine/screen_vaccine_record.dart'; // 導入疫苗記錄畫面
 
 ///*******************************************
 /// 客戶端配置部分
@@ -179,6 +182,8 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   // 添加生物識別狀態
   bool _biometricEnabled = false;
+  // 用於檢查是否需要導向到特定路徑
+  String? _initialRoute;
 
   @override
   void initState() {
@@ -203,6 +208,16 @@ class _AppState extends State<App> {
 
       // 檢查是否啟用了生物識別
       _biometricEnabled = await ServiceAuth.isBiometricEnabled();
+
+      // 檢查web路徑並設置初始路由
+      if (kIsWeb) {
+        final path = html.window.location.pathname;
+        debugPrint('當前 Web 路徑: $path');
+        
+        if (path == '/vaccine') {
+          _initialRoute = 'vaccine';
+        }
+      }
 
       setState(() {});
     }
@@ -241,11 +256,22 @@ class _AppState extends State<App> {
               theme: themeLight(),
               darkTheme: themeDark(),
               themeMode: themeMode(),
-              home: _biometricEnabled ? const AuthScreen() : const MainApp(),
+              home: _buildHomeWidget(),
             );
           },
         );
       },
     );
+  }
+
+  // 根據條件構建首頁小部件
+  Widget _buildHomeWidget() {
+    // 如果有指定的初始路由，直接導向到相應頁面
+    if (_initialRoute == 'vaccine' && allowVaccine) {
+      return const ScreenVaccineRecord();
+    }
+    
+    // 否則按照正常流程選擇顯示認證畫面或主應用
+    return _biometricEnabled ? const AuthScreen() : const MainApp();
   }
 }
