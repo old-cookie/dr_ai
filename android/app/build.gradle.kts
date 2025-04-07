@@ -8,7 +8,7 @@ plugins {
 android {
     namespace = "com.example.dr_ai"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = "27.0.12077973"
+    ndkVersion = "27.2.12479018"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
