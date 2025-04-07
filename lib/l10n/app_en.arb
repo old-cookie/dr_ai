@@ -1388,5 +1388,9 @@
     "view": "View",
     "@view": {
         "description": "Button text for view"
+    },
+    "calendarSearchEvents": "Search Events",
+    "@calendarSearchEvents": {
+        "description": "Label for search events input field"
     }
 }

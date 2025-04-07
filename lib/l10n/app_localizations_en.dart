@@ -980,4 +980,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get view => 'View';
+
+  @override
+  String get calendarSearchEvents => 'Search Events';
 }

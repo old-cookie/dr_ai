@@ -16,12 +16,66 @@ class ScreenCalendarList extends StatefulWidget {
 
 class _ScreenCalendarListState extends State<ScreenCalendarList> {
   List<CalendarEvent> events = [];
+  List<CalendarEvent> filteredEvents = []; // 新增：用於存儲搜尋結果
   String sortOrder = 'date_asc'; // 預設按日期升序排序
+  final TextEditingController _searchController = TextEditingController(); // 新增：搜尋控制器
+  bool _isSearching = false; // 新增：是否正在搜尋
 
   @override
   void initState() {
     super.initState();
     _loadEvents();
+    _searchController.addListener(_onSearchChanged); // 新增：添加搜尋變化監聽
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged); // 新增：移除監聽
+    _searchController.dispose(); // 新增：釋放控制器
+    super.dispose();
+  }
+
+  // 新增：搜尋變化監聽方法
+  void _onSearchChanged() {
+    _searchEvents(_searchController.text);
+  }
+
+  // 新增：搜尋事件方法
+  void _searchEvents(String query) {
+    if (query.isEmpty) {
+      setState(() {
+        _isSearching = false;
+        filteredEvents = events;
+      });
+      return;
+    }
+
+    final lowerCaseQuery = query.toLowerCase();
+    setState(() {
+      _isSearching = true;
+      filteredEvents = events.where((event) {
+        return event.title.toLowerCase().contains(lowerCaseQuery);
+      }).toList();
+      _sortFilteredEvents(); // 排序搜尋結果
+    });
+  }
+
+  // 新增：排序搜尋結果
+  void _sortFilteredEvents() {
+    switch (sortOrder) {
+      case 'date_asc':
+        filteredEvents.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+        break;
+      case 'date_desc':
+        filteredEvents.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+        break;
+      case 'title_asc':
+        filteredEvents.sort((a, b) => a.title.compareTo(b.title));
+        break;
+      case 'title_desc':
+        filteredEvents.sort((a, b) => b.title.compareTo(a.title));
+        break;
+    }
   }
 
   Future<void> _loadEvents() async {
@@ -29,6 +83,7 @@ class _ScreenCalendarListState extends State<ScreenCalendarList> {
     final eventStrings = prefs.getStringList('calendar_events') ?? [];
     setState(() {
       events = eventStrings.map((e) => CalendarEvent.fromJson(jsonDecode(e))).toList();
+      filteredEvents = events; // 新增：初始化過濾後的事件列表
       _sortEvents();
     });
   }
@@ -47,6 +102,13 @@ class _ScreenCalendarListState extends State<ScreenCalendarList> {
       case 'title_desc':
         events.sort((a, b) => b.title.compareTo(a.title));
         break;
+    }
+    
+    // 新增：如果正在搜尋，也需要對過濾後的列表排序
+    if (_isSearching) {
+      _sortFilteredEvents();
+    } else {
+      filteredEvents = List.from(events);
     }
   }
 
@@ -136,6 +198,16 @@ class _ScreenCalendarListState extends State<ScreenCalendarList> {
       appBar: AppBar(
         title: Text(l10n?.calendarEventList ?? 'Event List'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            tooltip: l10n?.calendarSearchEvents ?? 'Search Events',
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: CalendarSearchDelegate(events, _searchEvents),
+              );
+            },
+          ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.sort),
             tooltip: l10n?.calendarSortEvents ?? 'Sort Events',
@@ -166,15 +238,15 @@ class _ScreenCalendarListState extends State<ScreenCalendarList> {
           ),
         ],
       ),
-      body: events.isEmpty
+      body: filteredEvents.isEmpty
           ? Center(
               child: Text(l10n?.calendarNoEvents ?? 'No events'),
             )
           : ListView.builder(
               padding: const EdgeInsets.all(8),
-              itemCount: events.length,
+              itemCount: filteredEvents.length,
               itemBuilder: (context, index) {
-                final event = events[index];
+                final event = filteredEvents[index];
                 final bool isPastEvent = event.dateTime.isBefore(DateTime.now());
 
                 return Dismissible(
@@ -235,6 +307,80 @@ class _ScreenCalendarListState extends State<ScreenCalendarList> {
                 );
               },
             ),
+    );
+  }
+}
+
+class CalendarSearchDelegate extends SearchDelegate {
+  final List<CalendarEvent> events;
+  final Function(String) onSearch;
+
+  CalendarSearchDelegate(this.events, this.onSearch);
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: const Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+          onSearch(query);
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    onSearch(query);
+    final filteredEvents = events.where((event) {
+      return event.title.toLowerCase().contains(query.toLowerCase());
+    }).toList();
+
+    return ListView.builder(
+      itemCount: filteredEvents.length,
+      itemBuilder: (context, index) {
+        final event = filteredEvents[index];
+        return ListTile(
+          title: Text(event.title),
+          subtitle: Text('${event.dateTime.year}/${event.dateTime.month}/${event.dateTime.day}'),
+          onTap: () {
+            close(context, event);
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final filteredEvents = events.where((event) {
+      return event.title.toLowerCase().contains(query.toLowerCase());
+    }).toList();
+
+    return ListView.builder(
+      itemCount: filteredEvents.length,
+      itemBuilder: (context, index) {
+        final event = filteredEvents[index];
+        return ListTile(
+          title: Text(event.title),
+          subtitle: Text('${event.dateTime.year}/${event.dateTime.month}/${event.dateTime.day}'),
+          onTap: () {
+            query = event.title;
+            showResults(context);
+          },
+        );
+      },
     );
   }
 }

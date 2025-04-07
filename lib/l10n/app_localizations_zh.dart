@@ -979,4 +979,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get view => '查看';
+
+  @override
+  String get calendarSearchEvents => '搜尋事件';
 }

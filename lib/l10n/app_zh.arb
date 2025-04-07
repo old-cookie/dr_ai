@@ -354,5 +354,6 @@
   "edit": "編輯",
   "recordUpdated": "記錄已更新",
   "editMedicalCertificate": "編輯醫療證明",
-  "view": "查看"
+  "view": "查看",
+  "calendarSearchEvents": "搜尋事件"
 }

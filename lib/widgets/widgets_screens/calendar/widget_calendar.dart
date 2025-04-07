@@ -147,6 +147,10 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
               color: theme.colorScheme.primary,
               fontWeight: FontWeight.bold,
             ),
+            // 自定義標記裝飾 - 使用基本裝飾，將由 calendarBuilders 替換為特定顏色
+            markersMaxCount: 3, // 顯示最多3個點
+            markerSize: 8.0, // 點的大小
+            markerMargin: const EdgeInsets.symmetric(horizontal: 0.5), // 點之間的間距
           ),
           headerStyle: HeaderStyle(
             formatButtonVisible: false,
@@ -157,6 +161,33 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
             ),
           ),
           eventLoader: _getEventsForDay,
+          // 添加自定義標記構建器
+          calendarBuilders: CalendarBuilders(
+            markerBuilder: (context, date, events) {
+              if (events.isEmpty) return const SizedBox();
+              
+              // 將 CalendarEvent 類型轉換
+              final castedEvents = events.cast<CalendarEvent>();
+              
+              return Positioned(
+                bottom: 1,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: castedEvents.take(3).map((event) {
+                    return Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 0.5),
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: event.color, // 使用事件的顏色
+                      ),
+                    );
+                  }).toList(),
+                ),
+              );
+            },
+          ),
         ),
         const SizedBox(height: 20),
         if (_selectedDay != null) ...[
@@ -226,9 +257,12 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
                       vertical: 4.0,
                     ),
                     child: ListTile(
-                      leading: Icon(
-                        Icons.event,
-                        color: theme.colorScheme.primary,
+                      leading: CircleAvatar(
+                        backgroundColor: event.color, // 使用事件顏色
+                        child: Icon(
+                          Icons.event,
+                          color: Colors.white,
+                        ),
                       ),
                       title: Text(
                         event.title,

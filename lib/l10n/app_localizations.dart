@@ -1942,6 +1942,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View'**
   String get view;
+
+  /// Label for search events input field
+  ///
+  /// In en, this message translates to:
+  /// **'Search Events'**
+  String get calendarSearchEvents;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

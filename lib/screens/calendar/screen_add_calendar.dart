@@ -23,6 +23,19 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
   int? notificationMinutes = 15; // 改為可為 null
   bool isPastDate = false; // 新增判斷是否為過去時間
 
+  // 預設顏色為藍色 (0xFF2196F3)
+  int selectedColorValue = 0xFF2196F3;
+
+  // 預設顏色選項
+  final List<ColorOption> colorOptions = [
+    ColorOption(name: '藍色', value: 0xFF2196F3),
+    ColorOption(name: '紅色', value: 0xFFF44336),
+    ColorOption(name: '綠色', value: 0xFF4CAF50),
+    ColorOption(name: '橙色', value: 0xFFFF9800),
+    ColorOption(name: '紫色', value: 0xFF9C27B0),
+    ColorOption(name: '青色', value: 0xFF00BCD4),
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -90,6 +103,7 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
         title: eventController.text,
         dateTime: _selectedDateTime!,
         notificationMinutes: notificationMinutes ?? 0, // 如果沒有設置通知，使用 0
+        colorValue: selectedColorValue, // 添加顏色值
       );
 
       // 儲存事件
@@ -170,6 +184,35 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
                   style: const TextStyle(fontSize: 16),
                 ),
               ),
+            const SizedBox(height: 16),
+            widgetTitle('事件顏色', top: 0, bottom: 8),
+            Wrap(
+              spacing: 10,
+              children: colorOptions.map((color) {
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedColorValue = color.value;
+                    });
+                  },
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    margin: const EdgeInsets.only(bottom: 10),
+                    decoration: BoxDecoration(
+                      color: Color(color.value),
+                      shape: BoxShape.circle,
+                      border: selectedColorValue == color.value
+                          ? Border.all(color: Colors.black, width: 2)
+                          : null,
+                    ),
+                    child: selectedColorValue == color.value
+                        ? const Icon(Icons.check, color: Colors.white)
+                        : null,
+                  ),
+                );
+              }).toList(),
+            ),
             if (!isPastDate && _selectedDateTime != null && !kIsWeb) ...[
               const SizedBox(height: 16),
               widgetTitle(l10n?.calendarEventNotification ?? 'Notification', top: 0, bottom: 8),
@@ -213,4 +256,15 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
       ),
     );
   }
+}
+
+// 新增一個顏色選項類，方便管理
+class ColorOption {
+  final String name;
+  final int value;
+
+  ColorOption({
+    required this.name,
+    required this.value,
+  });
 }
