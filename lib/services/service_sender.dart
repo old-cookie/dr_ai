@@ -9,7 +9,7 @@ import 'package:uuid/uuid.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'service_haptic.dart';
 import 'service_setter.dart';
-import 'service_chinese.dart';
+
 import 'service_demo.dart';
 import '../main.dart';
 
@@ -106,7 +106,6 @@ Future<String> getTitleAi(List history) async {
   while (title.contains("  ")) {
     title = title.replaceAll("  ", " ");
   }
-  title = await ChineseService.convertToTraditional(title);
   return title.trim();
 }
 
@@ -271,11 +270,6 @@ Future<String> send(
           messages.removeWhere((message) => message.id == newId);
           if (chatAllowed) return "";
 
-          try {
-            if (displayText != "🤔 AI正在思考中...") {
-              displayText = await ChineseService.convertToTraditional(displayText);
-            }
-          } catch (_) {}
 
           messages.insert(0, types.TextMessage(author: assistant, id: newId, text: displayText));
 
@@ -300,7 +294,6 @@ Future<String> send(
       if (finalText.trim().startsWith("<think>")) {
         finalText = finalText.replaceAll(RegExp(r"<think>.*?</think>", dotAll: true), "");
       }
-      finalText = await ChineseService.convertToTraditional(finalText);
       messages.insert(0, types.TextMessage(author: assistant, id: newId, text: finalText));
       // 記錄整體的 AI 回應（串流形式）
       log("AI response stream: $text");
@@ -325,8 +318,7 @@ Future<String> send(
       }
       // 記錄 AI 回應（非串流形式）
       log("AI response non-stream: $text");
-      String s2hkText = await ChineseService.convertToTraditional(text);
-      messages.insert(0, types.TextMessage(author: assistant, id: newId, text: s2hkText));
+      messages.insert(0, types.TextMessage(author: assistant, id: newId, text: text));
       setState(() {});
       heavyHaptic();
     }

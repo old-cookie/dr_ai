@@ -32,8 +32,6 @@ dependencies:
   flutter_displaymode: ^0.6.0
   flutter_local_notifications: ^18.0.1
   flutter_markdown: ^0.7.1
-  flutter_opencc_ffi:
-    path: packages/flutter_opencc_ffi/flutter_opencc_ffi
   flutter_tesseract_ocr: ^0.4.28
   flutter_timezone: ^4.1.0
   flutter_tts: ^4.0.2
@@ -73,8 +71,3 @@ flutter:
     - assets/logo512.png
     - assets/logo512_light.png
     - assets/logo512error.png
-    - assets/OpenCC/
-    - assets/opencc_assets.txt
-    - assets/tessdata/
-    - assets/tessdata/eng.traineddata
-    - assets/tessdata/chi_tra.traineddata

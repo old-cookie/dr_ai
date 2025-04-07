@@ -1,6 +1,0 @@
-[submodule "assets/OpenCC"]
-	path = assets/OpenCC
-	url = https://github.com/BYVoid/OpenCC
-[submodule "packages/flutter_opencc_ffi"]
-	path = packages/flutter_opencc_ffi
-	url = https://github.com/old-cookie/flutter_opencc_ffi

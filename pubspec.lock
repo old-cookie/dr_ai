@@ -515,68 +515,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.6+2"
-  flutter_opencc_ffi:
-    dependency: "direct main"
-    description:
-      path: "packages/flutter_opencc_ffi/flutter_opencc_ffi"
-      relative: true
-    source: path
-    version: "0.0.3"
-  flutter_opencc_ffi_android:
-    dependency: transitive
-    description:
-      path: "packages/flutter_opencc_ffi/flutter_opencc_ffi_android"
-      relative: true
-    source: path
-    version: "0.0.3"
-  flutter_opencc_ffi_ios:
-    dependency: transitive
-    description:
-      name: flutter_opencc_ffi_ios
-      sha256: "19ae60292e0ab4411b2f3237ebbc210e5ff6c50620146e17c863210a2be2531e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.3"
-  flutter_opencc_ffi_macos:
-    dependency: transitive
-    description:
-      name: flutter_opencc_ffi_macos
-      sha256: d2722f4fcb317198ffdf59ecb6e9cd85e348b5b5d7c53268c2d6033c4d17cb39
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.3"
-  flutter_opencc_ffi_native:
-    dependency: transitive
-    description:
-      name: flutter_opencc_ffi_native
-      sha256: "767d6eca6c5ed9c57d966557eccc23d8b6cf0dc153ae6ddaf9b4bb8263708e1a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.3"
-  flutter_opencc_ffi_platform_interface:
-    dependency: transitive
-    description:
-      name: flutter_opencc_ffi_platform_interface
-      sha256: fcafe9f64cbcadac73d23ffc317cf950727c4e051aaa7baa3ffe14f1ce2f31e7
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.3"
-  flutter_opencc_ffi_web:
-    dependency: transitive
-    description:
-      name: flutter_opencc_ffi_web
-      sha256: "7596522628c75e9891a4271b80760bc332984cd3cd76b862fbc4d8f73d452ac7"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.4"
-  flutter_opencc_ffi_windows:
-    dependency: transitive
-    description:
-      name: flutter_opencc_ffi_windows
-      sha256: "507fc0d930feb542253bf027d8e7cb8a35509a5b3157ac45353ea9d25e30e1c9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.3"
   flutter_parsed_text:
     dependency: transitive
     description:
