@@ -871,9 +871,15 @@
         "context": "Visible in the crop image view"
     },
     "errorLoadingRecords": "Error loading records.",
-    "@errorLoadingRecords": {},
+    "@errorLoadingRecords": {
+        "description": "Error message shown when loading records fails",
+        "context": "Visible in the vaccine record view"
+    },
     "noRecordsFound": "No records found.",
-    "@noRecordsFound": {},
+    "@noRecordsFound": {
+        "description": "Message shown when no records are found",
+        "context": "Visible in the vaccine record view"
+    },
     "notSelected": "Not selected",
     "@notSelected": {
         "description": "Text shown when no date is selected",
@@ -920,27 +926,50 @@
         }
     },
     "calendarEventTitle": "Add Appointment",
-    "@calendarEventTitle": {},
+    "@calendarEventTitle": {
+        "description": "Title of the add appointment dialog"
+    },
     "calendarEventDate": "Appointment Date",
-    "@calendarEventDate": {},
+    "@calendarEventDate": {
+        "description": "Label for appointment date input field"
+    },
     "calendarEventTime": "Appointment Time",
-    "@calendarEventTime": {},
+    "@calendarEventTime": {
+        "description": "Label for appointment time input field"
+    },
     "calendarEventNotification": "Notify Before",
-    "@calendarEventNotification": {},
+    "@calendarEventNotification": {
+        "description": "Label for notification time input field"
+    },
     "calendarEventSave": "Save Appointment",
-    "@calendarEventSave": {},
+    "@calendarEventSave": {
+        "description": "Text for save button in appointment dialog"
+    },
     "calendarEventDelete": "Delete Appointment",
-    "@calendarEventDelete": {},
+    "@calendarEventDelete": {
+        "description": "Text for delete button in appointment dialog"
+    },
     "calendarEventNoEvents": "No appointments for this day",
-    "@calendarEventNoEvents": {},
+    "@calendarEventNoEvents": {
+        "description": "Message shown when there are no appointments for the selected day",
+        "context": "Visible in the calendar view"
+    },
     "calendarEventAdd": "Add Appointment",
-    "@calendarEventAdd": {},
+    "@calendarEventAdd": {
+        "description": "Text for add appointment button in calendar view"
+    },
     "calendarReminderTitle": "Appointment Reminder",
-    "@calendarReminderTitle": {},
+    "@calendarReminderTitle": {
+        "description": "Title of the appointment reminder notification",
+        "context": "Visible in the appointment reminder notification"
+    },
     "calendarReminderBody": "You have an upcoming appointment '{eventTitle}'",
     "calendarDeleteEvent": "Deleted event: {eventTitle}",
     "calendarDeleteEventUndo": "Undo",
-    "@calendarDeleteEventUndo": {},
+    "@calendarDeleteEventUndo": {
+        "description": "Text for undo button in appointment deletion notification",
+        "context": "Visible in the appointment deletion notification"
+    },
     "@calendarReminderBody": {
         "description": "Message shown in appointment reminder notification",
         "placeholders": {
@@ -1052,7 +1081,7 @@
     "@bmiValidationInvalidAge": {
         "description": "Validation message for invalid age"
     },
-    "bmiClassificationTitle": "BMI 分類標準：",
+    "bmiClassificationTitle": "BMI classification criteria: ",
     "@bmiClassificationTitle": {
         "description": "Title for BMI classification section"
     },
@@ -1153,7 +1182,9 @@
         "description": "BMI category - overweight"
     },
     "dialogSelectModel": "Select Model",
-    "@dialogSelectModel": {},
+    "@dialogSelectModel": {
+        "description": "Title of the model selection dialog"
+    },
     "bmiObese": "Obese",
     "@bmiObese": {
         "description": "BMI category - obese"
@@ -1251,43 +1282,94 @@
         "description": "Label for sick leave end date"
     },
     "optionMedicalCertificate": "Medical Certificate",
-    "@optionMedicalCertificate": {},
+    "@optionMedicalCertificate": {
+        "description": "Text displayed for Medical Certificate option",
+        "context": "Visible in the side bar"
+    },
     "searchHospital": "Search hospital...",
-    "@searchHospital": {},
+    "@searchHospital": {
+        "description": "Placeholder text for searching hospitals",
+        "context": "Visible in the hospital selection dialog"
+    },
     "serverConnectionError": "Server Connection Error",
-    "@serverConnectionError": {},
+    "@serverConnectionError": {
+        "description": "Error message shown when server connection fails",
+        "context": "Visible in the app when server connection fails"
+    },
     "error": "Error",
-    "@error": {},
+    "@error": {
+        "description": "General error message",
+        "context": "Visible in the app when an error occurs"
+    },
     "ok": "ok",
-    "@ok": {},
+    "@ok": {
+        "description": "Button text for OK",
+        "context": "Visible in the app when an action is confirmed"
+    },
     "serverNotConfigured": "Server Not Configured",
-    "@serverNotConfigured": {},
+    "@serverNotConfigured": {
+        "description": "Message shown when the server is not configured",
+        "context": "Visible in the app when server configuration is missing"
+    },
     "loading": "loading",
-    "@loading": {},
+    "@loading": {
+        "description": "Loading message",
+        "context": "Visible in the app when loading data"
+    },
     "selectImage": "Select Image",
     "@selectImage": {
         "description": "Button text for selecting an image"
     },
     "ocrSuccessful": "OCR successful, form filled automatically",
-    "@ocrSuccessful": {},
+    "@ocrSuccessful": {
+        "description": "Message shown when OCR is successful",
+        "context": "Visible in the app when OCR recognition is successful"
+    },
     "ocrNoDataFound": "No data could be recognized",
-    "@ocrNoDataFound": {},
+    "@ocrNoDataFound": {
+        "description": "Message shown when no data is found during OCR",
+        "context": "Visible in the app when OCR recognition fails to find data"
+    },
     "ocrError": "OCR recognition error",
-    "@ocrError": {},
+    "@ocrError": {
+        "description": "Message shown when OCR recognition fails",
+        "context": "Visible in the app when OCR recognition encounters an error"
+    },
     "processingOcr": "Processing text...",
-    "@processingOcr": {},
+    "@processingOcr": {
+        "description": "Message shown when OCR is processing text",
+        "context": "Visible in the app when OCR recognition is in progress"
+    },
     "scanAndFill": "Scan and Fill",
-    "@scanAndFill": {},
+    "@scanAndFill": {
+        "description": "Button text for scanning and filling form",
+        "context": "Visible in the app when scanning a document"
+    },
     "scanToFill": "Scan to auto-fill",
-    "@scanToFill": {},
+    "@scanToFill": {
+        "description": "Button text for scanning to auto-fill form",
+        "context": "Visible in the app when scanning a document"
+    },
     "scanText": "Recognize medical certificate text",
-    "@scanText": {},
+    "@scanText": {
+        "description": "Button text for recognizing text in a medical certificate",
+        "context": "Visible in the app when scanning a document"
+    },
     "ocrProcessing": "Text recognition in progress",
-    "@ocrProcessing": {},
+    "@ocrProcessing": {
+        "description": "Message shown when OCR is processing",
+        "context": "Visible in the app when OCR recognition is in progress"
+    },
     "uploadAndScan": "Upload & Scan",
-    "@uploadAndScan": {},
+    "@uploadAndScan": {
+        "description": "Button text for uploading and scanning a document",
+        "context": "Visible in the app when uploading a document for OCR"
+    },
     "selectOrTakePhoto": "Select or Take Photo",
-    "@selectOrTakePhoto": {},
+    "@selectOrTakePhoto": {
+        "description": "Button text for selecting or taking a photo",
+        "context": "Visible in the app when selecting or taking a photo for OCR"
+    },
     "scannerError": "Scanner Error",
     "cameraPermissionDenied": "Camera permission is required to scan documents",
     "@cameraPermissionDenied": {
@@ -1297,30 +1379,63 @@
         "description": "Message shown when scanner encounters an error"
     },
     "calendarEventList": "Event List",
-    "@calendarEventList": {},
+    "@calendarEventList": {
+        "description": "Title for the event list in the calendar"
+    },
     "calendarSortEvents": "Sort Events",
-    "@calendarSortEvents": {},
+    "@calendarSortEvents": {
+        "description": "Label for sorting events in the calendar"
+    },
     "calendarSortDateAsc": "Date (Ascending)",
-    "@calendarSortDateAsc": {},
+    "@calendarSortDateAsc": {
+        "description": "Label for sorting events by date in ascending order",
+        "context": "Used in the calendar event sorting options"
+    },
     "calendarSortDateDesc": "Date (Descending)",
-    "@calendarSortDateDesc": {},
+    "@calendarSortDateDesc": {
+        "description": "Label for sorting events by date in descending order",
+        "context": "Used in the calendar event sorting options"
+    },
     "calendarSortTitleAsc": "Title (A-Z)",
-    "@calendarSortTitleAsc": {},
+    "@calendarSortTitleAsc": {
+        "description": "Label for sorting events by title in ascending order",
+        "context": "Used in the calendar event sorting options"
+    },
     "calendarSortTitleDesc": "Title (Z-A)",
-    "@calendarSortTitleDesc": {},
+    "@calendarSortTitleDesc": {
+        "description": "Label for sorting events by title in descending order",
+        "context": "Used in the calendar event sorting options"
+    },
     "calendarNoEvents": "No Appointments",
-    "@calendarNoEvents": {},
+    "@calendarNoEvents": {
+        "description": "Message shown when there are no appointments in the calendar"
+    },
     "calendarEventMinutesBefore": "{minutes} minutes before",
     "settingsDemoModeEnable": "Enable Demo Mode (bypass AI)",
-    "@settingsDemoModeEnable": {},
+    "@settingsDemoModeEnable": { 
+        "description": "Text displayed as description for enable demo mode toggle",
+        "context": "Visible in the settings view"
+    },
     "settingsDemoModeInfo": "Demo Mode Information",
-    "@settingsDemoModeInfo": {},
+    "@settingsDemoModeInfo": {
+        "description": "Text displayed as description for demo mode information",
+        "context": "Visible in the settings view"
+    },
     "settingsDemoModeTitle": "About Demo Mode",
-    "@settingsDemoModeTitle": {},
+    "@settingsDemoModeTitle": {
+        "description": "Title for the demo mode information dialog",
+        "context": "Visible in the settings view"
+    },
     "settingsDemoModeDescription": "Demo mode bypasses the AI model and provides predefined answers.\n\nThis is useful for:\n• Offline app demonstrations\n• Testing chat interface\n• Feature showcasing without server connection\n\nCurrently supported keywords: headache, fever, cough, cold/flu\nOther inputs will receive a default response.",
-    "@settingsDemoModeDescription": {},
+    "@settingsDemoModeDescription": {
+        "description": "Description of the demo mode information dialog",
+        "context": "Visible in the settings view"
+    },
     "buttonGotIt": "Got it",
-    "@buttonGotIt": {},
+    "@buttonGotIt": {
+        "description": "Button text for acknowledging information",
+        "context": "Visible in the demo mode information dialog"
+    },
     "authPrompt": "Please authenticate to unlock the app",
     "@authPrompt": {
         "description": "Prompt shown when biometric authentication is required"
@@ -1392,5 +1507,9 @@
     "calendarSearchEvents": "Search Events",
     "@calendarSearchEvents": {
         "description": "Label for search events input field"
+    },
+    "calendarEventEdit": "Edit Event",
+    "@calendarEventEdit": {
+        "description": "Button text for editing an event"
     }
 }

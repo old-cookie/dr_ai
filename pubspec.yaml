@@ -1,9 +1,9 @@
 name: dr_ai
-description: "A new Flutter project."
+description: "Dr.AI是一個AI驅動的智能醫生應用程式，整合了語音識別、文字轉語音和AI聊天功能，用於健康諮詢和醫療記錄管理。"
 repository: https://github.com/old-cookie/dr_ai
 issue_tracker: https://github.com/old-cookie/dr_ai/issues
 publish_to: 'none'
-version: 5.7.0+1
+version: 5.8.0+1
 
 environment:
   sdk: ^3.7.2
@@ -63,6 +63,11 @@ dependencies:
 
 dev_dependencies:
   flutter_lints: ^5.0.0
+  flutter_test:
+    sdk: flutter
+  mockito: ^5.4.4
+  http_mock_adapter: ^0.6.1
+  build_runner: ^2.4.8
 
 flutter:
   uses-material-design: true

@@ -686,7 +686,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bmiValidationInvalidAge => 'Please enter valid age';
 
   @override
-  String get bmiClassificationTitle => 'BMI 分類標準：';
+  String get bmiClassificationTitle => 'BMI classification criteria: ';
 
   @override
   String get bmiChildStandard => 'BMI standards for children/teens:';
@@ -983,4 +983,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get calendarSearchEvents => 'Search Events';
+
+  @override
+  String get calendarEventEdit => 'Edit Event';
 }

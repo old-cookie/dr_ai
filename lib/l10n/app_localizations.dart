@@ -1109,13 +1109,13 @@ abstract class AppLocalizations {
   /// **'Save Image'**
   String get saveImage;
 
-  /// No description provided for @errorLoadingRecords.
+  /// Error message shown when loading records fails
   ///
   /// In en, this message translates to:
   /// **'Error loading records.'**
   String get errorLoadingRecords;
 
-  /// No description provided for @noRecordsFound.
+  /// Message shown when no records are found
   ///
   /// In en, this message translates to:
   /// **'No records found.'**
@@ -1151,55 +1151,55 @@ abstract class AppLocalizations {
   /// **'Remarks: {remarks}'**
   String vaccineFieldRemarks(String remarks);
 
-  /// No description provided for @calendarEventTitle.
+  /// Title of the add appointment dialog
   ///
   /// In en, this message translates to:
   /// **'Add Appointment'**
   String get calendarEventTitle;
 
-  /// No description provided for @calendarEventDate.
+  /// Label for appointment date input field
   ///
   /// In en, this message translates to:
   /// **'Appointment Date'**
   String get calendarEventDate;
 
-  /// No description provided for @calendarEventTime.
+  /// Label for appointment time input field
   ///
   /// In en, this message translates to:
   /// **'Appointment Time'**
   String get calendarEventTime;
 
-  /// No description provided for @calendarEventNotification.
+  /// Label for notification time input field
   ///
   /// In en, this message translates to:
   /// **'Notify Before'**
   String get calendarEventNotification;
 
-  /// No description provided for @calendarEventSave.
+  /// Text for save button in appointment dialog
   ///
   /// In en, this message translates to:
   /// **'Save Appointment'**
   String get calendarEventSave;
 
-  /// No description provided for @calendarEventDelete.
+  /// Text for delete button in appointment dialog
   ///
   /// In en, this message translates to:
   /// **'Delete Appointment'**
   String get calendarEventDelete;
 
-  /// No description provided for @calendarEventNoEvents.
+  /// Message shown when there are no appointments for the selected day
   ///
   /// In en, this message translates to:
   /// **'No appointments for this day'**
   String get calendarEventNoEvents;
 
-  /// No description provided for @calendarEventAdd.
+  /// Text for add appointment button in calendar view
   ///
   /// In en, this message translates to:
   /// **'Add Appointment'**
   String get calendarEventAdd;
 
-  /// No description provided for @calendarReminderTitle.
+  /// Title of the appointment reminder notification
   ///
   /// In en, this message translates to:
   /// **'Appointment Reminder'**
@@ -1217,7 +1217,7 @@ abstract class AppLocalizations {
   /// **'Deleted event: {eventTitle}'**
   String calendarDeleteEvent(String eventTitle);
 
-  /// No description provided for @calendarDeleteEventUndo.
+  /// Text for undo button in appointment deletion notification
   ///
   /// In en, this message translates to:
   /// **'Undo'**
@@ -1358,7 +1358,7 @@ abstract class AppLocalizations {
   /// Title for BMI classification section
   ///
   /// In en, this message translates to:
-  /// **'BMI 分類標準：'**
+  /// **'BMI classification criteria: '**
   String get bmiClassificationTitle;
 
   /// Title for child/teen BMI standards
@@ -1505,7 +1505,7 @@ abstract class AppLocalizations {
   /// **'Overweight'**
   String get bmiOverweight;
 
-  /// No description provided for @dialogSelectModel.
+  /// Title of the model selection dialog
   ///
   /// In en, this message translates to:
   /// **'Select Model'**
@@ -1655,43 +1655,43 @@ abstract class AppLocalizations {
   /// **'Sick Leave End Date'**
   String get sickLeaveEndDate;
 
-  /// No description provided for @optionMedicalCertificate.
+  /// Text displayed for Medical Certificate option
   ///
   /// In en, this message translates to:
   /// **'Medical Certificate'**
   String get optionMedicalCertificate;
 
-  /// No description provided for @searchHospital.
+  /// Placeholder text for searching hospitals
   ///
   /// In en, this message translates to:
   /// **'Search hospital...'**
   String get searchHospital;
 
-  /// No description provided for @serverConnectionError.
+  /// Error message shown when server connection fails
   ///
   /// In en, this message translates to:
   /// **'Server Connection Error'**
   String get serverConnectionError;
 
-  /// No description provided for @error.
+  /// General error message
   ///
   /// In en, this message translates to:
   /// **'Error'**
   String get error;
 
-  /// No description provided for @ok.
+  /// Button text for OK
   ///
   /// In en, this message translates to:
   /// **'ok'**
   String get ok;
 
-  /// No description provided for @serverNotConfigured.
+  /// Message shown when the server is not configured
   ///
   /// In en, this message translates to:
   /// **'Server Not Configured'**
   String get serverNotConfigured;
 
-  /// No description provided for @loading.
+  /// Loading message
   ///
   /// In en, this message translates to:
   /// **'loading'**
@@ -1703,61 +1703,61 @@ abstract class AppLocalizations {
   /// **'Select Image'**
   String get selectImage;
 
-  /// No description provided for @ocrSuccessful.
+  /// Message shown when OCR is successful
   ///
   /// In en, this message translates to:
   /// **'OCR successful, form filled automatically'**
   String get ocrSuccessful;
 
-  /// No description provided for @ocrNoDataFound.
+  /// Message shown when no data is found during OCR
   ///
   /// In en, this message translates to:
   /// **'No data could be recognized'**
   String get ocrNoDataFound;
 
-  /// No description provided for @ocrError.
+  /// Message shown when OCR recognition fails
   ///
   /// In en, this message translates to:
   /// **'OCR recognition error'**
   String get ocrError;
 
-  /// No description provided for @processingOcr.
+  /// Message shown when OCR is processing text
   ///
   /// In en, this message translates to:
   /// **'Processing text...'**
   String get processingOcr;
 
-  /// No description provided for @scanAndFill.
+  /// Button text for scanning and filling form
   ///
   /// In en, this message translates to:
   /// **'Scan and Fill'**
   String get scanAndFill;
 
-  /// No description provided for @scanToFill.
+  /// Button text for scanning to auto-fill form
   ///
   /// In en, this message translates to:
   /// **'Scan to auto-fill'**
   String get scanToFill;
 
-  /// No description provided for @scanText.
+  /// Button text for recognizing text in a medical certificate
   ///
   /// In en, this message translates to:
   /// **'Recognize medical certificate text'**
   String get scanText;
 
-  /// No description provided for @ocrProcessing.
+  /// Message shown when OCR is processing
   ///
   /// In en, this message translates to:
   /// **'Text recognition in progress'**
   String get ocrProcessing;
 
-  /// No description provided for @uploadAndScan.
+  /// Button text for uploading and scanning a document
   ///
   /// In en, this message translates to:
   /// **'Upload & Scan'**
   String get uploadAndScan;
 
-  /// No description provided for @selectOrTakePhoto.
+  /// Button text for selecting or taking a photo
   ///
   /// In en, this message translates to:
   /// **'Select or Take Photo'**
@@ -1775,43 +1775,43 @@ abstract class AppLocalizations {
   /// **'Camera permission is required to scan documents'**
   String get cameraPermissionDenied;
 
-  /// No description provided for @calendarEventList.
+  /// Title for the event list in the calendar
   ///
   /// In en, this message translates to:
   /// **'Event List'**
   String get calendarEventList;
 
-  /// No description provided for @calendarSortEvents.
+  /// Label for sorting events in the calendar
   ///
   /// In en, this message translates to:
   /// **'Sort Events'**
   String get calendarSortEvents;
 
-  /// No description provided for @calendarSortDateAsc.
+  /// Label for sorting events by date in ascending order
   ///
   /// In en, this message translates to:
   /// **'Date (Ascending)'**
   String get calendarSortDateAsc;
 
-  /// No description provided for @calendarSortDateDesc.
+  /// Label for sorting events by date in descending order
   ///
   /// In en, this message translates to:
   /// **'Date (Descending)'**
   String get calendarSortDateDesc;
 
-  /// No description provided for @calendarSortTitleAsc.
+  /// Label for sorting events by title in ascending order
   ///
   /// In en, this message translates to:
   /// **'Title (A-Z)'**
   String get calendarSortTitleAsc;
 
-  /// No description provided for @calendarSortTitleDesc.
+  /// Label for sorting events by title in descending order
   ///
   /// In en, this message translates to:
   /// **'Title (Z-A)'**
   String get calendarSortTitleDesc;
 
-  /// No description provided for @calendarNoEvents.
+  /// Message shown when there are no appointments in the calendar
   ///
   /// In en, this message translates to:
   /// **'No Appointments'**
@@ -1823,31 +1823,31 @@ abstract class AppLocalizations {
   /// **'{minutes} minutes before'**
   String calendarEventMinutesBefore(String minutes);
 
-  /// No description provided for @settingsDemoModeEnable.
+  /// Text displayed as description for enable demo mode toggle
   ///
   /// In en, this message translates to:
   /// **'Enable Demo Mode (bypass AI)'**
   String get settingsDemoModeEnable;
 
-  /// No description provided for @settingsDemoModeInfo.
+  /// Text displayed as description for demo mode information
   ///
   /// In en, this message translates to:
   /// **'Demo Mode Information'**
   String get settingsDemoModeInfo;
 
-  /// No description provided for @settingsDemoModeTitle.
+  /// Title for the demo mode information dialog
   ///
   /// In en, this message translates to:
   /// **'About Demo Mode'**
   String get settingsDemoModeTitle;
 
-  /// No description provided for @settingsDemoModeDescription.
+  /// Description of the demo mode information dialog
   ///
   /// In en, this message translates to:
   /// **'Demo mode bypasses the AI model and provides predefined answers.\n\nThis is useful for:\n• Offline app demonstrations\n• Testing chat interface\n• Feature showcasing without server connection\n\nCurrently supported keywords: headache, fever, cough, cold/flu\nOther inputs will receive a default response.'**
   String get settingsDemoModeDescription;
 
-  /// No description provided for @buttonGotIt.
+  /// Button text for acknowledging information
   ///
   /// In en, this message translates to:
   /// **'Got it'**
@@ -1948,6 +1948,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search Events'**
   String get calendarSearchEvents;
+
+  /// Button text for editing an event
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Event'**
+  String get calendarEventEdit;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

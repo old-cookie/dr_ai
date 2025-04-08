@@ -97,11 +97,18 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
     } catch (e) {
       debugPrint('刪除事件錯誤: $e');
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('刪除事件失敗')),
-        );
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('刪除事件失敗')));
       }
     }
+  }
+
+  // 添加編輯事件的方法
+  void _editEvent(CalendarEvent event, int index) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ScreenAddCalendar(eventToEdit: event, eventIndex: index))).then((result) {
+      if (result == true) {
+        _loadEvents();
+      }
+    });
   }
 
   List<CalendarEvent> _getEventsForDay(DateTime day) {
@@ -132,21 +139,10 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
             });
           },
           calendarStyle: CalendarStyle(
-            selectedDecoration: BoxDecoration(
-              color: theme.colorScheme.primary,
-              shape: BoxShape.circle,
-            ),
-            selectedTextStyle: TextStyle(
-              color: theme.colorScheme.onPrimary,
-            ),
-            todayDecoration: BoxDecoration(
-              color: theme.colorScheme.primary.withAlpha(76),
-              shape: BoxShape.circle,
-            ),
-            todayTextStyle: TextStyle(
-              color: theme.colorScheme.primary,
-              fontWeight: FontWeight.bold,
-            ),
+            selectedDecoration: BoxDecoration(color: theme.colorScheme.primary, shape: BoxShape.circle),
+            selectedTextStyle: TextStyle(color: theme.colorScheme.onPrimary),
+            todayDecoration: BoxDecoration(color: theme.colorScheme.primary.withAlpha(76), shape: BoxShape.circle),
+            todayTextStyle: TextStyle(color: theme.colorScheme.primary, fontWeight: FontWeight.bold),
             // 自定義標記裝飾 - 使用基本裝飾，將由 calendarBuilders 替換為特定顏色
             markersMaxCount: 3, // 顯示最多3個點
             markerSize: 8.0, // 點的大小
@@ -155,35 +151,33 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
           headerStyle: HeaderStyle(
             formatButtonVisible: false,
             titleCentered: true,
-            titleTextStyle: TextStyle(
-              color: theme.colorScheme.onSurface,
-              fontSize: 17,
-            ),
+            titleTextStyle: TextStyle(color: theme.colorScheme.onSurface, fontSize: 17),
           ),
           eventLoader: _getEventsForDay,
           // 添加自定義標記構建器
           calendarBuilders: CalendarBuilders(
             markerBuilder: (context, date, events) {
               if (events.isEmpty) return const SizedBox();
-              
+
               // 將 CalendarEvent 類型轉換
               final castedEvents = events.cast<CalendarEvent>();
-              
+
               return Positioned(
                 bottom: 1,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: castedEvents.take(3).map((event) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 0.5),
-                      width: 8,
-                      height: 8,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: event.color, // 使用事件的顏色
-                      ),
-                    );
-                  }).toList(),
+                  children:
+                      castedEvents.take(3).map((event) {
+                        return Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 0.5),
+                          width: 8,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: event.color, // 使用事件的顏色
+                          ),
+                        );
+                      }).toList(),
                 ),
               );
             },
@@ -199,20 +193,11 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
                 Text(
                   // 使用 Intl 格式化日期
                   '${_selectedDay?.year}年${_selectedDay?.month}月${_selectedDay?.day}日',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: theme.colorScheme.primary,
-                  ),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: theme.colorScheme.primary),
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    final result = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ScreenAddCalendar(),
-                      ),
-                    );
+                    final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenAddCalendar()));
                     if (result == true) {
                       _loadEvents();
                     }
@@ -224,10 +209,7 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
           ),
           const SizedBox(height: 10),
           if (selectedDayEvents.isEmpty)
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(l10n?.calendarEventNoEvents ?? 'No events for this day'),
-            )
+            Padding(padding: const EdgeInsets.all(16.0), child: Text(l10n?.calendarEventNoEvents ?? 'No events for this day'))
           else
             ListView.builder(
               shrinkWrap: true,
@@ -235,6 +217,9 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
               itemCount: selectedDayEvents.length,
               itemBuilder: (context, index) {
                 final event = selectedDayEvents[index];
+                // 找到事件在原始列表中的索引
+                final originalIndex = events.indexWhere((e) => e.dateTime == event.dateTime && e.title == event.title);
+
                 return Dismissible(
                   // 添加滑動刪除功能
                   key: Key(event.dateTime.toIso8601String() + index.toString()),
@@ -243,40 +228,43 @@ class _WidgetCalendarState extends State<WidgetCalendar> {
                     alignment: Alignment.centerRight,
                     padding: const EdgeInsets.only(right: 20.0),
                     color: Colors.red,
-                    child: const Icon(
-                      Icons.delete,
-                      color: Colors.white,
-                    ),
+                    child: const Icon(Icons.delete, color: Colors.white),
                   ),
                   onDismissed: (direction) {
-                    _deleteEvent(event, index);
+                    _deleteEvent(event, originalIndex);
                   },
                   child: Card(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                      vertical: 4.0,
-                    ),
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: event.color, // 使用事件顏色
-                        child: Icon(
-                          Icons.event,
-                          color: Colors.white,
+                    margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                    child: Column(
+                      children: [
+                        ListTile(
+                          leading: CircleAvatar(backgroundColor: event.color, child: const Icon(Icons.event, color: Colors.white)),
+                          title: Text(event.title, style: const TextStyle(fontWeight: FontWeight.bold)),
+                          subtitle: Text(
+                            event.notificationMinutes > 0
+                                ? '${l10n?.calendarEventTime ?? 'Time'}: ${event.dateTime.hour.toString().padLeft(2, '0')}:'
+                                    '${event.dateTime.minute.toString().padLeft(2, '0')}\n'
+                                    '${l10n?.calendarEventNotification ?? 'Reminder'}: ${l10n?.calendarEventMinutesBefore(event.notificationMinutes.toString()) ?? "${event.notificationMinutes} minutes before"}'
+                                : '${l10n?.calendarEventTime ?? 'Time'}: ${event.dateTime.hour.toString().padLeft(2, '0')}:'
+                                    '${event.dateTime.minute.toString().padLeft(2, '0')}',
+                          ),
                         ),
-                      ),
-                      title: Text(
-                        event.title,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        event.notificationMinutes > 0
-                            ? '${l10n?.calendarEventTime ?? 'Time'}: ${event.dateTime.hour.toString().padLeft(2, '0')}:'
-                                '${event.dateTime.minute.toString().padLeft(2, '0')}\n'
-                                '${l10n?.calendarEventNotification ?? 'Reminder'}: ${event.notificationMinutes} '
-                                '${l10n?.calendarEventNotification ?? 'minutes before'}'
-                            : '${l10n?.calendarEventTime ?? 'Time'}: ${event.dateTime.hour.toString().padLeft(2, '0')}:'
-                                '${event.dateTime.minute.toString().padLeft(2, '0')}',
-                      ),
+                        // 添加編輯按鈕
+                        Divider(height: 1),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              OutlinedButton.icon(
+                                icon: const Icon(Icons.edit, size: 18),
+                                label: Text(l10n?.edit ?? 'Edit'),
+                                onPressed: () => _editEvent(event, originalIndex),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 );

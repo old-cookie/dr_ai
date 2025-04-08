@@ -45,11 +45,11 @@ const String backupHost = "http://100.64.50.3:11434";
 const bool useModel = false;
 
 /// 預設的 AI 模型名稱
-const String fixedModel = "deepseek-r1:14b";
+const String fixedModel = "gemma3:12b";
 
 /// 推薦模型列表
 /// 在模型選擋中會標記星號
-const List<String> recommendedModels = ["oldcookie/dr_ai:q5_1", "oldcookie/dr_ai:q8_0"];
+const List<String> recommendedModels = ["gemma3:12b", "deepseek-r1:14b"];
 
 /// 是否允許打開設置頁面
 const bool allowSettings = true;

@@ -30,12 +30,12 @@ class ScreenMedicalCertificateRecordState extends State<ScreenMedicalCertificate
 
     try {
       final prefs = EncryptedSharedPreferences.getInstance();
-      final allKeys = await prefs.getKeys();
+      final allKeys = prefs.getKeys();
       final certificateKeys = allKeys.where((key) => key.startsWith('medical_certificate_')).toList();
 
       List<Map<String, dynamic>> loadedCertificates = [];
       for (String key in certificateKeys) {
-        final data = await prefs.getString(key);
+        final data = prefs.getString(key);
         if (data != null && data.isNotEmpty) {
           try {
             final Map<String, dynamic> certificate = Map<String, dynamic>.from(jsonDecode(data));

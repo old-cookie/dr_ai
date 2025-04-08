@@ -10,7 +10,10 @@ import 'package:encrypt_shared_preferences/provider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 class ScreenAddCalendar extends StatefulWidget {
-  const ScreenAddCalendar({super.key});
+  final CalendarEvent? eventToEdit; // 添加編輯事件參數
+  final int? eventIndex; // 添加事件索引參數
+
+  const ScreenAddCalendar({super.key, this.eventToEdit, this.eventIndex});
 
   @override
   State<ScreenAddCalendar> createState() => _ScreenAddCalendarState();
@@ -42,32 +45,40 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
     if (kIsWeb) {
       notificationMinutes = null;
     }
+
+    // 若有傳入要編輯的事件，載入其資料
+    if (widget.eventToEdit != null) {
+      _selectedDateTime = widget.eventToEdit!.dateTime;
+      eventController.text = widget.eventToEdit!.title;
+      notificationMinutes = widget.eventToEdit!.notificationMinutes > 0 ? widget.eventToEdit!.notificationMinutes : null;
+      selectedColorValue = widget.eventToEdit!.colorValue;
+
+      // 設置選擇的日期時間顯示
+      selectedDateTime =
+          '${_selectedDateTime!.month}/${_selectedDateTime!.day}/${_selectedDateTime!.year} '
+          '${_selectedDateTime!.hour}:${_selectedDateTime!.minute.toString().padLeft(2, '0')}';
+
+      // 檢查是否為過去時間
+      isPastDate = _selectedDateTime!.isBefore(DateTime.now());
+    }
   }
 
   Future<void> _openDateTimePicker(BuildContext context) async {
+    // 設置初始日期，如果是編輯模式，使用已存在的日期
+    DateTime initialDate = _selectedDateTime ?? DateTime.now();
+
     final DateTime? dateTime = await showOmniDateTimePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: initialDate,
       firstDate: DateTime.now(),
       lastDate: DateTime(2100),
       is24HourMode: false,
       isForce2Digits: true,
       minutesInterval: 1,
       borderRadius: const BorderRadius.all(Radius.circular(16)),
-      constraints: const BoxConstraints(
-        maxWidth: 350,
-        maxHeight: 650,
-      ),
+      constraints: const BoxConstraints(maxWidth: 350, maxHeight: 650),
       transitionBuilder: (context, anim1, anim2, child) {
-        return FadeTransition(
-          opacity: anim1.drive(
-            Tween(
-              begin: 0,
-              end: 1,
-            ),
-          ),
-          child: child,
-        );
+        return FadeTransition(opacity: anim1.drive(Tween(begin: 0, end: 1)), child: child);
       },
       transitionDuration: const Duration(milliseconds: 200),
       barrierDismissible: true,
@@ -76,7 +87,8 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
     if (dateTime != null) {
       setState(() {
         _selectedDateTime = dateTime;
-        selectedDateTime = '${dateTime.month}/${dateTime.day}/${dateTime.year} '
+        selectedDateTime =
+            '${dateTime.month}/${dateTime.day}/${dateTime.year} '
             '${dateTime.hour}:${dateTime.minute.toString().padLeft(2, '0')}';
 
         // 檢查是否為過去時間
@@ -93,9 +105,9 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
     try {
       final l10n = AppLocalizations.of(context);
       if (_selectedDateTime == null || eventController.text.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n?.calendarEventNoEvents ?? 'Please fill in event title and select time')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n?.calendarEventNoEvents ?? 'Please fill in event title and select time')));
         return;
       }
 
@@ -109,7 +121,23 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
       // 儲存事件
       final prefs = EncryptedSharedPreferences.getInstance();
       List<String> events = prefs.getStringList('calendar_events') ?? [];
-      events.add(jsonEncode(event.toJson()));
+
+      // 判斷是新增還是編輯模式
+      if (widget.eventIndex != null) {
+        // 編輯模式：更新現有事件
+        events[widget.eventIndex!] = jsonEncode(event.toJson());
+
+        // 嘗試取消之前的通知
+        try {
+          await NotificationService().cancelNotification(widget.eventIndex! + 1);
+        } catch (e) {
+          debugPrint('取消舊通知時發生錯誤: $e');
+        }
+      } else {
+        // 新增模式：添加新事件
+        events.add(jsonEncode(event.toJson()));
+      }
+
       await prefs.setStringList('calendar_events', events);
 
       // 只有當有設置通知時間且不是過去的時間才設置通知
@@ -121,9 +149,12 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
         // 直接替換事件標題，不使用複雜的模板格式
         final String notificationBody = '您有一個即將到來的預約：${event.title}';
 
+        // 通知ID：如果是編輯，使用相同的索引；如果是新增，使用列表長度
+        final int notificationId = widget.eventIndex != null ? widget.eventIndex! + 1 : events.length;
+
         try {
           await NotificationService().scheduleNotification(
-            id: events.length,
+            id: notificationId,
             title: notificationTitle,
             body: notificationBody,
             scheduledDate: notificationTime,
@@ -131,9 +162,9 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
           debugPrint('設置了通知: $notificationTitle - $notificationBody');
         } catch (e) {
           debugPrint('通知設置錯誤: $e');
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(l10n?.calendarEventSave ?? 'Event saved, but notification setup failed')),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(l10n?.calendarEventSave ?? 'Event saved, but notification setup failed')));
         }
       }
 
@@ -141,9 +172,7 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
         Navigator.pop(context, true);
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('儲存事件失敗')),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('儲存事件失敗')));
       debugPrint('儲存事件錯誤: $e');
     }
   }
@@ -152,10 +181,11 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
+    // 根據是否是編輯模式設置不同的標題
+    final String pageTitle = widget.eventToEdit != null ? (l10n?.calendarEventEdit ?? 'Edit Event') : (l10n?.calendarEventTitle ?? 'Add Event');
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n?.calendarEventTitle ?? 'Add Event'),
-      ),
+      appBar: AppBar(title: Text(pageTitle)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
@@ -163,55 +193,38 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
             widgetTitle(l10n?.calendarEventTitle ?? 'Event Title', top: 0, bottom: 8),
             TextField(
               controller: eventController,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                hintText: l10n?.calendarEventTitle ?? 'Enter event title',
-              ),
+              decoration: InputDecoration(border: const OutlineInputBorder(), hintText: l10n?.calendarEventTitle ?? 'Enter event title'),
             ),
             const SizedBox(height: 16),
             widgetTitle(l10n?.calendarEventDate ?? 'Date and Time', top: 0, bottom: 8),
-            widgetButton(
-              l10n?.selectDate ?? 'Select Date and Time',
-              Icons.calendar_today,
-              () => _openDateTimePicker(context),
-              context: context,
-            ),
+            widgetButton(l10n?.selectDate ?? 'Select Date and Time', Icons.calendar_today, () => _openDateTimePicker(context), context: context),
             if (selectedDateTime != null)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Text(
-                  '已選擇: $selectedDateTime',
-                  style: const TextStyle(fontSize: 16),
-                ),
-              ),
+              Padding(padding: const EdgeInsets.symmetric(vertical: 8), child: Text('已選擇: $selectedDateTime', style: const TextStyle(fontSize: 16))),
             const SizedBox(height: 16),
             widgetTitle('事件顏色', top: 0, bottom: 8),
             Wrap(
               spacing: 10,
-              children: colorOptions.map((color) {
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedColorValue = color.value;
-                    });
-                  },
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    margin: const EdgeInsets.only(bottom: 10),
-                    decoration: BoxDecoration(
-                      color: Color(color.value),
-                      shape: BoxShape.circle,
-                      border: selectedColorValue == color.value
-                          ? Border.all(color: Colors.black, width: 2)
-                          : null,
-                    ),
-                    child: selectedColorValue == color.value
-                        ? const Icon(Icons.check, color: Colors.white)
-                        : null,
-                  ),
-                );
-              }).toList(),
+              children:
+                  colorOptions.map((color) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedColorValue = color.value;
+                        });
+                      },
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        margin: const EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                          color: Color(color.value),
+                          shape: BoxShape.circle,
+                          border: selectedColorValue == color.value ? Border.all(color: Colors.black, width: 2) : null,
+                        ),
+                        child: selectedColorValue == color.value ? const Icon(Icons.check, color: Colors.white) : null,
+                      ),
+                    );
+                  }).toList(),
             ),
             if (!isPastDate && _selectedDateTime != null && !kIsWeb) ...[
               const SizedBox(height: 16),
@@ -231,26 +244,16 @@ class _ScreenAddCalendarState extends State<ScreenAddCalendar> {
                     notificationMinutes = value;
                   });
                 },
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
+                decoration: const InputDecoration(border: OutlineInputBorder()),
               ),
             ] else if (_selectedDateTime != null && isPastDate) ...[
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Text(
-                  l10n?.calendarEventNoEvents ?? 'Cannot set notification for past time',
-                  style: const TextStyle(color: Colors.red),
-                ),
+                child: Text(l10n?.calendarEventNoEvents ?? 'Cannot set notification for past time', style: const TextStyle(color: Colors.red)),
               ),
             ],
             const SizedBox(height: 24),
-            widgetButton(
-              l10n?.calendarEventSave ?? 'Save',
-              Icons.save,
-              _saveEvent,
-              context: context,
-            ),
+            widgetButton(l10n?.calendarEventSave ?? 'Save', Icons.save, _saveEvent, context: context),
           ],
         ),
       ),
@@ -263,8 +266,5 @@ class ColorOption {
   final String name;
   final int value;
 
-  ColorOption({
-    required this.name,
-    required this.value,
-  });
+  ColorOption({required this.name, required this.value});
 }

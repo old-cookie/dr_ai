@@ -982,4 +982,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get calendarSearchEvents => '搜尋事件';
+
+  @override
+  String get calendarEventEdit => '編輯事件';
 }
