@@ -20,7 +20,7 @@ class GuidePageMedicaltwo extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/medicial_images/secondpage.png',
+            Image.asset('assets/images/medical_light_2.png',
             width:500 ,height: 550),
           ],
         )
