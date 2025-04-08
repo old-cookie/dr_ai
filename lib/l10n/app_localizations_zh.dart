@@ -1026,5 +1026,17 @@ class AppLocalizationsZh extends AppLocalizations {
   String get done => '完成';
 
   @override
+  String get guideWelcomeTitle => '歡迎使用 Dr.AI';
+
+  @override
+  String get guideWelcomeDescription => '您的智慧醫療助手';
+
+  @override
+  String get guideMedicalConsultation => '智慧醫療諮詢';
+
+  @override
+  String get guideMedicalAssistantCapabilities => 'Dr.AI 是您的智慧醫療助手，可以：\n• 24小時提供醫療諮詢\n• 解答健康相關問題\n• 提供初步醫療建議\n\n請注意：AI 建議僅供參考，重要醫療決定請諮詢專業醫師。';
+
+  @override
   String get viewIntroduction => '查看介紹';
 }

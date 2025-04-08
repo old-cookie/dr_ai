@@ -2033,6 +2033,30 @@ abstract class AppLocalizations {
   /// **'Done'**
   String get done;
 
+  /// Title of the welcome screen in the guide
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Dr.AI'**
+  String get guideWelcomeTitle;
+
+  /// Description of the welcome screen in the guide
+  ///
+  /// In en, this message translates to:
+  /// **'Your Smart Medical Assistant'**
+  String get guideWelcomeDescription;
+
+  /// Title of the medical consultation feature in the guide
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Medical Consultation'**
+  String get guideMedicalConsultation;
+
+  /// Description of what Dr.AI can do as a medical assistant
+  ///
+  /// In en, this message translates to:
+  /// **'Dr.AI is your smart medical assistant, which can:\n• Provide 24-hour medical consultation\n• Answer health-related questions\n• Offer preliminary medical advice\n\nNote: AI suggestions are for reference only, please consult professional physicians for important medical decisions.'**
+  String get guideMedicalAssistantCapabilities;
+
   /// Button text for viewing the introduction
   ///
   /// In en, this message translates to:
