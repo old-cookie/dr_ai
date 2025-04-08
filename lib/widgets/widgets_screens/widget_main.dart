@@ -27,6 +27,8 @@ import '../../services/service_haptic.dart';
 import '../../services/service_sender.dart';
 import '../../services/service_desktop.dart';
 import '../../services/service_theme.dart';
+import '../../services/service_guide.dart';
+import '../../screens/guide/screen_guide_page_1.dart';
 import '../../main.dart';
 
 class MainApp extends StatefulWidget {
@@ -550,6 +552,20 @@ class _MainAppState extends State<MainApp> {
   void initState() {
     super.initState();
     mainContext = context;
+    
+    // Initialize guide service
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await GuideService.initGuide();
+      if (GuideService.shouldShowGuide()) {
+        if (mounted) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const GuideExample(),
+            ),
+          );
+        }
+      }
+    });
 
     if (kIsWeb) {
       html.querySelector(".loader")?.remove();
