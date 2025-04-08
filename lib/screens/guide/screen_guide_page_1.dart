@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screen_guide_frame.dart';
+import 'screen_guide_page_2.dart';
 import '../../services/service_guide.dart';
 
 /// 第一個引導頁面
@@ -41,8 +42,7 @@ class GuidePageOne extends StatelessWidget {
   }
 }
 
-/// 示例：如何使用 GuideFrame
-/// 您可以根據需要添加更多引導頁面
+
 class GuideExample extends StatelessWidget {
   const GuideExample({super.key});
 
@@ -50,7 +50,10 @@ class GuideExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return GuideFrame(
       pages: const [
+        //TODO More pages can be added here
+        //add GuidePageX() here
         GuidePageOne(),
+        GuidePageTwo(),
       ],
       onFinish: () async {
         await GuideService.markGuideShown();

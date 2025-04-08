@@ -140,7 +140,7 @@ class _GuideFrameState extends State<GuideFrame> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: 100,  // 固定寬度
+                        width: 120,  // 固定寬度
                         child: _currentPage > 0
                             ? widgetButton(
                                 "Previous",
