@@ -5,6 +5,8 @@ import 'screen_add_medical_certificate.dart';
 import 'screen_medical_certificate_detail.dart';
 import '../../l10n/app_localizations.dart';
 import '../../widgets/widgets_units/widget_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dr_ai/screens/medical_certificate/screen_introduction.dart';
 
 class ScreenMedicalCertificateRecord extends StatefulWidget {
   const ScreenMedicalCertificateRecord({super.key});
@@ -21,7 +23,22 @@ class ScreenMedicalCertificateRecordState extends State<ScreenMedicalCertificate
   void initState() {
     super.initState();
     _loadCertificates();
+    _checkFirstTimeVisit();
   }
+
+  Future<void> _checkFirstTimeVisit() async {
+    final prefs = await SharedPreferences.getInstance();
+    final seenIntro = prefs.getBool('seen_intro') ?? false;
+
+    if (!seenIntro) {
+      Future.delayed(Duration.zero, () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => const ScreenIntroduction()),
+          );
+        });
+      }
+    }
 
   Future<void> _loadCertificates() async {
     setState(() {

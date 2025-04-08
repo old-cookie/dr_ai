@@ -60,6 +60,8 @@ dependencies:
   version: ^3.0.2
   visibility_detector: ^0.4.0+2
   volume_controller: ^3.2.0
+  introduction_screen: ^3.1.17
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_lints: ^5.0.0
@@ -68,6 +70,7 @@ dev_dependencies:
   mockito: ^5.4.4
   http_mock_adapter: ^0.6.1
   build_runner: ^2.4.8
+ 
 
 flutter:
   uses-material-design: true
@@ -76,3 +79,8 @@ flutter:
     - assets/logo512.png
     - assets/logo512_light.png
     - assets/logo512error.png
+    - assets/images/firstpage.png
+    - assets/images/secondpage.png
+    - assets/images/thirdpage.png
+    - assets/images/fourthpage.png
+    - assets/images/fifthpage.png

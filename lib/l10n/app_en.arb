@@ -1511,5 +1511,63 @@
     "calendarEventEdit": "Edit Event",
     "@calendarEventEdit": {
         "description": "Button text for editing an event"
+    },
+    "medintroTitle1": "Welcome to Medical Certificate",
+    "@medintroTitle1": {
+        "description": "Title of the Medical certrficate into page"
+    },
+
+    "medintroTitle2": "press the upload photo button",
+    "@medintroTitle2": {
+        "description": "the button text for upload photo"
+    },
+
+    "medintroTitle3": "take or pick photo to upload",
+    "@medintroTitle3": {
+        "description": "upload photo method"
+    },
+
+    "medintroTitle4": "press the save button",
+    "@medintroTitle4": {
+        "description": "button text for save"
+    },
+
+    "medintroTitle5": "View, Edit and change records",
+    "@medintroTitle5": {
+        "description": "View, Edit and change records"
+    },
+
+    "medintroBody1": "Your personal health management assistant, \nyou can Click the add medical certificate button \nto add a new medical certificate",
+    "@medintroBody1": {},
+
+    "medintroBody2": "You can press the upload \nphoto button to upload a \nphoto of your medical certificate",    
+    "@medintroBody2": {},
+
+    "medintroBody3": "You can take your follow-up paper \nor pick a photo from your gallery \nto upload a medical certificate",
+    "@medintroBody3": {},
+
+    "medintroBody4": "After upload the photo \n you can check the information \n and press the save button \n to save the medical certificate",
+    "@medintroBody4": {},
+
+    "medintroBody5": "when the upload is done \n you can view the record \n or the record update or wrong \n you edit or delete the old record",
+    "@medintroBody5": {},
+
+    "next": "next",
+    "@next": {
+        "description": "Button text for next page of the medical certificate intro"
+    },
+
+    "skip": "Skip",
+    "@skip": {
+        "description": "Button text for skipping the Medical certificate intro"
+    },
+
+    "done": "Done",
+    "@done": {
+        "description": "Button text for completing the Medical certificate intro"
+    },
+    "viewIntroduction": "View Introduction",
+    "@viewIntroduction": {
+        "description": "Button text for viewing the introduction"
     }
 }
