@@ -1,4 +1,6 @@
 import 'package:dr_ai/l10n/app_localizations.dart';
+import 'package:dr_ai/screens/guide/screen_guide_page_medical_1.dart';
+import 'package:dr_ai/screens/guide/screen_guide_page_medical_2.dart';
 import 'package:flutter/material.dart';
 import 'screen_guide_frame.dart';
 import 'screen_guide_page_2.dart';
@@ -100,6 +102,8 @@ class GuideExample extends StatelessWidget {
         //add GuidePageX() here
         GuidePageOne(),
         GuidePageTwo(),
+        GuidePageMedicalOne(),
+        GuidePageMedicaltwo()
       ],
       onFinish: () async {
         await GuideService.markGuideShown();

@@ -1023,7 +1023,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get skip => '跳過';
 
   @override
-  String get done => '完成';
+  String get finish => '完成';
+
+  @override
+  String get previous => '上一步';
 
   @override
   String get guideWelcomeTitle => '歡迎使用 Dr.AI';
