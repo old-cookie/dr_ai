@@ -1566,6 +1566,11 @@
     "@finish": {
         "description": "Button text for completing the Medical certificate intro"
     },
+
+    "previous": "previous",
+    "@previous": {
+        "description": "Button text for previous page of the medical certificate intro"
+    },
     "guideWelcomeTitle": "Welcome to Dr.AI",
     "@guideWelcomeTitle": {
         "description": "Title of the welcome screen in the guide"
