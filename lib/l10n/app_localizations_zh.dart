@@ -985,4 +985,46 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get calendarEventEdit => '編輯事件';
+
+  @override
+  String get medintroTitle1 => '歡迎使用醫療證明功能';
+
+  @override
+  String get medintroTitle2 => '請按下上傳並辨識';
+
+  @override
+  String get medintroTitle3 => '選擇圖片或拍攝照片';
+
+  @override
+  String get medintroTitle4 => '請按下儲存';
+
+  @override
+  String get medintroTitle5 => '請按下查看證明或編輯證明';
+
+  @override
+  String get medintroBody1 => '按下新增醫療證明，並進入新增醫療證明頁面。';
+
+  @override
+  String get medintroBody2 => '按下上傳並辨識，然後選擇你所需的選項，在圖片庫中選擇圖片或拍攝照片。';
+
+  @override
+  String get medintroBody3 => '選擇圖片或拍攝照片，然後等待系統辨識圖片中的文字。';
+
+  @override
+  String get medintroBody4 => '辨識完成後，檢查相關資料無誤後，按下儲存，然後返回醫療證明頁面。';
+
+  @override
+  String get medintroBody5 => '按下查看證明或編輯證明，完成後可返回醫療證明頁面。';
+
+  @override
+  String get next => '下一頁';
+
+  @override
+  String get skip => '跳過';
+
+  @override
+  String get done => '完成';
+
+  @override
+  String get viewIntroduction => '查看介紹';
 }

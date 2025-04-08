@@ -986,4 +986,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get calendarEventEdit => 'Edit Event';
+
+  @override
+  String get medintroTitle1 => 'Welcome to Medical Certificate';
+
+  @override
+  String get medintroTitle2 => 'press the upload photo button';
+
+  @override
+  String get medintroTitle3 => 'take or pick photo to upload';
+
+  @override
+  String get medintroTitle4 => 'press the save button';
+
+  @override
+  String get medintroTitle5 => 'View, Edit and change records';
+
+  @override
+  String get medintroBody1 => 'Your personal health management assistant, \nyou can Click the add medical certificate button \nto add a new medical certificate';
+
+  @override
+  String get medintroBody2 => 'You can press the upload \nphoto button to upload a \nphoto of your medical certificate';
+
+  @override
+  String get medintroBody3 => 'You can take your follow-up paper \nor pick a photo from your gallery \nto upload a medical certificate';
+
+  @override
+  String get medintroBody4 => 'After upload the photo \n you can check the information \n and press the save button \n to save the medical certificate';
+
+  @override
+  String get medintroBody5 => 'when the upload is done \n you can view the record \n or the record update or wrong \n you edit or delete the old record';
+
+  @override
+  String get next => 'next';
+
+  @override
+  String get skip => 'Skip';
+
+  @override
+  String get done => 'Done';
+
+  @override
+  String get viewIntroduction => 'View Introduction';
 }

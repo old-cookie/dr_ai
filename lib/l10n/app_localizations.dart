@@ -1954,6 +1954,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit Event'**
   String get calendarEventEdit;
+
+  /// Title of the Medical certrficate into page
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Medical Certificate'**
+  String get medintroTitle1;
+
+  /// the button text for upload photo
+  ///
+  /// In en, this message translates to:
+  /// **'press the upload photo button'**
+  String get medintroTitle2;
+
+  /// upload photo method
+  ///
+  /// In en, this message translates to:
+  /// **'take or pick photo to upload'**
+  String get medintroTitle3;
+
+  /// button text for save
+  ///
+  /// In en, this message translates to:
+  /// **'press the save button'**
+  String get medintroTitle4;
+
+  /// View, Edit and change records
+  ///
+  /// In en, this message translates to:
+  /// **'View, Edit and change records'**
+  String get medintroTitle5;
+
+  /// No description provided for @medintroBody1.
+  ///
+  /// In en, this message translates to:
+  /// **'Your personal health management assistant, \nyou can Click the add medical certificate button \nto add a new medical certificate'**
+  String get medintroBody1;
+
+  /// No description provided for @medintroBody2.
+  ///
+  /// In en, this message translates to:
+  /// **'You can press the upload \nphoto button to upload a \nphoto of your medical certificate'**
+  String get medintroBody2;
+
+  /// No description provided for @medintroBody3.
+  ///
+  /// In en, this message translates to:
+  /// **'You can take your follow-up paper \nor pick a photo from your gallery \nto upload a medical certificate'**
+  String get medintroBody3;
+
+  /// No description provided for @medintroBody4.
+  ///
+  /// In en, this message translates to:
+  /// **'After upload the photo \n you can check the information \n and press the save button \n to save the medical certificate'**
+  String get medintroBody4;
+
+  /// No description provided for @medintroBody5.
+  ///
+  /// In en, this message translates to:
+  /// **'when the upload is done \n you can view the record \n or the record update or wrong \n you edit or delete the old record'**
+  String get medintroBody5;
+
+  /// Button text for next page of the medical certificate intro
+  ///
+  /// In en, this message translates to:
+  /// **'next'**
+  String get next;
+
+  /// Button text for skipping the Medical certificate intro
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get skip;
+
+  /// Button text for completing the Medical certificate intro
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
+
+  /// Button text for viewing the introduction
+  ///
+  /// In en, this message translates to:
+  /// **'View Introduction'**
+  String get viewIntroduction;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
