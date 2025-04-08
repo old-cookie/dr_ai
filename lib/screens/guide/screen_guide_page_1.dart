@@ -1,6 +1,9 @@
+import 'package:dr_ai/screens/guide/screen_guide_page_medical_1.dart';
+import 'package:dr_ai/screens/guide/screen_guide_page_medical_2.dart';
 import 'package:flutter/material.dart';
 import 'screen_guide_frame.dart';
 import '../../services/service_guide.dart';
+
 
 /// 第一個引導頁面
 /// 展示如何使用 GuidePage 組件創建引導頁面
@@ -51,6 +54,8 @@ class GuideExample extends StatelessWidget {
     return GuideFrame(
       pages: const [
         GuidePageOne(),
+        GuidePageMedicalOne(),
+        GuidePageMedicaltwo()
       ],
       onFinish: () async {
         await GuideService.markGuideShown();

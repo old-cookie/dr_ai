@@ -79,8 +79,8 @@ flutter:
     - assets/logo512.png
     - assets/logo512_light.png
     - assets/logo512error.png
-    - assets/images/firstpage.png
-    - assets/images/secondpage.png
-    - assets/images/thirdpage.png
-    - assets/images/fourthpage.png
-    - assets/images/fifthpage.png
+    - assets/medicial_images/firstpage.png
+    - assets/medicial_images/secondpage.png
+    - assets/medicial_images/thirdpage.png
+    - assets/medicial_images/fourthpage.png
+    - assets/medicial_images/fifthpage.png
