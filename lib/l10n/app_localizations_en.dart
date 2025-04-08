@@ -1027,5 +1027,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get done => 'Done';
 
   @override
+  String get guideWelcomeTitle => 'Welcome to Dr.AI';
+
+  @override
+  String get guideWelcomeDescription => 'Your Smart Medical Assistant';
+
+  @override
+  String get guideMedicalConsultation => 'Smart Medical Consultation';
+
+  @override
+  String get guideMedicalAssistantCapabilities => 'Dr.AI is your smart medical assistant, which can:\n• Provide 24-hour medical consultation\n• Answer health-related questions\n• Offer preliminary medical advice\n\nNote: AI suggestions are for reference only, please consult professional physicians for important medical decisions.';
+
+  @override
   String get viewIntroduction => 'View Introduction';
 }

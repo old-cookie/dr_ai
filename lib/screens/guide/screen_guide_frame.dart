@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../widgets/widgets_units/widget_button.dart';
-import '../../widgets/widgets_units/widget_title.dart';
 
 /// 用戶引導框架組件
 /// 提供可滑動的引導頁面，包含導航按鈕和頁面指示器
@@ -140,7 +139,7 @@ class _GuideFrameState extends State<GuideFrame> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: 100,  // 固定寬度
+                        width: 120,  // 固定寬度
                         child: _currentPage > 0
                             ? widgetButton(
                                 "Previous",
@@ -190,22 +189,44 @@ class GuidePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          widgetTitle(title),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text(
-              description,
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+            colors: [
+            Theme.of(context).colorScheme.surface,
+            Theme.of(context).colorScheme.surface.withAlpha((0.8 * 255).round()),
+          ],
+        ),
+      ),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 12),
+              Text(
+                description,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 48),
+              Expanded(child: content),
+            ],
           ),
-          const SizedBox(height: 24.0),
-          Expanded(child: content),
-        ],
+        ),
       ),
     );
   }

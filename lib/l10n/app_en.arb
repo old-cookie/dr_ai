@@ -1566,6 +1566,22 @@
     "@done": {
         "description": "Button text for completing the Medical certificate intro"
     },
+    "guideWelcomeTitle": "Welcome to Dr.AI",
+    "@guideWelcomeTitle": {
+        "description": "Title of the welcome screen in the guide"
+    },
+    "guideWelcomeDescription": "Your Smart Medical Assistant",
+    "@guideWelcomeDescription": {
+        "description": "Description of the welcome screen in the guide"
+    },
+    "guideMedicalConsultation": "Smart Medical Consultation",
+    "@guideMedicalConsultation": {
+        "description": "Title of the medical consultation feature in the guide"
+    },
+    "guideMedicalAssistantCapabilities": "Dr.AI is your smart medical assistant, which can:\n• Provide 24-hour medical consultation\n• Answer health-related questions\n• Offer preliminary medical advice\n\nNote: AI suggestions are for reference only, please consult professional physicians for important medical decisions.",
+    "@guideMedicalAssistantCapabilities": {
+      "description": "Description of what Dr.AI can do as a medical assistant"
+    },
     "viewIntroduction": "View Introduction",
     "@viewIntroduction": {
         "description": "Button text for viewing the introduction"

@@ -355,7 +355,6 @@
   "recordUpdated": "記錄已更新",
   "editMedicalCertificate": "編輯醫療證明",
   "view": "查看",
-  "calendarSearchEvents": "搜尋事件",
   "calendarEventEdit": "編輯事件",
   "calendarSearchEvents": "搜尋事件",
   "medintroTitle1": "歡迎使用醫療證明功能",
@@ -371,6 +370,12 @@
   "next": "下一頁",
   "skip": "跳過",
   "done": "完成",
+  "guideWelcomeTitle": "歡迎使用 Dr.AI",
+  "guideWelcomeDescription": "您的智慧醫療助手",
+  "guideMedicalConsultation": "智慧醫療諮詢",
+  "guideMedicalAssistantCapabilities": "Dr.AI 是您的智慧醫療助手，可以：\n• 24小時提供醫療諮詢\n• 解答健康相關問題\n• 提供初步醫療建議\n\n請注意：AI 建議僅供參考，重要醫療決定請諮詢專業醫師。",
+  "@guideMedicalAssistantCapabilities": {
+    "description": "描述 Dr.AI 作為醫療助手可以做什麼"
+  },
   "viewIntroduction": "查看介紹"
-  
 }
