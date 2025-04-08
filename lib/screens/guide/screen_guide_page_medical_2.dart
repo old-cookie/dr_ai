@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'screen_guide_frame.dart';
-import '../../services/service_guide.dart';
 import 'package:dr_ai/l10n/app_localizations.dart';
 
 
@@ -29,29 +28,5 @@ class GuidePageMedicaltwo extends StatelessWidget {
   }
 }
 
-// /// 示例：如何使用 GuideFrame
-// /// 您可以根據需要添加更多引導頁面
-// class GuideExample extends StatelessWidget {
-//   const GuideExample({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return GuideFrame(
-      pages: const [        
-        GuidePageMedicaltwo(),
-      ],
-      onFinish: () async {
-        await GuideService.markGuideShown();
-        if (context.mounted) {
-          Navigator.of(context).pushReplacementNamed('/');
-        }
-      },
-      onSkip: () async {
-        await GuideService.markGuideShown();
-        if (context.mounted) {
-          Navigator.of(context).pushReplacementNamed('/');
-        }
-      },
-    );
-  }
 
