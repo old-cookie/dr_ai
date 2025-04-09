@@ -2030,8 +2030,14 @@ abstract class AppLocalizations {
   /// Button text for completing the Medical certificate intro
   ///
   /// In en, this message translates to:
-  /// **'Done'**
-  String get done;
+  /// **'finish'**
+  String get finish;
+
+  /// Button text for previous page of the medical certificate intro
+  ///
+  /// In en, this message translates to:
+  /// **'previous'**
+  String get previous;
 
   /// Title of the welcome screen in the guide
   ///

@@ -1024,7 +1024,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get skip => 'Skip';
 
   @override
-  String get done => 'Done';
+  String get finish => 'finish';
+
+  @override
+  String get previous => 'previous';
 
   @override
   String get guideWelcomeTitle => 'Welcome to Dr.AI';

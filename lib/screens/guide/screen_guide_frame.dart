@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/widgets_units/widget_button.dart';
+import 'package:dr_ai/l10n/app_localizations.dart';
 
 /// 用戶引導框架組件
 /// 提供可滑動的引導頁面，包含導航按鈕和頁面指示器
@@ -76,6 +77,7 @@ class _GuideFrameState extends State<GuideFrame> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -87,7 +89,7 @@ class _GuideFrameState extends State<GuideFrame> {
             SizedBox(
               width: 100,
               child: widgetButton(
-                "Skip",
+                l10n.skip,
                 Icons.skip_next,
                 widget.onSkip,
                 color: theme.colorScheme.primary,
@@ -142,7 +144,7 @@ class _GuideFrameState extends State<GuideFrame> {
                         width: 120,  // 固定寬度
                         child: _currentPage > 0
                             ? widgetButton(
-                                "Previous",
+                                l10n.previous,
                                 Icons.arrow_back,
                                 _previousPage,
                                 color: theme.colorScheme.primary,
@@ -152,7 +154,7 @@ class _GuideFrameState extends State<GuideFrame> {
                       SizedBox(
                         width: 100,  // 固定寬度
                         child: widgetButton(
-                          _currentPage == widget.pages.length - 1 ? "Finish" : "Next",
+                          _currentPage == widget.pages.length - 1 ? l10n.finish : l10n.next,
                           Icons.arrow_forward,
                           _nextPage,
                           color: theme.colorScheme.primary,
