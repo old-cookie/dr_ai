@@ -2,6 +2,8 @@ import 'package:dr_ai/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'screen_guide_frame.dart';
 import 'screen_guide_page_2.dart';
+import 'screen_guide_page_3.dart';
+import 'screen_guide_page_4.dart';
 import '../../services/service_guide.dart';
 import '../../services/service_theme.dart';
 
