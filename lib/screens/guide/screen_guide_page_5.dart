@@ -4,8 +4,8 @@ import '../../../l10n/app_localizations.dart';
 
 /// 第二個引導頁面
 /// 展示頁面跳轉示例
-class GuidePageThree extends StatelessWidget {
-  const GuidePageThree({super.key});
+class GuidePageFive extends StatelessWidget {
+  const GuidePageFive({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class GuidePageThree extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/dr.ai_vaccine record.png',
+              'assets/images/dr.ai_vaccine record.jpg',
               width: 128,
               height: 128,
             ),

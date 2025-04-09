@@ -4,8 +4,8 @@ import 'screen_guide_frame.dart';
 
 /// 第四個引導頁面
 /// 展示頁面跳轉示例
-class GuidePageFour extends StatelessWidget {
-  const GuidePageFour({super.key});
+class GuidePageSix extends StatelessWidget {
+  const GuidePageSix({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class GuidePageFour extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/dr_ai_BMI.jpg',
+              'assets/images/dr_ai_BMI.jpg',
               width: 128,
               height: 128,
             ),
