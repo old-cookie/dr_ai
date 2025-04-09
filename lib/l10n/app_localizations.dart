@@ -2069,10 +2069,16 @@ abstract class AppLocalizations {
   /// **'View Introduction'**
   String get viewIntroduction;
 
-  /// Title of the medical certificate feature in the guide
+  /// No description provided for @guideVaccineRecordBenefits.
+  ///
+  /// In en, this message translates to:
+  /// **'The benefits of the vaccine record feature include:\n• Systematic management of vaccination records\n• Detailed information on vaccination dates, locations, and doses\n• Support for uploading and viewing vaccination photos\n• Ability to add, edit, and delete vaccination records\n• Helps track vaccination history for convenient medical consultations'**
   String get guideVaccineRecordBenefits;
 
-  /// Description of the medical certificate feature in the guide
+  /// No description provided for @bmiFunctionDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'The benefits of the BMI calculation feature include:\n• Provides accurate BMI index calculation\n• Offers personalized BMI classification standards based on age and gender\n• Supports BMI classification using Asian and WHO standards\n• Provides health recommendations to improve weight conditions\n• Helps users track health status and promote a healthy lifestyle\n\nNote: BMI is for reference only. For specific health advice, please consult professional physicians.'**
   String get bmiFunctionDescription;
 }
 

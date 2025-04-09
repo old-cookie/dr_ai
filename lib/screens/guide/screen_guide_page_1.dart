@@ -5,7 +5,6 @@ import 'package:dr_ai/screens/guide/screen_guide_page_medical_2.dart';
 import 'package:flutter/material.dart';
 import 'screen_guide_frame.dart';
 import 'screen_guide_page_2.dart';
-import 'screen_guide_page_5.dart';
 import 'screen_guide_page_6.dart';
 import '../../services/service_guide.dart';
 import '../../services/service_theme.dart';
