@@ -2062,6 +2062,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View Introduction'**
   String get viewIntroduction;
+
+  /// Title of the medical certificate feature in the guide
+  String get guideVaccineRecordBenefits;
+
+  /// Description of the medical certificate feature in the guide
+  String get bmiFunctionDescription;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

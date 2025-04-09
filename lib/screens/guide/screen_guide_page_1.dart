@@ -102,6 +102,8 @@ class GuideExample extends StatelessWidget {
         //add GuidePageX() here
         GuidePageOne(),
         GuidePageTwo(),
+        GuidePageThree(),
+        GuidePageFour(),
       ],
       onFinish: () async {
         await GuideService.markGuideShown();
