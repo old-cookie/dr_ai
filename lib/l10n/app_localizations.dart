@@ -2045,7 +2045,7 @@ abstract class AppLocalizations {
   /// **'Welcome to Dr.AI'**
   String get guideWelcomeTitle;
 
-  /// Description of the welcome screen in the guide
+  /// User can input event select date and time
   ///
   /// In en, this message translates to:
   /// **'Your Smart Medical Assistant'**
@@ -2068,6 +2068,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View Introduction'**
   String get viewIntroduction;
+
+  /// No description provided for @guidecalendarTitle1.
+  ///
+  /// In en, this message translates to:
+  /// **'Introdution Calendar'**
+  String get guidecalendarTitle1;
+
+  /// No description provided for @guidecalendarBody1.
+  ///
+  /// In en, this message translates to:
+  /// **'User can see the reminder'**
+  String get guidecalendarBody1;
+
+  /// No description provided for @guidecalendarTitle2.
+  ///
+  /// In en, this message translates to:
+  /// **'Introdution reminder listview'**
+  String get guidecalendarTitle2;
+
+  /// No description provided for @guidecalendarBody2.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the reminder listview'**
+  String get guidecalendarBody2;
+
+  /// No description provided for @guidecalendarTitle3.
+  ///
+  /// In en, this message translates to:
+  /// **'Create or motify the reminder'**
+  String get guidecalendarTitle3;
+
+  /// No description provided for @guidecalendarBody3.
+  ///
+  /// In en, this message translates to:
+  /// **'User can input event select date and time'**
+  String get guidecalendarBody3;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

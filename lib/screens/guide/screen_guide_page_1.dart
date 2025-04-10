@@ -6,7 +6,9 @@ import 'screen_guide_frame.dart';
 import 'screen_guide_page_2.dart';
 import '../../services/service_guide.dart';
 import '../../services/service_theme.dart';
-
+import 'package:dr_ai/screens/guide/screen_guide_page_calendar_1.dart';
+import 'package:dr_ai/screens/guide/screen_guide_page_calendar_2.dart';
+import 'package:dr_ai/screens/guide/screen_guide_page_calendar_3.dart';
 /// 第一個引導頁面
 /// 展示如何使用 GuidePage 組件創建引導頁面
 class GuidePageOne extends StatefulWidget {
@@ -103,7 +105,10 @@ class GuideExample extends StatelessWidget {
         GuidePageOne(),
         GuidePageTwo(),
         GuidePageMedicalOne(),
-        GuidePageMedicaltwo()
+        GuidePageMedicaltwo(),
+        GuidePageCalendarone(),
+        GuidePageCalendartwo(),
+        GuidePageCalendarthree()
       ],
       onFinish: () async {
         await GuideService.markGuideShown();

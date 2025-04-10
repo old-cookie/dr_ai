@@ -1590,5 +1590,29 @@
     "viewIntroduction": "View Introduction",
     "@viewIntroduction": {
         "description": "Button text for viewing the introduction"
+    },
+    "guidecalendarTitle1": "Introdution Calendar",
+    "@guideWelcomeDescription": {
+        "description": "Introdution Calendar"
+    },
+    "guidecalendarBody1": "User can see the reminder",
+    "@guideWelcomeDescription": {
+        "description": "User can see the reminder"
+    },
+    "guidecalendarTitle2": "Introdution reminder listview",
+    "@guideWelcomeDescription": {
+        "description": "Introdution reminder listview"
+    },
+    "guidecalendarBody2": "Check the reminder listview",
+    "@guideWelcomeDescription": {
+        "description": "Check the reminder listview"
+    },
+    "guidecalendarTitle3": "Create or motify the reminder",
+    "@guideWelcomeDescription": {
+        "description": "Create or motify the reminder"
+    },
+    "guidecalendarBody3": "User can input event select date and time",
+    "@guideWelcomeDescription": {
+        "description": "User can input event select date and time"
     }
 }
