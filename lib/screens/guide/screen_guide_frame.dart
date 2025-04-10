@@ -196,7 +196,7 @@ class _GuideFrameState extends State<GuideFrame> {
 /// @param title 頁面標題
 /// @param description 頁面描述
 /// @param content 頁面內容
-class GuidePage extends StatelessWidget {
+class GuidePage extends StatefulWidget {
   final String title;
   final String description;
   final Widget content;
@@ -215,8 +215,64 @@ class GuidePage extends StatelessWidget {
   });
 
   @override
+  State<GuidePage> createState() => _GuidePageState();
+}
+
+class _GuidePageState extends State<GuidePage> {
+  ScrollController? _scrollController;
+  
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = widget.scrollController ?? ScrollController();
+    // 添加後置幀回調以確保在佈局完成後進行滾動
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _autoScrollToTop();
+    });
+  }
+  
+  @override
+  void didUpdateWidget(GuidePage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // 當 autoScrolling 狀態改變時執行自動滾動
+    if (widget.autoScrolling != oldWidget.autoScrolling && widget.autoScrolling == true) {
+      _autoScrollToTop();
+    }
+  }
+  
+  void _autoScrollToTop() {
+    // 只有在啟用自動滾動且滾動控制器已附加時才執行滾動
+    if ((widget.autoScrolling ?? false) && _scrollController != null && _scrollController!.hasClients) {
+      _scrollController!.animateTo(
+        0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    // 只有在內部創建的控制器才需要釋放
+    if (widget.scrollController == null) {
+      _scrollController?.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    Widget contentWidget = content;
+    // 確保內容可滾動
+    Widget contentWidget = widget.content;
+    if (contentWidget is! ScrollView) {
+      contentWidget = Listener(
+        onPointerDown: (_) => widget.onPointerDown?.call(),
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          child: contentWidget,
+        ),
+      );
+    }
 
     return Container(
       decoration: BoxDecoration(
@@ -233,13 +289,13 @@ class GuidePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                title,
+                widget.title,
                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 12),
               Text(
-                description,
+                widget.description,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Theme.of(context).colorScheme.secondary),
                 textAlign: TextAlign.center,
               ),

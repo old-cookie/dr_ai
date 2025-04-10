@@ -10,28 +10,49 @@ import '../../services/service_guide.dart';
 import '../../services/service_theme.dart';
 import 'package:dr_ai/screens/guide/screen_guide_calendar.dart';
 import 'package:dr_ai/screens/guide/screen_guide_calendar_list.dart';
+import 'package:dr_ai/screens/guide/screen_guide_page_medical_3.dart';
+import 'package:dr_ai/screens/guide/screen_guide_page_medical_4.dart';
+import 'package:dr_ai/screens/guide/screen_guide_page_medical_5.dart';
 import 'package:dr_ai/screens/guide/screen_guide_calendar_add_edit.dart';
 
 /// 第一個引導頁面
 /// 展示如何使用 GuidePage 組件創建引導頁面
-class ScreenGuideAiChat extends StatelessWidget {
+class ScreenGuideAiChat extends StatefulWidget {
   const ScreenGuideAiChat({super.key});
+
+  @override
+  State<ScreenGuideAiChat> createState() => _ScreenGuideAiChatState();
+}
+
+class _ScreenGuideAiChatState extends State<ScreenGuideAiChat> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final screenSize = MediaQuery.of(context).size;
+    // 計算適合的圖片尺寸，最大不超過螢幕高度的40%
+    final imageSize = screenSize.height * 0.4;
 
     return GuidePage(
       title: l10n.guideWelcomeTitle,
       description: l10n.guideWelcomeDescription,
+      scrollController: _scrollController,
       content: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
               themeCurrent(context) == themeLight() ? 'assets/images/ai_chat_light.png' : 'assets/images/ai_chat_dark.png',
-              width: 500,
-              height: 500,
+              width: imageSize,
+              height: imageSize,
+              fit: BoxFit.contain,
             ),
             const SizedBox(height: 24),
 
@@ -41,6 +62,8 @@ class ScreenGuideAiChat extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 32.0),
               child: Text(l10n.guideMedicalAssistantCapabilities, textAlign: TextAlign.left, style: const TextStyle(fontSize: 14)),
             ),
+            // 底部增加額外的空間以確保內容可以完全滾動
+            const SizedBox(height: 24),
           ],
         ),
       ),
@@ -61,8 +84,11 @@ class GuideExample extends StatelessWidget {
       ScreenGuideAiChat(), // 歡迎/基本介紹頁面
       //ScreenGuideSample(),     // 功能示範頁面
       // 醫療功能頁面組
-      ScreenGuideMedicalCertificate(), // 醫療功能介紹1
-      ScreenGuideMedicalCertificateAdd(), // 醫療功能介紹2
+      ScreenGuideMedicalCertificate(),
+      ScreenGuideMedicalCertificateAdd(),
+      GuidePageMedicalthree(),
+      GuidePageMedicalfour(),
+      GuidePageMedicalfive(),
       // 健康記錄功能頁面組
       ScreenGuideVaccineRecord(), // 疫苗記錄頁面
       ScreenGuideBmi(), // BMI計算頁面
