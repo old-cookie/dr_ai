@@ -1043,22 +1043,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get viewIntroduction => 'View Introduction';
-
-  @override
-  String get guidecalendarTitle1 => 'Introdution Calendar';
-
-  @override
-  String get guidecalendarBody1 => 'User can see the reminder';
-
-  @override
-  String get guidecalendarTitle2 => 'Introdution reminder listview';
-
-  @override
-  String get guidecalendarBody2 => 'Check the reminder listview';
-
-  @override
-  String get guidecalendarTitle3 => 'Create or motify the reminder';
-
-  @override
-  String get guidecalendarBody3 => 'User can input event select date and time';
 }

@@ -1042,22 +1042,4 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get viewIntroduction => '查看介紹';
-
-  @override
-  String get guidecalendarTitle1 => '看診日曆簡介功能';
-
-  @override
-  String get guidecalendarBody1 => '用戶可以查看備忘';
-
-  @override
-  String get guidecalendarTitle2 => '查看備忘錄';
-
-  @override
-  String get guidecalendarBody2 => '上下可移動，備忘跟時間排序';
-
-  @override
-  String get guidecalendarTitle3 => '新增或修改備忘';
-
-  @override
-  String get guidecalendarBody3 => '記錄備忘並標住時間和提醒時間';
 }
