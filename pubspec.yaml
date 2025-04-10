@@ -25,7 +25,7 @@ dependencies:
   duration_picker: ^1.2.0
   dynamic_color: ^1.7.0
   encrypt_shared_preferences: ^0.9.8
-  file_picker: ^9.0.1
+  file_picker: ^10.1.0
   file_selector: ^1.0.3
   flutter_chat_types: ^3.6.2
   flutter_chat_ui: ^1.6.13
@@ -79,16 +79,16 @@ flutter:
     - assets/logo512.png
     - assets/logo512_light.png
     - assets/logo512error.png
-    - assets/images/medical_light_1.png
-    - assets/images/medical_light_2.png
-    - assets/images/medical_light_3.png
-    - assets/images/medical_light_4.png
-    - assets/images/medical_light_5.png
+    - assets/images/medical_certificate_light.png
+    - assets/images/medical_certificate_add_light.png
+    #- assets/images/medical_light_3.png
+    #- assets/images/medical_light_4.png
+    #- assets/images/medical_light_5.png
     - assets/images/ai_chat_dark.png
     - assets/images/ai_chat_light.png
-    - assets/images/dr_ai_BMI.jpg
-    - assets/images/dr.ai_vaccine record.jpg
-    - assets/images/Calendar_1.jpg
-    - assets/images/Calendar_2.jpg
-    - assets/images/Calendar_3.jpg
-    - assets/images/Calendar_3_2.jpg
+    - assets/images/bmi_dark.jpg
+    - assets/images/vaccine_record_dark.jpg
+    - assets/images/calendar_light.jpg
+    - assets/images/calendar_list_light.jpg
+    - assets/images/calendar_add_light.jpg
+    - assets/images/calendar_edit_light.jpg

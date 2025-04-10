@@ -11,7 +11,7 @@ import '../../../services/service_guide.dart';
 import '../../widgets_units/widget_title.dart';
 import '../../widgets_units/widget_button.dart';
 import '../../widgets_units/widget_toggle.dart'; // 添加toggle組件
-import '../../../screens/guide/screen_guide_page_1.dart'; // 引入引導頁面
+import '../../../screens/guide/screen_guide_ai_chat.dart'; // 引入引導頁面
 
 /// 關於頁面組件
 /// 用於顯示應用程式相關信息、外部鏈接和許可證
@@ -41,7 +41,7 @@ class _WidgetAboutState extends State<WidgetAbout> {
       });
       return;
     }
-    
+
     final bool deviceSupported = await ServiceAuth.isDeviceSupported();
     final bool canCheckBio = await ServiceAuth.canCheckBiometrics();
 
@@ -61,7 +61,7 @@ class _WidgetAboutState extends State<WidgetAbout> {
       });
       return;
     }
-    
+
     final bool enabled = await ServiceAuth.isBiometricEnabled();
 
     if (mounted) {
@@ -77,7 +77,7 @@ class _WidgetAboutState extends State<WidgetAbout> {
     if (kIsWeb && value) {
       return;
     }
-    
+
     if (!_biometricSupported && value) {
       return;
     }
@@ -97,12 +97,7 @@ class _WidgetAboutState extends State<WidgetAbout> {
       color: Theme.of(context).colorScheme.surface,
       child: Scaffold(
         appBar: AppBar(
-          title: Row(
-            children: [
-              Text(AppLocalizations.of(context)!.settingsTitleAbout),
-              Expanded(child: SizedBox(height: 200, child: MoveWindow())),
-            ],
-          ),
+          title: Row(children: [Text(AppLocalizations.of(context)!.settingsTitleAbout), Expanded(child: SizedBox(height: 200, child: MoveWindow()))]),
           actions: getDesktopControlsActions(context),
         ),
         body: SingleChildScrollView(
@@ -128,12 +123,7 @@ class _WidgetAboutState extends State<WidgetAbout> {
                     const SizedBox(height: 16),
                   ],
 
-                  buildButton(
-                    context, 
-                    AppLocalizations.of(context)!.settingsGithub,
-                    SimpleIcons.github,
-                    "https://github.com/old-cookie/dr_ai"
-                  ),
+                  buildButton(context, AppLocalizations.of(context)!.settingsGithub, SimpleIcons.github, "https://github.com/old-cookie/dr_ai"),
                   const SizedBox(height: 8),
 
                   buildButton(
@@ -147,41 +137,24 @@ class _WidgetAboutState extends State<WidgetAbout> {
                   buildLicensesButton(context),
                   const SizedBox(height: 8),
 
-                  widgetButton(
-                    "重置引導頁面",
-                    Icons.restart_alt_rounded,
-                    () async {
-                      selectionHaptic();
-                      try {
-                        await GuideService.resetGuide();
-                        if (!mounted) return;
-                        
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("引導已重置，即將顯示引導頁面"),
-                            duration: Duration(seconds: 2),
-                          ),
-                        );
-                        
-                        await Future.delayed(const Duration(seconds: 1));
-                        if (!mounted) return;
-                        
-                        // 清除導航堆疊並推送引導頁面
-                        Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                            builder: (context) => const GuideExample(),
-                          ),
-                          (route) => false,
-                        );
-                      } catch (e) {
-                        if (!mounted) return;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("重置失敗：$e")),
-                        );
-                      }
-                    },
-                    description: "下次啟動應用時將重新顯示引導頁面",
-                  ),
+                  widgetButton("重置引導頁面", Icons.restart_alt_rounded, () async {
+                    selectionHaptic();
+                    try {
+                      await GuideService.resetGuide();
+                      if (!mounted) return;
+
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("引導已重置，即將顯示引導頁面"), duration: Duration(seconds: 2)));
+
+                      await Future.delayed(const Duration(seconds: 1));
+                      if (!mounted) return;
+
+                      // 清除導航堆疊並推送引導頁面
+                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const GuideExample()), (route) => false);
+                    } catch (e) {
+                      if (!mounted) return;
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("重置失敗：$e")));
+                    }
+                  }, description: "下次啟動應用時將重新顯示引導頁面"),
                 ],
               ),
             ),
