@@ -81,9 +81,9 @@ flutter:
     - assets/logo512error.png
     - assets/images/medical_certificate_light.png
     - assets/images/medical_certificate_add_light.png
-    #- assets/images/medical_light_3.png
-    #- assets/images/medical_light_4.png
-    #- assets/images/medical_light_5.png
+    - assets/images/medical_light_3.png
+    - assets/images/medical_light_4.png
+    - assets/images/medical_light_5.png
     - assets/images/ai_chat_dark.png
     - assets/images/ai_chat_light.png
     - assets/images/bmi_dark.jpg
