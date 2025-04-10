@@ -2068,6 +2068,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View Introduction'**
   String get viewIntroduction;
+
+  /// No description provided for @guideVaccineRecordBenefits.
+  ///
+  /// In en, this message translates to:
+  /// **'The benefits of the vaccine record feature include:\n• Systematic management of vaccination records\n• Detailed information on vaccination dates, locations, and doses\n• Support for uploading and viewing vaccination photos\n• Ability to add, edit, and delete vaccination records\n• Helps track vaccination history for convenient medical consultations'**
+  String get guideVaccineRecordBenefits;
+
+  /// No description provided for @bmiFunctionDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'The benefits of the BMI calculation feature include:\n• Provides accurate BMI index calculation\n• Offers personalized BMI classification standards based on age and gender\n• Supports BMI classification using Asian and WHO standards\n• Provides health recommendations to improve weight conditions\n• Helps users track health status and promote a healthy lifestyle\n\nNote: BMI is for reference only. For specific health advice, please consult professional physicians.'**
+  String get bmiFunctionDescription;
+
+  /// No description provided for @guidecalendarTitle1.
+  ///
+  /// In en, this message translates to:
+  /// **'Introdution Calendar'**
+  String get guidecalendarTitle1;
+
+  /// No description provided for @guidecalendarBody1.
+  ///
+  /// In en, this message translates to:
+  /// **'User can see the reminder'**
+  String get guidecalendarBody1;
+
+  /// No description provided for @guidecalendarTitle2.
+  ///
+  /// In en, this message translates to:
+  /// **'Introdution reminder listview'**
+  String get guidecalendarTitle2;
+
+  /// No description provided for @guidecalendarBody2.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the reminder listview'**
+  String get guidecalendarBody2;
+
+  /// No description provided for @guidecalendarTitle3.
+  ///
+  /// In en, this message translates to:
+  /// **'Create or motify the reminder'**
+  String get guidecalendarTitle3;
+
+  /// No description provided for @guidecalendarBody3.
+  ///
+  /// In en, this message translates to:
+  /// **'User can input event select date and time'**
+  String get guidecalendarBody3;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

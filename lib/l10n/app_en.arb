@@ -1596,7 +1596,7 @@
     "@guideVaccineRecordBenefits": {},
     
     "bmiFunctionDescription": "The benefits of the BMI calculation feature include:\n• Provides accurate BMI index calculation\n• Offers personalized BMI classification standards based on age and gender\n• Supports BMI classification using Asian and WHO standards\n• Provides health recommendations to improve weight conditions\n• Helps users track health status and promote a healthy lifestyle\n\nNote: BMI is for reference only. For specific health advice, please consult professional physicians.",
-    "@bmiFunctionDescription": {}
+    "@bmiFunctionDescription": {
     },
     "guidecalendarTitle1": "Introdution Calendar",
     "@guideWelcomeDescription": {

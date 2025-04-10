@@ -1043,4 +1043,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get viewIntroduction => 'View Introduction';
+
+  @override
+  String get guideVaccineRecordBenefits => 'The benefits of the vaccine record feature include:\n• Systematic management of vaccination records\n• Detailed information on vaccination dates, locations, and doses\n• Support for uploading and viewing vaccination photos\n• Ability to add, edit, and delete vaccination records\n• Helps track vaccination history for convenient medical consultations';
+
+  @override
+  String get bmiFunctionDescription => 'The benefits of the BMI calculation feature include:\n• Provides accurate BMI index calculation\n• Offers personalized BMI classification standards based on age and gender\n• Supports BMI classification using Asian and WHO standards\n• Provides health recommendations to improve weight conditions\n• Helps users track health status and promote a healthy lifestyle\n\nNote: BMI is for reference only. For specific health advice, please consult professional physicians.';
+
+  @override
+  String get guidecalendarTitle1 => 'Introdution Calendar';
+
+  @override
+  String get guidecalendarBody1 => 'User can see the reminder';
+
+  @override
+  String get guidecalendarTitle2 => 'Introdution reminder listview';
+
+  @override
+  String get guidecalendarBody2 => 'Check the reminder listview';
+
+  @override
+  String get guidecalendarTitle3 => 'Create or motify the reminder';
+
+  @override
+  String get guidecalendarBody3 => 'User can input event select date and time';
 }
