@@ -2,6 +2,9 @@ import 'package:dr_ai/l10n/app_localizations.dart';
 import 'package:dr_ai/screens/guide/screen_guide_page_5.dart';
 import 'package:dr_ai/screens/guide/screen_guide_page_medical_1.dart';
 import 'package:dr_ai/screens/guide/screen_guide_page_medical_2.dart';
+import 'package:dr_ai/screens/guide/screen_guide_page_medical_3.dart';
+import 'package:dr_ai/screens/guide/screen_guide_page_medical_4.dart';
+import 'package:dr_ai/screens/guide/screen_guide_page_medical_5.dart';
 import 'package:flutter/material.dart';
 import 'screen_guide_frame.dart';
 import 'screen_guide_page_2.dart';
@@ -108,6 +111,9 @@ class GuideExample extends StatelessWidget {
         GuidePageTwo(),
         GuidePageMedicalOne(),
         GuidePageMedicaltwo(),
+        GuidePageMedicalthree(),
+        GuidePageMedicalfour(),
+        GuidePageMedicalfive(),
         GuidePageFive(),
         GuidePageSix(),
         GuidePageCalendarone(),

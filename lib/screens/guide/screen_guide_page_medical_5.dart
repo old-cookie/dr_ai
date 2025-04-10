@@ -5,14 +5,14 @@ import 'package:dr_ai/l10n/app_localizations.dart';
 
 /// 第四個引導頁面
 /// 展示如何使用 GuidePage 組件創建引導頁面
-class GuidePageMedicaltwo extends StatefulWidget {
-  const GuidePageMedicaltwo({super.key});
+class GuidePageMedicalfive extends StatefulWidget {
+  const GuidePageMedicalfive({super.key});
 
     @override
-  State<GuidePageMedicaltwo> createState() => _GuidePageMedicalOneState();
+  State<GuidePageMedicalfive> createState() => _GuidePageMedicalOneState();
 }
 
-class _GuidePageMedicalOneState extends State<GuidePageMedicaltwo> {
+class _GuidePageMedicalOneState extends State<GuidePageMedicalfive> {
   final ScrollController _scrollController = ScrollController();
   bool _autoScrolling = true;
 
@@ -55,8 +55,8 @@ class _GuidePageMedicalOneState extends State<GuidePageMedicaltwo> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return GuidePage(
-      title: l10n.medintroTitle2,
-      description: l10n.medintroBody2,
+      title: l10n.medintroTitle5,
+      description: l10n.medintroBody5,
       content: Listener(
         onPointerDown: (_) => setState(() => _autoScrolling = false),
         child: SingleChildScrollView(
@@ -65,17 +65,17 @@ class _GuidePageMedicalOneState extends State<GuidePageMedicaltwo> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/images/medical_light_2.png',
+            Image.asset('assets/images/medical_light_5.png',
             width:500 ,height: 550),
             const SizedBox(height: 24),
             Text(
-              l10n.medintroTitle2,
+              l10n.medintroTitle5,
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                child: Text(l10n.medintroBody2, textAlign: TextAlign.left),
+                child: Text(l10n.medintroBody5, textAlign: TextAlign.left),
               )
             ],
           )
