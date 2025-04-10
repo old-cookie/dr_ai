@@ -1714,14 +1714,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "14.3.1"
-  volume_controller:
-    dependency: "direct main"
-    description:
-      name: volume_controller
-      sha256: e82fd689bb8e1fe8e64be3fa5946ff8699058f8cf9f4c1679acdba20cda7f5bd
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.3.3"
   watcher:
     dependency: transitive
     description:

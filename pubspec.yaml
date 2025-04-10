@@ -3,7 +3,7 @@ description: "Dr.AI是一個AI驅動的智能醫生應用程式，整合了語�
 repository: https://github.com/old-cookie/dr_ai
 issue_tracker: https://github.com/old-cookie/dr_ai/issues
 publish_to: 'none'
-version: 5.10.0+1
+version: 5.10.0+2
 
 environment:
   sdk: ^3.7.2
@@ -59,7 +59,7 @@ dependencies:
   uuid: ^4.5.1
   version: ^3.0.2
   visibility_detector: ^0.4.0+2
-  volume_controller: ^3.2.0
+  #volume_controller: ^3.3.3
   introduction_screen: ^3.1.17
   shared_preferences: ^2.5.3
 
