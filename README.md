@@ -44,17 +44,22 @@ Dr.AI is a proof-of-concept Flutter application that simulates an AI-driven "sma
 6. Voice Mode (Experimental)  
    - Voice-based continuous conversation loop where the AI automatically responds with TTS and awaits further STT commands.
 
-7. Vaccines Record  
+7. Self-Trained Medical AI Model
+   - Custom fine-tuned Google Gemma 3 model using LoRA (Low-Rank Adaptation).
+   - Trained with HealthCareMagic dataset containing 100k real doctor-patient conversations.
+   - Specialized in understanding and responding to medical queries with clinical context.
+
+8. Vaccines Record  
    - Store and manage your vaccination history.  
    - Track upcoming vaccination schedules and past records.
 
-8. Medicine Calendar  
+9. Medicine Calendar  
    - Set reminders for medication schedules.  
    - Manage and track your daily medicine intake.
 
-9. Medical Certificate  
-   - Store and organize your medical certificates digitally.  
-   - Easily access and share your medical documentation when needed.
+10. Medical Certificate
+    - Store and organize your medical certificates digitally.
+    - Easily access and share your medical documentation when needed.
 
 ---
 
@@ -91,6 +96,20 @@ lib
 │   │   ├── screen_add_calendar.dart
 │   │   ├── screen_calendar.dart
 │   │   └── screen_calendar_list.dart
+│   ├── guide
+│   │   ├── screen_guide_ai_chat.dart
+│   │   ├── screen_guide_bmi.dart
+│   │   ├── screen_guide_calendar.dart
+│   │   ├── screen_guide_calendar_add_edit.dart
+│   │   ├── screen_guide_calendar_list.dart
+│   │   ├── screen_guide_frame.dart
+│   │   ├── screen_guide_medical_certificate.dart
+│   │   ├── screen_guide_medical_certificate_add.dart
+│   │   ├── screen_guide_page_medical_3.dart
+│   │   ├── screen_guide_page_medical_4.dart
+│   │   ├── screen_guide_page_medical_5.dart
+│   │   ├── screen_guide_sample.dart
+│   │   └── screen_guide_vaccine_record.dart
 │   ├── medical_certificate
 │   │   ├── screen_add_medical_certificate.dart
 │   │   ├── screen_medical_certificate_detail.dart
@@ -113,10 +132,10 @@ lib
 │   ├── ocr_service.dart
 │   ├── service_auth.dart
 │   ├── service_calendar_event.dart
-│   ├── service_chinese.dart
 │   ├── service_crop_image.dart
 │   ├── service_demo.dart
 │   ├── service_desktop.dart
+│   ├── service_guide.dart
 │   ├── service_haptic.dart
 │   ├── service_notification.dart
 │   ├── service_sender.dart
