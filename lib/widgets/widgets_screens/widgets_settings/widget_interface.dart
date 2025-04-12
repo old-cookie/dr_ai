@@ -175,7 +175,17 @@ class _WidgetInterfaceState extends State<WidgetInterface> {
                         widget.prefs.getBool("demoModeEnabled") ?? false,
                         (value) {
                            widget.prefs.setBool("demoModeEnabled", value);
-                           OcrService.toggleDemoMode(enable: value);
+                //           OcrService.toggleDemoMode(enable: value);
+                        },
+                      ),
+
+                      _buildToggle(
+                        context,
+                        AppLocalizations.of(context)!.photoDemoActive,
+                        widget.prefs.getBool("photoDemoActive") ?? false,
+                        (value) {
+                          widget.prefs.setBool("photoDemoActive", value);
+                          OcrService.toggleDemoMode(enable: value);
                         },
                       ),
 
