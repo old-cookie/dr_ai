@@ -2116,6 +2116,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'User can input event select date and time'**
   String get guidecalendarBody3;
+
+  /// No description provided for @photoDemoActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo Demo Active'**
+  String get photoDemoActive;
   String get VCOVID19Vaccine;
   String get VHepatitisAVaccine;
   String get VHepatitisBVaccine;

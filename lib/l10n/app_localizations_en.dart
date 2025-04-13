@@ -1069,6 +1069,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get guidecalendarBody3 => 'User can input event select date and time';
 
   @override
+  String get photoDemoActive => 'Photo Demo Active';
+
+  @override
 String get VCOVID19Vaccine => 'COVID-19 Vaccine';
 
 @override

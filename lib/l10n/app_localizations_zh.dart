@@ -1068,6 +1068,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get guidecalendarBody3 => '記錄備忘並標住時間和提醒時間';
 
   @override
+  String get photoDemoActive => '啟用照片演示模式';
+
+  @override
 String get VCOVID19Vaccine => '冠狀病毒疫苗';
 
 @override

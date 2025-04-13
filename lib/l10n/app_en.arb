@@ -1622,46 +1622,4 @@
     "@guideWelcomeDescription": {
         "description": "User can input event select date and time"
     }
-    "VCOVID19Vaccine": "COVID-19 Vaccine",
-"@VCOVID19Vaccine": {
-    "description": "Name of the COVID-19 vaccine"
-},
-"VHepatitisAVaccine": "Hepatitis A Vaccine",
-"@VHepatitisAVaccine": {
-    "description": "Name of the Hepatitis A vaccine"
-},
-"VHepatitisBVaccine": "Hepatitis B Vaccine",
-"@VHepatitisBVaccine": {
-    "description": "Name of the Hepatitis B vaccine"
-},
-"VHerpesZosterVaccine": "Herpes Zoster Vaccine",
-"@VHerpesZosterVaccine": {
-    "description": "Name of the Herpes Zoster vaccine"
-},
-"VHPV9ValentVaccine": "HPV 9-Valent Vaccine",
-"@VHPV9ValentVaccine": {
-    "description": "Name of the HPV 9-Valent vaccine"
-},
-"VInfluenzaSeasonalVaccine": "Influenza Seasonal Vaccine",
-"@VInfluenzaSeasonalVaccine": {
-    "description": "Name of the Influenza Seasonal vaccine"
-}
-    "vaccinePlace1": "Department of Health/Hospital Authority",
-    "@vaccinePlace1": {
-    "description": "Vaccination place: Department of Health or Hospital Authority"
-},
-"vaccinePlace2": "Elderly Home",
-"@vaccinePlace2": {
-    "description": "Vaccination place: Elderly Home"
-},
-"vaccinePlace3": "Private Clinic/Hospital",
-"@vaccinePlace3": {
-    "description": "Vaccination place: Private Clinic or Hospital"
-},
-"vaccinePlace4": "School",
-"@vaccinePlace4": {
-    "description": "Vaccination place: School"
-}
-
-
 }
