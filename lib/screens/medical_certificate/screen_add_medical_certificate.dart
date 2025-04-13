@@ -30,23 +30,7 @@ class ScreenAddMedicalCertificate extends StatefulWidget {
 
 class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificate> {
   // 醫院列表
-  final List<String> hospitalsList = [
-    'Queen Mary Hospital',
-    'Prince of Wales Hospital',
-    'Queen Elizabeth Hospital',
-    'Tuen Mun Hospital',
-    'United Christian Hospital',
-    'Princess Margaret Hospital',
-    'Kwong Wah Hospital',
-    'Caritas Medical Centre',
-    'Pamela Youde Nethersole Eastern Hospital',
-    'Ruttonjee Hospital',
-    'Hong Kong Baptist Hospital',
-    'St. Teresa\'s Hospital',
-    'Hong Kong Sanatorium & Hospital',
-    'Matilda International Hospital',
-    'Other',
-  ];
+  late List<String> hospitalsList;
 
   // 表單控制器和狀態變數
   final TextEditingController certificateNumberController = TextEditingController(); // 證明編號控制器
@@ -72,8 +56,39 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
   void initState() {
     super.initState();
 
+    // 初始化醫院列表
+    hospitalsList = [];
+
     // 檢查是否為編輯模式
     _isEditMode = widget.recordToEdit != null;
+
+  }
+
+    @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // 獲取當前的本地化資源
+    final l10n = AppLocalizations.of(context);
+    if (l10n != null) {
+
+    // 如果當前語言為中文，則設置醫院列表為中文名稱) {
+      hospitalsList = [
+        l10n.hospitalNTW1,
+        l10n.hospitalNTW2,
+        l10n.hospitalNTE1,
+        l10n.hospitalNTE2,
+        l10n.hospitalKLW1,
+        l10n.hospitalKLW2,
+        l10n.hospitalKLW3,
+        l10n.hospitalKLC1,
+        l10n.hospitalKLC2,
+        l10n.hospitalKLC3,
+        l10n.hospitalHKW1,
+        l10n.hospitalHKW2,
+        l10n.hospitalother,
+      ];
+    
+  
 
     if (_isEditMode && widget.recordToEdit != null) {
       // 設置現有記錄的值
@@ -97,6 +112,10 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
       selectedHospital = hospitalsList.first; // 初始化默認選擇第一個醫院
     }
   }
+}
+
+
+  
 
   /// 顯示圖片來源選擇選單
   /// 

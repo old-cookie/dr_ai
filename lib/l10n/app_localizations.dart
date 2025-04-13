@@ -2122,6 +2122,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Photo Demo Active'**
   String get photoDemoActive;
+
+  /// No description provided for @hospitalNTW1.
+  ///
+  /// In en, this message translates to:
+  /// **'Tuen Mun Hospital'**
+  String get hospitalNTW1;
+
+  /// No description provided for @hospitalNTW2.
+  ///
+  /// In en, this message translates to:
+  /// **'Pok Oi Hospital'**
+  String get hospitalNTW2;
+
+  /// No description provided for @hospitalNTE1.
+  ///
+  /// In en, this message translates to:
+  /// **'Prince of Wales Hospital'**
+  String get hospitalNTE1;
+
+  /// No description provided for @hospitalNTE2.
+  ///
+  /// In en, this message translates to:
+  /// **'Alice Ho Miu Ling Nethersole Hospital'**
+  String get hospitalNTE2;
+
+  /// No description provided for @hospitalKLW1.
+  ///
+  /// In en, this message translates to:
+  /// **'Princess Margaret Hospital'**
+  String get hospitalKLW1;
+
+  /// No description provided for @hospitalKLW2.
+  ///
+  /// In en, this message translates to:
+  /// **'Caritas Medical Centre'**
+  String get hospitalKLW2;
+
+  /// No description provided for @hospitalKLW3.
+  ///
+  /// In en, this message translates to:
+  /// **'Yan Chai Hospital'**
+  String get hospitalKLW3;
+
+  /// No description provided for @hospitalKLC1.
+  ///
+  /// In en, this message translates to:
+  /// **'Queen Elizabeth Hospital'**
+  String get hospitalKLC1;
+
+  /// No description provided for @hospitalKLC2.
+  ///
+  /// In en, this message translates to:
+  /// **'Kwong Wah Hospital'**
+  String get hospitalKLC2;
+
+  /// No description provided for @hospitalKLC3.
+  ///
+  /// In en, this message translates to:
+  /// **'Hong Kong Children\'s Hospital'**
+  String get hospitalKLC3;
+
+  /// No description provided for @hospitalHKW1.
+  ///
+  /// In en, this message translates to:
+  /// **'Queen Mary Hospital'**
+  String get hospitalHKW1;
+
+  /// No description provided for @hospitalHKW2.
+  ///
+  /// In en, this message translates to:
+  /// **'Tung wah hospital'**
+  String get hospitalHKW2;
+
+  /// Label for other hospital option
+  ///
+  /// In en, this message translates to:
+  /// **'Other hospital'**
+  String get hospitalother;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

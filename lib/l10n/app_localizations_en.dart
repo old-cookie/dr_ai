@@ -1070,4 +1070,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get photoDemoActive => 'Photo Demo Active';
+
+  @override
+  String get hospitalNTW1 => 'Tuen Mun Hospital';
+
+  @override
+  String get hospitalNTW2 => 'Pok Oi Hospital';
+
+  @override
+  String get hospitalNTE1 => 'Prince of Wales Hospital';
+
+  @override
+  String get hospitalNTE2 => 'Alice Ho Miu Ling Nethersole Hospital';
+
+  @override
+  String get hospitalKLW1 => 'Princess Margaret Hospital';
+
+  @override
+  String get hospitalKLW2 => 'Caritas Medical Centre';
+
+  @override
+  String get hospitalKLW3 => 'Yan Chai Hospital';
+
+  @override
+  String get hospitalKLC1 => 'Queen Elizabeth Hospital';
+
+  @override
+  String get hospitalKLC2 => 'Kwong Wah Hospital';
+
+  @override
+  String get hospitalKLC3 => 'Hong Kong Children\'s Hospital';
+
+  @override
+  String get hospitalHKW1 => 'Queen Mary Hospital';
+
+  @override
+  String get hospitalHKW2 => 'Tung wah hospital';
+
+  @override
+  String get hospitalother => 'Other hospital';
 }

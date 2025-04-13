@@ -111,11 +111,19 @@ class WidgetAddMedicalCertificate extends StatelessWidget {
 
     // 醫院清單範例
     final List<String> hospitals = [
-      '台大醫院',
-      '榮民總醫院',
-      '三軍總醫院',
-      '長庚醫院',
-      '馬偕醫院',
+      localizations.hospitalNTW1,
+      localizations.hospitalNTW2,
+      localizations.hospitalNTE1,
+      localizations.hospitalNTE2,
+      localizations.hospitalKLW1,
+      localizations.hospitalKLW2,
+      localizations.hospitalKLW3,
+      localizations.hospitalKLC1,
+      localizations.hospitalKLC2,
+      localizations.hospitalKLC3,
+      localizations.hospitalHKW1,
+      localizations.hospitalHKW2,
+      localizations.hospitalother,
     ];
 
     return SingleChildScrollView(

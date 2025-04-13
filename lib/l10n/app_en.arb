@@ -1623,5 +1623,34 @@
         "description": "User can input event select date and time"
     },
     "photoDemoActive": "Photo Demo Active",
-    "@photoDemoActive": {}
+    "@photoDemoActive": {},
+    "hospitalNTW1": "Tuen Mun Hospital",
+    "@hospitalNTW1": {},
+    "hospitalNTW2": "Pok Oi Hospital",
+    "@hospitalNTW2": {},
+    "hospitalNTE1": "Prince of Wales Hospital",
+    "@hospitalNTE1": {},
+    "hospitalNTE2": "Alice Ho Miu Ling Nethersole Hospital",
+    "@hospitalNTE2": {},
+    "hospitalKLW1": "Princess Margaret Hospital",
+    "@hospitalKLW1": {},
+    "hospitalKLW2": "Caritas Medical Centre",
+    "@hospitalKLW2": {},
+    "hospitalKLW3": "Yan Chai Hospital",
+    "@hospitalKLW3": {},
+    "hospitalKLC1": "Queen Elizabeth Hospital",
+    "@hospitalKLC1": {},
+    "hospitalKLC2": "Kwong Wah Hospital",
+    "@hospitalKLC2": {},
+    "hospitalKLC3": "Hong Kong Children's Hospital",
+    "@hospitalKLC3": {},
+    "hospitalHKW1": "Queen Mary Hospital",
+    "@hospitalHKW1": {},
+    "hospitalHKW2": "Tung wah hospital",
+    "@hospitalHKW2": {},
+    "hospitalother": "Other hospital",
+    "@hospitalother": {
+        "description": "Label for other hospital option"
+    }
+
 }

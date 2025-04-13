@@ -1069,4 +1069,43 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get photoDemoActive => '啟用照片演示模式';
+
+  @override
+  String get hospitalNTW1 => '屯門醫院';
+
+  @override
+  String get hospitalNTW2 => '博愛醫院';
+
+  @override
+  String get hospitalNTE1 => '威爾斯親王醫院';
+
+  @override
+  String get hospitalNTE2 => '雅麗氏何妙玲那打素醫院';
+
+  @override
+  String get hospitalKLW1 => '瑪嘉烈醫院';
+
+  @override
+  String get hospitalKLW2 => '明愛醫院';
+
+  @override
+  String get hospitalKLW3 => '仁濟醫院';
+
+  @override
+  String get hospitalKLC1 => '伊利沙伯醫院';
+
+  @override
+  String get hospitalKLC2 => '廣華醫院';
+
+  @override
+  String get hospitalKLC3 => '香港兒童醫院';
+
+  @override
+  String get hospitalHKW1 => '瑪麗醫院';
+
+  @override
+  String get hospitalHKW2 => '東華醫院';
+
+  @override
+  String get hospitalother => '其他醫院';
 }
