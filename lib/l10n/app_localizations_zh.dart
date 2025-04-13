@@ -1066,4 +1066,34 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get guidecalendarBody3 => '記錄備忘並標住時間和提醒時間';
+
+  @override
+String get VCOVID19Vaccine => '冠狀病毒疫苗';
+
+@override
+String get VHepatitisAVaccine => '甲型肝炎疫苗';
+
+@override
+String get VHepatitisBVaccine => '乙型肝炎疫苗';
+
+@override
+String get VHerpesZosterVaccine => '帶狀疱疹疫苗';
+
+@override
+String get VHPV9ValentVaccine => '人類乳頭瘤病毒(HPV)疫苗';
+
+@override
+String get VInfluenzaSeasonalVaccine => '季節性流感疫苗';
+
+@override
+String get vaccinePlace1 => '衛生署/醫院管理局';
+
+@override
+String get vaccinePlace2 => '安老院';
+
+@override
+String get vaccinePlace3 => '私家診所/醫院';
+
+@override
+String get vaccinePlace4 => '學校';
 }
