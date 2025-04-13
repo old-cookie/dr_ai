@@ -1653,8 +1653,6 @@
     "@hospitalother": {
         "description": "Label for other hospital option"
     },
- 
-    
     "VCOVID19Vaccine": "COVID-19 Vaccine",
 "@VCOVID19Vaccine": {
     "description": "Name of the COVID-19 vaccine"
@@ -1678,7 +1676,7 @@
 "VInfluenzaSeasonalVaccine": "Influenza Seasonal Vaccine",
 "@VInfluenzaSeasonalVaccine": {
     "description": "Name of the Influenza Seasonal vaccine"
-}
+},
     "vaccinePlace1": "Department of Health/Hospital Authority",
     "@vaccinePlace1": {
     "description": "Vaccination place: Department of Health or Hospital Authority"
