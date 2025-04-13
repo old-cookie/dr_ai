@@ -12,17 +12,13 @@ import '../../l10n/app_localizations.dart';
 import '../../widgets/widgets_screens/medical_certificate/widget_add_medical_certificate.dart';
 
 /// 醫療證明添加螢幕
-/// 
+///
 /// 此螢幕允許用戶添加新的醫療證明記錄或編輯現有記錄
 class ScreenAddMedicalCertificate extends StatefulWidget {
   final Map<String, dynamic>? recordToEdit;
   final String? recordKey;
 
-  const ScreenAddMedicalCertificate({
-    super.key, 
-    this.recordToEdit, 
-    this.recordKey
-  });
+  const ScreenAddMedicalCertificate({super.key, this.recordToEdit, this.recordKey});
 
   @override
   State<ScreenAddMedicalCertificate> createState() => _ScreenAddMedicalCertificateState();
@@ -61,17 +57,15 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
 
     // 檢查是否為編輯模式
     _isEditMode = widget.recordToEdit != null;
-
   }
 
-    @override
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     // 獲取當前的本地化資源
     final l10n = AppLocalizations.of(context);
     if (l10n != null) {
-
-    // 如果當前語言為中文，則設置醫院列表為中文名稱) {
+      // 如果當前語言為中文，則設置醫院列表為中文名稱) {
       hospitalsList = [
         l10n.hospitalNTW1,
         l10n.hospitalNTW2,
@@ -85,40 +79,35 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
         l10n.hospitalKLC3,
         l10n.hospitalHKW1,
         l10n.hospitalHKW2,
-        l10n.hospitalother,
+        l10n.hospitalOther,
       ];
-    
-  
 
-    if (_isEditMode && widget.recordToEdit != null) {
-      // 設置現有記錄的值
-      final record = widget.recordToEdit!;
-      certificateNumberController.text = record['certificateNumber'] ?? '';
-      selectedHospital = record['hospital'] ?? hospitalsList.first;
-      treatmentDate = record['treatmentDate'];
-      hospitalizationStartDate = record['hospitalizationStartDate'];
-      hospitalizationEndDate = record['hospitalizationEndDate'];
-      sickLeaveStartDate = record['sickLeaveStartDate'];
-      sickLeaveEndDate = record['sickLeaveEndDate'];
-      followUpDate = record['followUpDate'];
-      remarksController.text = record['remarks'] ?? '';
+      if (_isEditMode && widget.recordToEdit != null) {
+        // 設置現有記錄的值
+        final record = widget.recordToEdit!;
+        certificateNumberController.text = record['certificateNumber'] ?? '';
+        selectedHospital = record['hospital'] ?? hospitalsList.first;
+        treatmentDate = record['treatmentDate'];
+        hospitalizationStartDate = record['hospitalizationStartDate'];
+        hospitalizationEndDate = record['hospitalizationEndDate'];
+        sickLeaveStartDate = record['sickLeaveStartDate'];
+        sickLeaveEndDate = record['sickLeaveEndDate'];
+        followUpDate = record['followUpDate'];
+        remarksController.text = record['remarks'] ?? '';
 
-      if (record['image'] != null) {
-        _base64Image = record['image'];
-        _imageBytes = base64Decode(_base64Image!);
+        if (record['image'] != null) {
+          _base64Image = record['image'];
+          _imageBytes = base64Decode(_base64Image!);
+        }
+      } else {
+        // 設置默認值（新增模式）
+        selectedHospital = hospitalsList.first; // 初始化默認選擇第一個醫院
       }
-    } else {
-      // 設置默認值（新增模式）
-      selectedHospital = hospitalsList.first; // 初始化默認選擇第一個醫院
     }
   }
-}
-
-
-  
 
   /// 顯示圖片來源選擇選單
-  /// 
+  ///
   /// 呈現三個選項：
   /// - 掃描文檔
   /// - 使用相機拍照
@@ -165,34 +154,27 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
   }
 
   /// 從相機拍攝圖片
-  /// 
+  ///
   /// 請求相機權限並啟動相機進行拍照，然後處理拍攝的照片
   Future<void> _getImageFromCamera() async {
     final l10n = AppLocalizations.of(context);
     if (l10n == null) return;
 
     setState(() => _isLoading = true);
-    
+
     try {
       // 檢查相機權限
       var cameraStatus = await Permission.camera.status;
       if (!cameraStatus.isGranted) {
         cameraStatus = await Permission.camera.request();
         if (!cameraStatus.isGranted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(l10n.cameraPermissionDenied)),
-          );
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.cameraPermissionDenied)));
           setState(() => _isLoading = false);
           return;
         }
       }
 
-      final XFile? photo = await _picker.pickImage(
-        source: ImageSource.camera,
-        maxWidth: 1920,
-        maxHeight: 1920,
-        imageQuality: 90,
-      );
+      final XFile? photo = await _picker.pickImage(source: ImageSource.camera, maxWidth: 1920, maxHeight: 1920, imageQuality: 90);
 
       if (photo != null) {
         await _processImage(await photo.readAsBytes());
@@ -203,34 +185,27 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
   }
 
   /// 從相冊選擇圖片
-  /// 
+  ///
   /// 請求相冊權限並開啟相冊選擇器，然後處理選擇的照片
   Future<void> _getImageFromGallery() async {
     final l10n = AppLocalizations.of(context);
     if (l10n == null) return;
 
     setState(() => _isLoading = true);
-    
+
     try {
       // 檢查相冊權限
       var galleryStatus = await Permission.photos.status;
       if (!galleryStatus.isGranted) {
         galleryStatus = await Permission.photos.request();
         if (!galleryStatus.isGranted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Photo library permission denied')),
-          );
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Photo library permission denied')));
           setState(() => _isLoading = false);
           return;
         }
       }
 
-      final XFile? image = await _picker.pickImage(
-        source: ImageSource.gallery,
-        maxWidth: 1920,
-        maxHeight: 1920,
-        imageQuality: 90,
-      );
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery, maxWidth: 1920, maxHeight: 1920, imageQuality: 90);
 
       if (image != null) {
         await _processImage(await image.readAsBytes());
@@ -241,7 +216,7 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
   }
 
   /// 使用文檔掃描器
-  /// 
+  ///
   /// 啟動文檔掃描器掃描文件，提供更高精度的文本識別
   Future<void> _scanDocument() async {
     final l10n = AppLocalizations.of(context);
@@ -254,9 +229,7 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
       if (!cameraStatus.isGranted) {
         cameraStatus = await Permission.camera.request();
         if (!cameraStatus.isGranted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(l10n.cameraPermissionDenied)),
-          );
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.cameraPermissionDenied)));
           setState(() => _isLoading = false);
           return;
         }
@@ -267,9 +240,7 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
       try {
         pictures = await CunningDocumentScanner.getPictures() ?? [];
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('${l10n.scannerError}: $e')),
-        );
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('${l10n.scannerError}: $e')));
         setState(() => _isLoading = false);
         return;
       }
@@ -285,25 +256,23 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
   }
 
   /// 處理圖片並進行OCR識別
-  /// 
+  ///
   /// 1. 將圖片轉換為黑白以提高OCR識別率
   /// 2. 執行OCR文字識別
   /// 3. 解析識別結果並填充表單欄位
-  /// 
+  ///
   /// @param bytes 圖片的二進位資料
   Future<void> _processImage(Uint8List bytes) async {
     final l10n = AppLocalizations.of(context);
     if (l10n == null) return;
-    
+
     // 將圖片轉換為黑白
     final img.Image? originalImage = img.decodeImage(bytes);
     if (originalImage == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.imageFormat)),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.imageFormat)));
       return;
     }
-    
+
     // 轉換為黑白圖片
     final img.Image bwImage = img.grayscale(originalImage);
     final Uint8List bwBytes = Uint8List.fromList(img.encodeJpg(bwImage, quality: 90));
@@ -317,23 +286,20 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
     // 執行OCR處理
     try {
       // 舊有的OCR服務
-  //    final recognizedText = await OcrService.recognizeText(bwBytes);
-  //    final extractedData = OcrService.parseMedicalCertificate(recognizedText);
+      //    final recognizedText = await OcrService.recognizeText(bwBytes);
+      //    final extractedData = OcrService.parseMedicalCertificate(recognizedText);
       // 直接執行Demo的OCR服務
       final extractedData = await OcrService.processImage(bwBytes);
       setState(() {
-
         // 填入OCR識別結果
-        if (certificateNumberController.text.isEmpty && 
-            extractedData.containsKey('certificateNumber')) {
+        if (certificateNumberController.text.isEmpty && extractedData.containsKey('certificateNumber')) {
           certificateNumberController.text = extractedData['certificateNumber'];
         }
 
         if (extractedData.containsKey('hospital')) {
           final hospital = extractedData['hospital'];
-          final hospitalIndex = hospitalsList
-              .indexWhere((h) => h.toLowerCase().contains(hospital.toLowerCase()));
-          
+          final hospitalIndex = hospitalsList.indexWhere((h) => h.toLowerCase().contains(hospital.toLowerCase()));
+
           if (hospitalIndex != -1 && selectedHospital == hospitalsList.first) {
             selectedHospital = hospitalsList[hospitalIndex];
           }
@@ -343,23 +309,19 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
           treatmentDate = extractedData['treatmentDate'];
         }
 
-        if (hospitalizationStartDate == null && 
-            extractedData.containsKey('hospitalizationStartDate')) {
+        if (hospitalizationStartDate == null && extractedData.containsKey('hospitalizationStartDate')) {
           hospitalizationStartDate = extractedData['hospitalizationStartDate'];
         }
 
-        if (hospitalizationEndDate == null && 
-            extractedData.containsKey('hospitalizationEndDate')) {
+        if (hospitalizationEndDate == null && extractedData.containsKey('hospitalizationEndDate')) {
           hospitalizationEndDate = extractedData['hospitalizationEndDate'];
         }
 
-        if (sickLeaveStartDate == null && 
-            extractedData.containsKey('sickLeaveStartDate')) {
+        if (sickLeaveStartDate == null && extractedData.containsKey('sickLeaveStartDate')) {
           sickLeaveStartDate = extractedData['sickLeaveStartDate'];
         }
 
-        if (sickLeaveEndDate == null && 
-            extractedData.containsKey('sickLeaveEndDate')) {
+        if (sickLeaveEndDate == null && extractedData.containsKey('sickLeaveEndDate')) {
           sickLeaveEndDate = extractedData['sickLeaveEndDate'];
         }
 
@@ -371,34 +333,27 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
           remarksController.text = extractedData['remarks'];
         }
       });
-      
+
       // 顯示OCR處理結果
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(extractedData.isNotEmpty 
-              ? l10n.ocrSuccessful 
-              : l10n.ocrNoDataFound),
-          duration: Duration(seconds: 3),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(extractedData.isNotEmpty ? l10n.ocrSuccessful : l10n.ocrNoDataFound), duration: Duration(seconds: 3)));
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('${l10n.ocrError}: $e')),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('${l10n.ocrError}: $e')));
     } finally {
       setState(() => _isProcessingOcr = false);
     }
   }
 
   /// 顯示圖片選擇選項
-  /// 
+  ///
   /// 觸發底部彈出選單，顯示可用的圖片獲取方式
   Future<void> _pickImage() async {
     _showImageSourceOptions();
   }
 
   /// 儲存醫療證明記錄
-  /// 
+  ///
   /// 將表單數據保存到加密的本地存儲並返回上一個頁面
   Future<void> _saveRecord() async {
     final l10n = AppLocalizations.of(context);
@@ -406,16 +361,12 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
 
     // 驗證必填欄位
     if (certificateNumberController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.pleaseEnterCertificateNumber)),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.pleaseEnterCertificateNumber)));
       return;
     }
 
     if (treatmentDate == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.pleaseSelectTreatmentDate)),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.pleaseSelectTreatmentDate)));
       return;
     }
 
@@ -441,17 +392,10 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
         await prefs.setString(widget.recordKey!, jsonEncode(recordMap));
       } else {
         // 添加新記錄
-        await prefs.setString(
-          'medical_certificate_${DateTime.now().millisecondsSinceEpoch}', 
-          jsonEncode(recordMap)
-        );
+        await prefs.setString('medical_certificate_${DateTime.now().millisecondsSinceEpoch}', jsonEncode(recordMap));
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(_isEditMode ? l10n.recordUpdated : l10n.recordSaved)
-        ),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(_isEditMode ? l10n.recordUpdated : l10n.recordSaved)));
 
       Navigator.pop(context);
     } finally {
@@ -464,23 +408,12 @@ class _ScreenAddMedicalCertificateState extends State<ScreenAddMedicalCertificat
     final l10n = AppLocalizations.of(context);
     if (l10n == null) {
       // 如果沒有本地化資源，顯示基本界面
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text("Add Medical Certificate"),
-        ),
-        body: const Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
+      return Scaffold(appBar: AppBar(title: const Text("Add Medical Certificate")), body: const Center(child: CircularProgressIndicator()));
     }
 
     // 使用醫療證明表單小部件構建UI
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_isEditMode 
-          ? l10n.editMedicalCertificate 
-          : l10n.addMedicalCertificate),
-      ),
+      appBar: AppBar(title: Text(_isEditMode ? l10n.editMedicalCertificate : l10n.addMedicalCertificate)),
       body: WidgetAddMedicalCertificate(
         certificateNumberController: certificateNumberController,
         selectedHospital: selectedHospital,

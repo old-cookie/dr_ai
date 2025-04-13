@@ -1107,33 +1107,35 @@ class AppLocalizationsZh extends AppLocalizations {
   String get hospitalHKW2 => '東華醫院';
 
   @override
-  String get hospitalother => '其他醫院';
-String get VCOVID19Vaccine => '冠狀病毒疫苗';
+  String get hospitalOther => '其他醫院';
 
-@override
-String get VHepatitisAVaccine => '甲型肝炎疫苗';
+  @override
+  String get covidVaccine => '冠狀病毒疫苗';
 
-@override
-String get VHepatitisBVaccine => '乙型肝炎疫苗';
+  @override
+  String get hepatitisAVaccine => '甲型肝炎疫苗';
 
-@override
-String get VHerpesZosterVaccine => '帶狀疱疹疫苗';
+  @override
+  String get hepatitisBVaccine => '乙型肝炎疫苗';
 
-@override
-String get VHPV9ValentVaccine => '人類乳頭瘤病毒(HPV)疫苗';
+  @override
+  String get herpesZosterVaccine => '帶狀疱疹疫苗';
 
-@override
-String get VInfluenzaSeasonalVaccine => '季節性流感疫苗';
+  @override
+  String get hpv9ValentVaccine => '人類乳頭瘤病毒(HPV)疫苗';
 
-@override
-String get vaccinePlace1 => '衛生署/醫院管理局';
+  @override
+  String get influenzaSeasonalVaccine => '季節性流感疫苗';
 
-@override
-String get vaccinePlace2 => '安老院';
+  @override
+  String get vaccinePlace1 => '衛生署/醫院管理局';
 
-@override
-String get vaccinePlace3 => '私家診所/醫院';
+  @override
+  String get vaccinePlace2 => '安老院';
 
-@override
-String get vaccinePlace4 => '學校';
+  @override
+  String get vaccinePlace3 => '私家診所/醫院';
+
+  @override
+  String get vaccinePlace4 => '學校';
 }

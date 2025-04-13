@@ -123,7 +123,7 @@ class WidgetAddMedicalCertificate extends StatelessWidget {
       localizations.hospitalKLC3,
       localizations.hospitalHKW1,
       localizations.hospitalHKW2,
-      localizations.hospitalother,
+      localizations.hospitalOther,
     ];
 
     return SingleChildScrollView(

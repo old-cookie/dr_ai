@@ -1412,7 +1412,7 @@
     },
     "calendarEventMinutesBefore": "{minutes} minutes before",
     "settingsDemoModeEnable": "Enable Demo Mode (bypass AI)",
-    "@settingsDemoModeEnable": { 
+    "@settingsDemoModeEnable": {
         "description": "Text displayed as description for enable demo mode toggle",
         "context": "Visible in the settings view"
     },
@@ -1516,57 +1516,54 @@
     "@medintroTitle1": {
         "description": "Title of the Medical certrficate into page"
     },
-
     "medintroTitle2": "press the upload photo button",
     "@medintroTitle2": {
         "description": "the button text for upload photo"
     },
-
     "medintroTitle3": "take or pick photo to upload",
     "@medintroTitle3": {
         "description": "upload photo method"
     },
-
     "medintroTitle4": "press the save button",
     "@medintroTitle4": {
         "description": "button text for save"
     },
-
     "medintroTitle5": "View, Edit and change records",
     "@medintroTitle5": {
         "description": "View, Edit and change records"
     },
-
     "medintroBody1": "Your personal health management assistant, \nyou can Click the add medical certificate button \nto add a new medical certificate",
-    "@medintroBody1": {},
-
-    "medintroBody2": "You can press the upload \nphoto button to upload a \nphoto of your medical certificate",    
-    "@medintroBody2": {},
-
+    "@medintroBody1": {
+        "description": "Your personal health management assistant, \nyou can Click the add medical certificate button \nto add a new medical certificate"
+    },
+    "medintroBody2": "You can press the upload \nphoto button to upload a \nphoto of your medical certificate",
+    "@medintroBody2": {
+        "description": "You can press the upload \nphoto button to upload a \nphoto of your medical certificate"
+    },
     "medintroBody3": "You can take your follow-up paper \nor pick a photo from your gallery \nto upload a medical certificate",
-    "@medintroBody3": {},
-
+    "@medintroBody3": {
+        "description": "You can take your follow-up paper \nor pick a photo from your gallery \nto upload a medical certificate"
+    },
     "medintroBody4": "After upload the photo \n you can check the information \n and press the save button \n to save the medical certificate",
-    "@medintroBody4": {},
-
+    "@medintroBody4": {
+        "description": "After upload the photo \n you can check the information \n and press the save button \n to save the medical certificate"
+    },
     "medintroBody5": "when the upload is done \n you can view the record \n or the record update or wrong \n you edit or delete the old record",
-    "@medintroBody5": {},
-
+    "@medintroBody5": {
+        "description": "when the upload is done \n you can view the record \n or the record update or wrong \n you edit or delete the old record"
+    },
     "next": "next",
     "@next": {
         "description": "Button text for next page of the medical certificate intro"
     },
-
     "skip": "Skip",
     "@skip": {
         "description": "Button text for skipping the Medical certificate intro"
     },
-
     "finish": "finish",
     "@finish": {
         "description": "Button text for completing the Medical certificate intro"
     },
-
     "previous": "previous",
     "@previous": {
         "description": "Button text for previous page of the medical certificate intro"
@@ -1585,114 +1582,138 @@
     },
     "guideMedicalAssistantCapabilities": "Dr.AI is your smart medical assistant, which can:\n• Provide 24-hour medical consultation\n• Answer health-related questions\n• Offer preliminary medical advice\n\nNote: AI suggestions are for reference only, please consult professional physicians for important medical decisions.",
     "@guideMedicalAssistantCapabilities": {
-      "description": "Description of what Dr.AI can do as a medical assistant"
+        "description": "Description of what Dr.AI can do as a medical assistant"
     },
     "viewIntroduction": "View Introduction",
     "@viewIntroduction": {
         "description": "Button text for viewing the introduction"
     },
-    
     "guideVaccineRecordBenefits": "The benefits of the vaccine record feature include:\n• Systematic management of vaccination records\n• Detailed information on vaccination dates, locations, and doses\n• Support for uploading and viewing vaccination photos\n• Ability to add, edit, and delete vaccination records\n• Helps track vaccination history for convenient medical consultations",
-    "@guideVaccineRecordBenefits": {},
-    
+    "@guideVaccineRecordBenefits": {
+        "description": "Description of the benefits of the vaccine record feature"
+    },
     "bmiFunctionDescription": "The benefits of the BMI calculation feature include:\n• Provides accurate BMI index calculation\n• Offers personalized BMI classification standards based on age and gender\n• Supports BMI classification using Asian and WHO standards\n• Provides health recommendations to improve weight conditions\n• Helps users track health status and promote a healthy lifestyle\n\nNote: BMI is for reference only. For specific health advice, please consult professional physicians.",
     "@bmiFunctionDescription": {
+        "description": "Description of the BMI calculation feature and its benefits"
     },
     "guidecalendarTitle1": "Introdution Calendar",
-    "@guideWelcomeDescription": {
+    "@guidecalendarTitle1": {
         "description": "Introdution Calendar"
     },
     "guidecalendarBody1": "User can see the reminder",
-    "@guideWelcomeDescription": {
+    "@guidecalendarBody1": {
         "description": "User can see the reminder"
     },
     "guidecalendarTitle2": "Introdution reminder listview",
-    "@guideWelcomeDescription": {
+    "@guidecalendarTitle2": {
         "description": "Introdution reminder listview"
     },
     "guidecalendarBody2": "Check the reminder listview",
-    "@guideWelcomeDescription": {
+    "@guidecalendarBody2": {
         "description": "Check the reminder listview"
     },
     "guidecalendarTitle3": "Create or motify the reminder",
-    "@guideWelcomeDescription": {
+    "@guidecalendarTitle3": {
         "description": "Create or motify the reminder"
     },
     "guidecalendarBody3": "User can input event select date and time",
-    "@guideWelcomeDescription": {
+    "@guidecalendarBody3": {
         "description": "User can input event select date and time"
     },
     "photoDemoActive": "Photo Demo Active",
-    "@photoDemoActive": {},
-
+    "@photoDemoActive": {
+        "description": "Message shown when photo demo is active"
+    },
     "hospitalNTW1": "Tuen Mun Hospital",
-    "@hospitalNTW1": {},
+    "@hospitalNTW1": {
+        "description": "Tuen Mun Hospital"
+    },
     "hospitalNTW2": "Pok Oi Hospital",
-    "@hospitalNTW2": {},
+    "@hospitalNTW2": {
+        "description": "Pok Oi Hospital"
+    },
     "hospitalNTE1": "Prince of Wales Hospital",
-    "@hospitalNTE1": {},
+    "@hospitalNTE1": {
+        "description": "Prince of Wales Hospital"
+    },
     "hospitalNTE2": "Alice Ho Miu Ling Nethersole Hospital",
-    "@hospitalNTE2": {},
+    "@hospitalNTE2": {
+        "description": "Alice Ho Miu Ling Nethersole Hospital"
+    },
     "hospitalKLW1": "Princess Margaret Hospital",
-    "@hospitalKLW1": {},
+    "@hospitalKLW1": {
+        "description": "Princess Margaret Hospital"
+    },
     "hospitalKLW2": "Caritas Medical Centre",
-    "@hospitalKLW2": {},
+    "@hospitalKLW2": {
+        "description": "Caritas Medical Centre"
+    },
     "hospitalKLW3": "Yan Chai Hospital",
-    "@hospitalKLW3": {},
+    "@hospitalKLW3": {
+        "description": "Yan Chai Hospital"
+    },
     "hospitalKLC1": "Queen Elizabeth Hospital",
-    "@hospitalKLC1": {},
+    "@hospitalKLC1": {
+        "description": "Queen Elizabeth Hospital"
+    },
     "hospitalKLC2": "Kwong Wah Hospital",
-    "@hospitalKLC2": {},
+    "@hospitalKLC2": {
+        "description": "Kwong Wah Hospital"
+    },
     "hospitalKLC3": "Hong Kong Children's Hospital",
-    "@hospitalKLC3": {},
+    "@hospitalKLC3": {
+        "description": "Hong Kong Children's Hospital"
+    },
     "hospitalHKW1": "Queen Mary Hospital",
-    "@hospitalHKW1": {},
+    "@hospitalHKW1": {
+        "description": "Queen Mary Hospital"
+    },
     "hospitalHKW2": "Tung wah hospital",
-    "@hospitalHKW2": {},
-    "hospitalother": "Other hospital",
-    "@hospitalother": {
+    "@hospitalHKW2": {
+        "description": "Tung wah hospital"
+    },
+    "hospitalOther": "Other hospital",
+    "@hospitalOther": {
         "description": "Label for other hospital option"
     },
-    "VCOVID19Vaccine": "COVID-19 Vaccine",
-"@VCOVID19Vaccine": {
-    "description": "Name of the COVID-19 vaccine"
-},
-"VHepatitisAVaccine": "Hepatitis A Vaccine",
-"@VHepatitisAVaccine": {
-    "description": "Name of the Hepatitis A vaccine"
-},
-"VHepatitisBVaccine": "Hepatitis B Vaccine",
-"@VHepatitisBVaccine": {
-    "description": "Name of the Hepatitis B vaccine"
-},
-"VHerpesZosterVaccine": "Herpes Zoster Vaccine",
-"@VHerpesZosterVaccine": {
-    "description": "Name of the Herpes Zoster vaccine"
-},
-"VHPV9ValentVaccine": "HPV 9-Valent Vaccine",
-"@VHPV9ValentVaccine": {
-    "description": "Name of the HPV 9-Valent vaccine"
-},
-"VInfluenzaSeasonalVaccine": "Influenza Seasonal Vaccine",
-"@VInfluenzaSeasonalVaccine": {
-    "description": "Name of the Influenza Seasonal vaccine"
-},
+    "covidVaccine": "COVID-19 Vaccine",
+    "@covidVaccine": {
+        "description": "Name of the COVID-19 vaccine"
+    },
+    "hepatitisAVaccine": "Hepatitis A Vaccine",
+    "@hepatitisAVaccine": {
+        "description": "Name of the Hepatitis A vaccine"
+    },
+    "hepatitisBVaccine": "Hepatitis B Vaccine",
+    "@hepatitisBVaccine": {
+        "description": "Name of the Hepatitis B vaccine"
+    },
+    "herpesZosterVaccine": "Herpes Zoster Vaccine",
+    "@herpesZosterVaccine": {
+        "description": "Name of the Herpes Zoster vaccine"
+    },
+    "hpv9ValentVaccine": "HPV 9-Valent Vaccine",
+    "@hpv9ValentVaccine": {
+        "description": "Name of the HPV 9-Valent vaccine"
+    },
+    "influenzaSeasonalVaccine": "Influenza Seasonal Vaccine",
+    "@influenzaSeasonalVaccine": {
+        "description": "Name of the Influenza Seasonal vaccine"
+    },
     "vaccinePlace1": "Department of Health/Hospital Authority",
     "@vaccinePlace1": {
-    "description": "Vaccination place: Department of Health or Hospital Authority"
-},
-"vaccinePlace2": "Elderly Home",
-"@vaccinePlace2": {
-    "description": "Vaccination place: Elderly Home"
-},
-"vaccinePlace3": "Private Clinic/Hospital",
-"@vaccinePlace3": {
-    "description": "Vaccination place: Private Clinic or Hospital"
-},
-"vaccinePlace4": "School",
-"@vaccinePlace4": {
-    "description": "Vaccination place: School"
-}
-
-
+        "description": "Vaccination place: Department of Health or Hospital Authority"
+    },
+    "vaccinePlace2": "Elderly Home",
+    "@vaccinePlace2": {
+        "description": "Vaccination place: Elderly Home"
+    },
+    "vaccinePlace3": "Private Clinic/Hospital",
+    "@vaccinePlace3": {
+        "description": "Vaccination place: Private Clinic or Hospital"
+    },
+    "vaccinePlace4": "School",
+    "@vaccinePlace4": {
+        "description": "Vaccination place: School"
+    }
 }

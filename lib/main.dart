@@ -213,7 +213,7 @@ class _AppState extends State<App> {
       if (kIsWeb) {
         final path = html.window.location.pathname;
         debugPrint('當前 Web 路徑: $path');
-        
+
         if (path == '/vaccine') {
           _initialRoute = 'vaccine';
         }
@@ -270,7 +270,7 @@ class _AppState extends State<App> {
     if (_initialRoute == 'vaccine' && allowVaccine) {
       return const ScreenVaccineRecord();
     }
-    
+
     // 否則按照正常流程選擇顯示認證畫面或主應用
     return _biometricEnabled ? const AuthScreen() : const MainApp();
   }

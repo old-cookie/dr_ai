@@ -1985,31 +1985,43 @@ abstract class AppLocalizations {
   /// **'View, Edit and change records'**
   String get medintroTitle5;
 
-  /// No description provided for @medintroBody1.
+  /// Your personal health management assistant,
+  /// you can Click the add medical certificate button
+  /// to add a new medical certificate
   ///
   /// In en, this message translates to:
   /// **'Your personal health management assistant, \nyou can Click the add medical certificate button \nto add a new medical certificate'**
   String get medintroBody1;
 
-  /// No description provided for @medintroBody2.
+  /// You can press the upload
+  /// photo button to upload a
+  /// photo of your medical certificate
   ///
   /// In en, this message translates to:
   /// **'You can press the upload \nphoto button to upload a \nphoto of your medical certificate'**
   String get medintroBody2;
 
-  /// No description provided for @medintroBody3.
+  /// You can take your follow-up paper
+  /// or pick a photo from your gallery
+  /// to upload a medical certificate
   ///
   /// In en, this message translates to:
   /// **'You can take your follow-up paper \nor pick a photo from your gallery \nto upload a medical certificate'**
   String get medintroBody3;
 
-  /// No description provided for @medintroBody4.
+  /// After upload the photo
+  ///  you can check the information
+  ///  and press the save button
+  ///  to save the medical certificate
   ///
   /// In en, this message translates to:
   /// **'After upload the photo \n you can check the information \n and press the save button \n to save the medical certificate'**
   String get medintroBody4;
 
-  /// No description provided for @medintroBody5.
+  /// when the upload is done
+  ///  you can view the record
+  ///  or the record update or wrong
+  ///  you edit or delete the old record
   ///
   /// In en, this message translates to:
   /// **'when the upload is done \n you can view the record \n or the record update or wrong \n you edit or delete the old record'**
@@ -2045,7 +2057,7 @@ abstract class AppLocalizations {
   /// **'Welcome to Dr.AI'**
   String get guideWelcomeTitle;
 
-  /// User can input event select date and time
+  /// Description of the welcome screen in the guide
   ///
   /// In en, this message translates to:
   /// **'Your Smart Medical Assistant'**
@@ -2069,127 +2081,127 @@ abstract class AppLocalizations {
   /// **'View Introduction'**
   String get viewIntroduction;
 
-  /// No description provided for @guideVaccineRecordBenefits.
+  /// Description of the benefits of the vaccine record feature
   ///
   /// In en, this message translates to:
   /// **'The benefits of the vaccine record feature include:\n• Systematic management of vaccination records\n• Detailed information on vaccination dates, locations, and doses\n• Support for uploading and viewing vaccination photos\n• Ability to add, edit, and delete vaccination records\n• Helps track vaccination history for convenient medical consultations'**
   String get guideVaccineRecordBenefits;
 
-  /// No description provided for @bmiFunctionDescription.
+  /// Description of the BMI calculation feature and its benefits
   ///
   /// In en, this message translates to:
   /// **'The benefits of the BMI calculation feature include:\n• Provides accurate BMI index calculation\n• Offers personalized BMI classification standards based on age and gender\n• Supports BMI classification using Asian and WHO standards\n• Provides health recommendations to improve weight conditions\n• Helps users track health status and promote a healthy lifestyle\n\nNote: BMI is for reference only. For specific health advice, please consult professional physicians.'**
   String get bmiFunctionDescription;
 
-  /// No description provided for @guidecalendarTitle1.
+  /// Introdution Calendar
   ///
   /// In en, this message translates to:
   /// **'Introdution Calendar'**
   String get guidecalendarTitle1;
 
-  /// No description provided for @guidecalendarBody1.
+  /// User can see the reminder
   ///
   /// In en, this message translates to:
   /// **'User can see the reminder'**
   String get guidecalendarBody1;
 
-  /// No description provided for @guidecalendarTitle2.
+  /// Introdution reminder listview
   ///
   /// In en, this message translates to:
   /// **'Introdution reminder listview'**
   String get guidecalendarTitle2;
 
-  /// No description provided for @guidecalendarBody2.
+  /// Check the reminder listview
   ///
   /// In en, this message translates to:
   /// **'Check the reminder listview'**
   String get guidecalendarBody2;
 
-  /// No description provided for @guidecalendarTitle3.
+  /// Create or motify the reminder
   ///
   /// In en, this message translates to:
   /// **'Create or motify the reminder'**
   String get guidecalendarTitle3;
 
-  /// No description provided for @guidecalendarBody3.
+  /// User can input event select date and time
   ///
   /// In en, this message translates to:
   /// **'User can input event select date and time'**
   String get guidecalendarBody3;
 
-  /// No description provided for @photoDemoActive.
+  /// Message shown when photo demo is active
   ///
   /// In en, this message translates to:
   /// **'Photo Demo Active'**
   String get photoDemoActive;
 
-  /// No description provided for @hospitalNTW1.
+  /// Tuen Mun Hospital
   ///
   /// In en, this message translates to:
   /// **'Tuen Mun Hospital'**
   String get hospitalNTW1;
 
-  /// No description provided for @hospitalNTW2.
+  /// Pok Oi Hospital
   ///
   /// In en, this message translates to:
   /// **'Pok Oi Hospital'**
   String get hospitalNTW2;
 
-  /// No description provided for @hospitalNTE1.
+  /// Prince of Wales Hospital
   ///
   /// In en, this message translates to:
   /// **'Prince of Wales Hospital'**
   String get hospitalNTE1;
 
-  /// No description provided for @hospitalNTE2.
+  /// Alice Ho Miu Ling Nethersole Hospital
   ///
   /// In en, this message translates to:
   /// **'Alice Ho Miu Ling Nethersole Hospital'**
   String get hospitalNTE2;
 
-  /// No description provided for @hospitalKLW1.
+  /// Princess Margaret Hospital
   ///
   /// In en, this message translates to:
   /// **'Princess Margaret Hospital'**
   String get hospitalKLW1;
 
-  /// No description provided for @hospitalKLW2.
+  /// Caritas Medical Centre
   ///
   /// In en, this message translates to:
   /// **'Caritas Medical Centre'**
   String get hospitalKLW2;
 
-  /// No description provided for @hospitalKLW3.
+  /// Yan Chai Hospital
   ///
   /// In en, this message translates to:
   /// **'Yan Chai Hospital'**
   String get hospitalKLW3;
 
-  /// No description provided for @hospitalKLC1.
+  /// Queen Elizabeth Hospital
   ///
   /// In en, this message translates to:
   /// **'Queen Elizabeth Hospital'**
   String get hospitalKLC1;
 
-  /// No description provided for @hospitalKLC2.
+  /// Kwong Wah Hospital
   ///
   /// In en, this message translates to:
   /// **'Kwong Wah Hospital'**
   String get hospitalKLC2;
 
-  /// No description provided for @hospitalKLC3.
+  /// Hong Kong Children's Hospital
   ///
   /// In en, this message translates to:
   /// **'Hong Kong Children\'s Hospital'**
   String get hospitalKLC3;
 
-  /// No description provided for @hospitalHKW1.
+  /// Queen Mary Hospital
   ///
   /// In en, this message translates to:
   /// **'Queen Mary Hospital'**
   String get hospitalHKW1;
 
-  /// No description provided for @hospitalHKW2.
+  /// Tung wah hospital
   ///
   /// In en, this message translates to:
   /// **'Tung wah hospital'**
@@ -2199,19 +2211,67 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Other hospital'**
-  String get hospitalother;
-  String get VCOVID19Vaccine;
-  String get VHepatitisAVaccine;
-  String get VHepatitisBVaccine;
-  String get VHerpesZosterVaccine;
-  String get VHPV9ValentVaccine;
-  String get VInfluenzaSeasonalVaccine;
+  String get hospitalOther;
+
+  /// Name of the COVID-19 vaccine
+  ///
+  /// In en, this message translates to:
+  /// **'COVID-19 Vaccine'**
+  String get covidVaccine;
+
+  /// Name of the Hepatitis A vaccine
+  ///
+  /// In en, this message translates to:
+  /// **'Hepatitis A Vaccine'**
+  String get hepatitisAVaccine;
+
+  /// Name of the Hepatitis B vaccine
+  ///
+  /// In en, this message translates to:
+  /// **'Hepatitis B Vaccine'**
+  String get hepatitisBVaccine;
+
+  /// Name of the Herpes Zoster vaccine
+  ///
+  /// In en, this message translates to:
+  /// **'Herpes Zoster Vaccine'**
+  String get herpesZosterVaccine;
+
+  /// Name of the HPV 9-Valent vaccine
+  ///
+  /// In en, this message translates to:
+  /// **'HPV 9-Valent Vaccine'**
+  String get hpv9ValentVaccine;
+
+  /// Name of the Influenza Seasonal vaccine
+  ///
+  /// In en, this message translates to:
+  /// **'Influenza Seasonal Vaccine'**
+  String get influenzaSeasonalVaccine;
+
+  /// Vaccination place: Department of Health or Hospital Authority
+  ///
+  /// In en, this message translates to:
+  /// **'Department of Health/Hospital Authority'**
   String get vaccinePlace1;
+
+  /// Vaccination place: Elderly Home
+  ///
+  /// In en, this message translates to:
+  /// **'Elderly Home'**
   String get vaccinePlace2;
+
+  /// Vaccination place: Private Clinic or Hospital
+  ///
+  /// In en, this message translates to:
+  /// **'Private Clinic/Hospital'**
   String get vaccinePlace3;
+
+  /// Vaccination place: School
+  ///
+  /// In en, this message translates to:
+  /// **'School'**
   String get vaccinePlace4;
-
-
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

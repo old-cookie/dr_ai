@@ -1108,36 +1108,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hospitalHKW2 => 'Tung wah hospital';
 
   @override
-  String get hospitalother => 'Other hospital';
+  String get hospitalOther => 'Other hospital';
 
   @override
-String get VCOVID19Vaccine => 'COVID-19 Vaccine';
+  String get covidVaccine => 'COVID-19 Vaccine';
 
-@override
-String get VHepatitisAVaccine => 'Hepatitis A Vaccine';
+  @override
+  String get hepatitisAVaccine => 'Hepatitis A Vaccine';
 
-@override
-String get VHepatitisBVaccine => 'Hepatitis B Vaccine';
+  @override
+  String get hepatitisBVaccine => 'Hepatitis B Vaccine';
 
-@override
-String get VHerpesZosterVaccine => 'Herpes Zoster Vaccine';
+  @override
+  String get herpesZosterVaccine => 'Herpes Zoster Vaccine';
 
-@override
-String get VHPV9ValentVaccine => 'HPV 9-Valent Vaccine';
+  @override
+  String get hpv9ValentVaccine => 'HPV 9-Valent Vaccine';
 
-@override
-String get VInfluenzaSeasonalVaccine => 'Influenza Seasonal Vaccine';
+  @override
+  String get influenzaSeasonalVaccine => 'Influenza Seasonal Vaccine';
 
-@override
-String get vaccinePlace1 => 'Department of Health/Hospital Authority';
+  @override
+  String get vaccinePlace1 => 'Department of Health/Hospital Authority';
 
-@override
-String get vaccinePlace2 => 'Elderly Home';
+  @override
+  String get vaccinePlace2 => 'Elderly Home';
 
-@override
-String get vaccinePlace3 => 'Private Clinic/Hospital';
+  @override
+  String get vaccinePlace3 => 'Private Clinic/Hospital';
 
-@override
-String get vaccinePlace4 => 'School';
-
+  @override
+  String get vaccinePlace4 => 'School';
 }
