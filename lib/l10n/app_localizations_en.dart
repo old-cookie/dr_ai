@@ -1109,4 +1109,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hospitalother => 'Other hospital';
+
+  @override
+String get VCOVID19Vaccine => 'COVID-19 Vaccine';
+
+@override
+String get VHepatitisAVaccine => 'Hepatitis A Vaccine';
+
+@override
+String get VHepatitisBVaccine => 'Hepatitis B Vaccine';
+
+@override
+String get VHerpesZosterVaccine => 'Herpes Zoster Vaccine';
+
+@override
+String get VHPV9ValentVaccine => 'HPV 9-Valent Vaccine';
+
+@override
+String get VInfluenzaSeasonalVaccine => 'Influenza Seasonal Vaccine';
+
+@override
+String get vaccinePlace1 => 'Department of Health/Hospital Authority';
+
+@override
+String get vaccinePlace2 => 'Elderly Home';
+
+@override
+String get vaccinePlace3 => 'Private Clinic/Hospital';
+
+@override
+String get vaccinePlace4 => 'School';
+
 }

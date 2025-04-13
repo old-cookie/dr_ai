@@ -2200,6 +2200,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Other hospital'**
   String get hospitalother;
+  String get VCOVID19Vaccine;
+  String get VHepatitisAVaccine;
+  String get VHepatitisBVaccine;
+  String get VHerpesZosterVaccine;
+  String get VHPV9ValentVaccine;
+  String get VInfluenzaSeasonalVaccine;
+  String get vaccinePlace1;
+  String get vaccinePlace2;
+  String get vaccinePlace3;
+  String get vaccinePlace4;
+
+
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

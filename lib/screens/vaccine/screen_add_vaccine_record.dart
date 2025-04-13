@@ -9,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
 import 'package:image/image.dart' as img;
 import '../../services/service_crop_image.dart';
-import '../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations.dart';
 
 class ScreenAddVaccineRecord extends StatefulWidget {
   final Map<String, dynamic>? recordToEdit;
@@ -22,17 +22,11 @@ class ScreenAddVaccineRecord extends StatefulWidget {
 }
 
 class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
-  final List<String> listOfItem = [
-    'COVID-19 vaccine',
-    'Hepatitis A vaccine',
-    'Hepatitis B vaccine',
-    'Herpes Zoster vaccine',
-    'HPV 9-Valent vaccine',
-    'Influenza Seasonal vaccine',
-  ];
+  late AppLocalizations l10n;
 
+  late final List<String> listOfItem;
+  late List<String> thirdListOfItem;
   final List<String> secondListOfItem = ['1st', '2nd', '3rd'];
-  final List<String> thirdListOfItem = ['Department of Health/Hospital Authority', 'Elderly Home', 'Private Clinic/Hospital', 'School'];
 
   String? selectedVaccine;
   String? selectedDose;
@@ -45,6 +39,35 @@ class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
   bool _isLoading = false;
   bool _isSaving = false;
   bool _isEditMode = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    l10n = AppLocalizations.of(context)!;
+
+    listOfItem = [
+      l10n.VCOVID19Vaccine,
+      l10n.VHepatitisAVaccine,
+      l10n.VHepatitisBVaccine,
+      l10n.VHerpesZosterVaccine,
+      l10n.VHPV9ValentVaccine,
+      l10n.VInfluenzaSeasonalVaccine,
+    ];
+
+    thirdListOfItem = [
+      l10n.vaccinePlace1, // "Department of Health/Hospital Authority"
+      l10n.vaccinePlace2, // "Elderly Home"
+      l10n.vaccinePlace3, // "Private Clinic/Hospital"
+      l10n.vaccinePlace4, // "School"
+    ];
+
+    if (!_isEditMode) {
+      selectedVaccine = listOfItem.isNotEmpty ? listOfItem.first : null;
+      selectedDose = secondListOfItem.isNotEmpty ? secondListOfItem.first : null;
+      selectedPlace = thirdListOfItem.isNotEmpty ? thirdListOfItem.first : null;
+    }
+  }
 
   @override
   void initState() {
@@ -63,10 +86,6 @@ class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
         _base64Image = widget.recordToEdit!['image'];
         _imageBytes = base64Decode(_base64Image!);
       }
-    } else {
-      selectedVaccine = listOfItem.first;
-      selectedDose = secondListOfItem.first;
-      selectedPlace = thirdListOfItem.first;
     }
   }
 
@@ -166,12 +185,12 @@ class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     return Stack(
       children: [
         Scaffold(
           appBar: AppBar(
-            title: Text(_isEditMode ? (l10n?.editVaccineTitle ?? 'Edit Vaccination Record') : (l10n?.vaccineAddTitle ?? 'Add Vaccination Record')),
+            title: Text(_isEditMode ? (l10n.editVaccineTitle ?? 'Edit Vaccination Record') : (l10n.vaccineAddTitle ?? 'Add Vaccination Record')),
           ),
           backgroundColor: Theme.of(context).colorScheme.surface,
           body: Padding(
@@ -179,7 +198,7 @@ class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
             child: ListView(
               children: <Widget>[
                 const SizedBox(height: 16),
-                widgetTitle(l10n?.vaccineName ?? 'Vaccine Name', top: 0, bottom: 8),
+                widgetTitle(l10n.vaccineName ?? 'Vaccine Name', top: 0, bottom: 8),
                 DropdownSearch<String>(
                   selectedItem: selectedVaccine ?? listOfItem.first,
                   items: (filter, props) => listOfItem,
@@ -199,7 +218,7 @@ class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                widgetTitle(l10n?.vaccineDose ?? 'Dose Sequence', top: 0, bottom: 8),
+                widgetTitle(l10n.vaccineDose ?? 'Dose Sequence', top: 0, bottom: 8),
                 DropdownSearch<String>(
                   selectedItem: selectedDose ?? secondListOfItem.first,
                   items: (filter, props) => secondListOfItem,
@@ -214,9 +233,9 @@ class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
                   popupProps: PopupProps.menu(fit: FlexFit.loose, constraints: BoxConstraints()),
                 ),
                 const SizedBox(height: 16),
-                widgetTitle(l10n?.vaccineDate ?? 'Date Received', top: 0, bottom: 8),
+                widgetTitle(l10n.vaccineDate ?? 'Date Received', top: 0, bottom: 8),
                 widgetButton(
-                  l10n?.selectDate ?? 'Select Date',
+                  l10n.selectDate ?? 'Select Date',
                   Icons.calendar_today,
                   () => _openDatePicker(context),
                   context: context,
@@ -228,7 +247,7 @@ class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
                     child: Text('Selected Date: $selectedDate', style: TextStyle(fontSize: 16, color: Theme.of(context).colorScheme.onSurface)),
                   ),
                 const SizedBox(height: 16),
-                widgetTitle(l10n?.vaccinePlace ?? 'Place Given (Optional)', top: 0, bottom: 8),
+                widgetTitle(l10n.vaccinePlace ?? 'Place Given (Optional)', top: 0, bottom: 8),
                 DropdownSearch<String>(
                   selectedItem: selectedPlace ?? thirdListOfItem.first,
                   items: (filter, props) => thirdListOfItem,
@@ -248,16 +267,16 @@ class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                widgetTitle(l10n?.vaccineRemark ?? 'Remark (Optional)', top: 0, bottom: 8),
+                widgetTitle(l10n.vaccineRemark ?? 'Remark (Optional)', top: 0, bottom: 8),
                 TextField(
                   controller: remarkController,
                   maxLines: 3,
                   decoration: InputDecoration(border: OutlineInputBorder(), hintText: 'Other information'),
                 ),
                 const SizedBox(height: 16),
-                widgetTitle(l10n?.vaccinePhoto ?? 'Vaccination Record Photo (Optional)', top: 0, bottom: 8),
+                widgetTitle(l10n.vaccinePhoto ?? 'Vaccination Record Photo (Optional)', top: 0, bottom: 8),
                 widgetButton(
-                  l10n?.pickImage ?? 'Pick Image',
+                  l10n.pickImage ?? 'Pick Image',
                   Icons.photo_library,
                   _pickImage,
                   context: context,
@@ -289,7 +308,7 @@ class _ScreenAddVaccineRecordState extends State<ScreenAddVaccineRecord> {
                   ),
                 ],
                 const SizedBox(height: 16),
-                widgetButton(l10n?.saveRecord ?? 'Save', Icons.save, _saveRecord, context: context, color: Theme.of(context).colorScheme.primary),
+                widgetButton(l10n.saveRecord ?? 'Save', Icons.save, _saveRecord, context: context, color: Theme.of(context).colorScheme.primary),
               ],
             ),
           ),
