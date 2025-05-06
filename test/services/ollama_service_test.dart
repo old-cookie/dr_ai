@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 
 void main() {
   // 測試固定的主機和備用主機
-  const String fixedHost = "http://oldcookie2706.asuscomm.com:11434";
+  const String fixedHost = "http://oldcookie276.asuscomm.com:11434";
   const String backupHost = "http://100.64.50.3:11434";
   
   group('Ollama 服務器連接測試', () {

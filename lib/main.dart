@@ -35,7 +35,7 @@ const bool useHost = true;
 /// Ollama 服務器地址設定
 /// 必須確保客戶端可以訪問此地址
 /// @note 不要包含結尾的斜線
-const String fixedHost = "http://oldcookie2706.asuscomm.com:11434";
+const String fixedHost = "http://oldcookie276.asuscomm.com:11434";
 
 /// 備用服務器地址，當主服務器無法訪問時使用
 const String backupHost = "http://100.64.50.3:11434";

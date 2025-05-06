@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:simple_icons/simple_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../services/service_version.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../services/service_haptic.dart';
 import '../../../services/service_desktop.dart';
@@ -24,12 +26,70 @@ class WidgetAbout extends StatefulWidget {
 class _WidgetAboutState extends State<WidgetAbout> {
   bool _biometricSupported = false;
   bool _useBiometricAuth = false;
+  String _currentVersion = '';
+  String? _latestGitHubVersion;
+  bool _isCheckingVersion = true;
+  bool _isLatestVersion = false;
+  final _versionService = ServiceVersion();
 
   @override
   void initState() {
     super.initState();
     _checkBiometricSupport();
     _loadBiometricSetting();
+    _loadVersionInfo();
+  }
+
+  /// 加載版本信息
+  Future<void> _loadVersionInfo() async {
+    if (!mounted) return;
+
+    setState(() {
+      _isCheckingVersion = true;
+    });
+
+    try {
+      // Directly use PackageInfo.fromPlatform() for the current version
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      final String currentAppVersion = "${packageInfo.version}+${packageInfo.buildNumber}";
+
+      // Continue using ServiceVersion for the latest GitHub version
+      final latestGitHubVersion = await _versionService.getLatestGitHubVersion();
+
+      // Log the versions
+      debugPrint('Current App Version (package_info_plus): $currentAppVersion');
+      debugPrint('Latest GitHub Version (ServiceVersion): $latestGitHubVersion');
+
+      if (mounted) {
+        setState(() {
+          _currentVersion = currentAppVersion;
+          _latestGitHubVersion = latestGitHubVersion;
+          if (latestGitHubVersion != null) {
+            _isLatestVersion = _versionService.isVersionUpToDate(currentAppVersion, latestGitHubVersion);
+          } else {
+            // Handle case where GitHub version couldn't be fetched
+            _isLatestVersion = false;
+          }
+          _isCheckingVersion = false;
+        });
+      }
+    } catch (e) {
+      debugPrint('Error loading version info: $e');
+      if (mounted) {
+        setState(() {
+          _currentVersion = "Error loading version"; // Display error or N/A
+          _latestGitHubVersion = null;
+          _isLatestVersion = false;
+          _isCheckingVersion = false;
+        });
+      }
+    }
+  }
+
+  /// 刷新版本信息
+  Future<void> _refreshVersion() async {
+    selectionHaptic();
+    await _loadVersionInfo();
   }
 
   /// 檢查設備是否支持生物識別
@@ -97,7 +157,10 @@ class _WidgetAboutState extends State<WidgetAbout> {
       color: Theme.of(context).colorScheme.surface,
       child: Scaffold(
         appBar: AppBar(
-          title: Row(children: [Text(AppLocalizations.of(context)!.settingsTitleAbout), Expanded(child: SizedBox(height: 200, child: MoveWindow()))]),
+          title: Row(
+            // ignore: prefer_const_literals_to_create_immutables
+            children: [Text(AppLocalizations.of(context)!.settingsTitleAbout), Expanded(child: SizedBox(height: 200, child: MoveWindow()))],
+          ),
           actions: getDesktopControlsActions(context),
         ),
         body: SingleChildScrollView(
@@ -109,7 +172,36 @@ class _WidgetAboutState extends State<WidgetAbout> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   titleDivider(context: context),
-
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Text('版本: ', style: Theme.of(context).textTheme.titleMedium),
+                      if (_isCheckingVersion)
+                        const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
+                      else ...[
+                        Text(
+                          _currentVersion,
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(color: _isLatestVersion ? Colors.green : Colors.red),
+                        ),
+                        const SizedBox(width: 8),
+                        if (!_isLatestVersion && _latestGitHubVersion != null) ...[
+                          // ignore: prefer_const_constructors
+                          Icon(Icons.warning, color: Colors.red, size: 20),
+                          const SizedBox(width: 4),
+                          Text('($_latestGitHubVersion available)', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.red)),
+                        ],
+                        IconButton(
+                          icon: const Icon(SimpleIcons.github, size: 20),
+                          onPressed: () {
+                            selectionHaptic();
+                            launchUrl(Uri.parse('https://github.com/old-cookie/dr_ai/releases/latest'), mode: LaunchMode.inAppBrowserView);
+                          },
+                          tooltip: 'Check releases on GitHub',
+                        ),
+                        IconButton(icon: const Icon(Icons.refresh, size: 20), onPressed: _refreshVersion, tooltip: 'Check for updates'),
+                      ],
+                    ],
+                  ),
                   if (!kIsWeb) ...[
                     const SizedBox(height: 16),
                     widgetToggle(
@@ -118,6 +210,7 @@ class _WidgetAboutState extends State<WidgetAbout> {
                       _useBiometricAuth,
                       _toggleBiometricAuth,
                       disabled: !_biometricSupported,
+                      // ignore: prefer_const_constructors
                       icon: Icon(Icons.fingerprint, color: _biometricSupported ? null : Colors.grey),
                     ),
                     const SizedBox(height: 16),
@@ -143,15 +236,20 @@ class _WidgetAboutState extends State<WidgetAbout> {
                       await GuideService.resetGuide();
                       if (!mounted) return;
 
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("引導已重置，即將顯示引導頁面"), duration: Duration(seconds: 2)));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        // ignore: prefer_const_constructors
+                        SnackBar(content: Text("引導已重置，即將顯示引導頁面"), duration: Duration(seconds: 2)),
+                      );
 
                       await Future.delayed(const Duration(seconds: 1));
                       if (!mounted) return;
 
                       // 清除導航堆疊並推送引導頁面
+                      // ignore: use_build_context_synchronously
                       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const GuideExample()), (route) => false);
                     } catch (e) {
                       if (!mounted) return;
+                      // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("重置失敗：$e")));
                     }
                   }, description: "下次啟動應用時將重新顯示引導頁面"),
